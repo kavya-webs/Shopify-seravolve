@@ -1,0 +1,169 @@
+<section class="w-full bg-white py-16 lg:py-24">
+  <div class="max-w-lg lg:max-w-2xl mx-auto px-6">
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <p class="text-[10px] uppercase tracking-[0.4em] font-accent font-bold text-brand-aqua mb-3 animate-fade-in">
+        {{ section.settings.subheading | escape }}
+      </p>
+      <h2 class="font-serif text-3xl lg:text-4xl text-brand-slate animate-fade-up">
+        {{ section.settings.heading }}
+      </h2>
+    </div>
+
+    <!-- Chat Thread -->
+    <div class="flex flex-col space-y-3" id="chat-faq-container-{{ section.id }}">
+      {%- for block in section.blocks -%}
+        <div class="flex flex-col faq-item">
+          <!-- User question bubble (right-aligned) -->
+          <button
+            class="faq-question self-end max-w-[85%] lg:max-w-[75%] text-left px-5 py-3.5 chat-bubble-user transition-all duration-300 active:scale-[0.98] bg-brand-aqua-mist text-brand-slate hover:bg-brand-aqua/10"
+            data-index="{{ forloop.index0 }}"
+          >
+            <span class="text-sm font-medium leading-snug">{{ block.settings.question | escape }}</span>
+          </button>
+
+          <!-- SERAVOLVE answer bubble (left-aligned) -->
+          <div class="faq-answer self-start max-w-[85%] lg:max-w-[75%] mt-2 hidden" data-index="{{ forloop.index0 }}">
+            <div class="chat-bubble bg-brand-glacial px-5 py-4 shadow-sm border border-brand-marble/15 animate-fade-up" style="animation-duration: 0.35s;">
+              <p class="text-[9px] uppercase tracking-widest font-accent font-bold text-brand-aqua mb-2">
+                SERAVOLVE
+              </p>
+              <p class="text-sm text-brand-slate/70 leading-relaxed font-light">
+                {{ block.settings.answer | escape }}
+              </p>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+
+      <!-- Typing indicator -->
+      <div id="typing-indicator-{{ section.id }}" class="self-start mt-2 hidden">
+        <div class="chat-bubble bg-brand-glacial border border-brand-marble/15 inline-block">
+          <div class="flex space-x-1 px-4 py-3">
+            <div class="w-1.5 h-1.5 bg-brand-aqua/40 rounded-full animate-typing" style="animation-delay: 0s;"></div>
+            <div class="w-1.5 h-1.5 bg-brand-aqua/40 rounded-full animate-typing" style="animation-delay: 0.15s;"></div>
+            <div class="w-1.5 h-1.5 bg-brand-aqua/40 rounded-full animate-typing" style="animation-delay: 0.3s;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .chat-bubble-user {
+    border-radius: 20px 20px 0 20px;
+  }
+  .chat-bubble {
+    border-radius: 20px 20px 20px 0;
+  }
+  @keyframes typingPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+  .animate-typing {
+    animation: typingPulse 0.8s infinite;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('chat-faq-container-{{ section.id }}');
+    if (!container) return;
+
+    const questions = container.querySelectorAll('.faq-question');
+    const answers = container.querySelectorAll('.faq-answer');
+    const typingIndicator = document.getElementById('typing-indicator-{{ section.id }}');
+
+    let openIndex = null;
+    let isTyping = false;
+
+    questions.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (isTyping) return;
+        
+        const index = parseInt(btn.getAttribute('data-index'));
+
+        // Close current open answer
+        if (openIndex !== null) {
+          answers[openIndex].classList.add('hidden');
+          questions[openIndex].classList.remove('bg-brand-aqua', 'text-white', 'shadow-md');
+          questions[openIndex].classList.add('bg-brand-aqua-mist', 'text-brand-slate', 'hover:bg-brand-aqua/10');
+        }
+
+        // If clicking the currently open one, just close it and stop
+        if (openIndex === index) {
+          openIndex = null;
+          return;
+        }
+
+        // Show typing indicator
+        isTyping = true;
+        typingIndicator.classList.remove('hidden');
+
+        setTimeout(() => {
+          typingIndicator.classList.add('hidden');
+          isTyping = false;
+          openIndex = index;
+
+          // Open new answer
+          answers[openIndex].classList.remove('hidden');
+          questions[openIndex].classList.add('bg-brand-aqua', 'text-white', 'shadow-md');
+          questions[openIndex].classList.remove('bg-brand-aqua-mist', 'text-brand-slate', 'hover:bg-brand-aqua/10');
+        }, 600);
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Chat FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Guidance"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Common <span class=\"italic font-light\">Questions</span>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Which product should I start with?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "If you're new to clinical skincare, we recommend starting with our Bestsellers or using the Routine Builder."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Chat FAQ",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "Which product should I start with?", "answer": "If you're new to clinical skincare, we recommend starting with our Bestsellers or using the Routine Builder. Our Vitamin C + E serum is a universal favorite for brightening, while our Hyaluronic Acid serum is perfect for all skin types needing hydration." } },
+        { "type": "faq", "settings": { "question": "How long before I see visible changes?", "answer": "Skincare is a journey. While hydration effects are often immediate, cellular-level changes like evening skin tone or reducing blemishes typically take 4-6 weeks of consistent daily use, aligned with your skin's natural renewal cycle." } },
+        { "type": "faq", "settings": { "question": "Can I use Seravolve with my existing routine?", "answer": "Yes, our products are designed to be layering-friendly. However, we recommend introducing one new active at a time. If you use prescription treatments, consult with your professional before adding new high-potency serums." } },
+        { "type": "faq", "settings": { "question": "What is your shipping timeline?", "answer": "We ship nationwide across India. Orders are typically processed within 24 hours. Delivery takes 2-4 business days for metros and 5-7 days for other regions." } },
+        { "type": "faq", "settings": { "question": "Can I change or cancel my order?", "answer": "We offer a 2-hour window for order modifications or cancellations. Please reach out to our WhatsApp support immediately with your order ID for any urgent changes." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

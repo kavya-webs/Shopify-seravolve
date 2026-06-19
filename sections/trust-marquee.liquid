@@ -1,0 +1,123 @@
+<section class="w-full bg-brand-glacial border-b border-brand-marble/20 overflow-hidden">
+  <div class="marquee-container py-4">
+    <div class="marquee-content flex items-center gap-8">
+      <!-- Original items -->
+      {%- for block in section.blocks -%}
+        <div class="flex items-center space-x-2 shrink-0 px-1">
+          {%- if block.settings.icon == 'star' -%}
+            <svg class="w-3.5 h-3.5 {% if block.settings.highlight %}text-brand-gold{% else %}text-brand-aqua/60{% endif %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          {%- elsif block.settings.icon == 'truck' -%}
+            <svg class="w-3.5 h-3.5 {% if block.settings.highlight %}text-brand-gold{% else %}text-brand-aqua/60{% endif %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5"/><path d="M14 17h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+          {%- elsif block.settings.icon == 'leaf' -%}
+            <svg class="w-3.5 h-3.5 {% if block.settings.highlight %}text-brand-gold{% else %}text-brand-aqua/60{% endif %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+          {%- elsif block.settings.icon == 'flask' -%}
+            <svg class="w-3.5 h-3.5 {% if block.settings.highlight %}text-brand-gold{% else %}text-brand-aqua/60{% endif %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.52 16h12.96"/></svg>
+          {%- elsif block.settings.icon == 'heart' -%}
+            <svg class="w-3.5 h-3.5 {% if block.settings.highlight %}text-brand-gold{% else %}text-brand-aqua/60{% endif %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          {%- else -%}
+             <svg class="w-3.5 h-3.5 {% if block.settings.highlight %}text-brand-gold{% else %}text-brand-aqua/60{% endif %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+          {%- endif -%}
+          <span class="text-[10px] uppercase tracking-[0.2em] font-accent font-bold text-brand-slate/50 whitespace-nowrap">
+            {{ block.settings.text | escape }}
+          </span>
+          <span class="text-brand-marble/40 ml-4">·</span>
+        </div>
+      {%- endfor -%}
+      <!-- Duplicate items for seamless loop -->
+      {%- for block in section.blocks -%}
+        <div class="flex items-center space-x-2 shrink-0 px-1">
+          {%- if block.settings.icon == 'star' -%}
+            <svg class="w-3.5 h-3.5 {% if block.settings.highlight %}text-brand-gold{% else %}text-brand-aqua/60{% endif %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          {%- elsif block.settings.icon == 'truck' -%}
+            <svg class="w-3.5 h-3.5 {% if block.settings.highlight %}text-brand-gold{% else %}text-brand-aqua/60{% endif %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5"/><path d="M14 17h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+          {%- elsif block.settings.icon == 'leaf' -%}
+            <svg class="w-3.5 h-3.5 {% if block.settings.highlight %}text-brand-gold{% else %}text-brand-aqua/60{% endif %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+          {%- elsif block.settings.icon == 'flask' -%}
+            <svg class="w-3.5 h-3.5 {% if block.settings.highlight %}text-brand-gold{% else %}text-brand-aqua/60{% endif %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.52 16h12.96"/></svg>
+          {%- elsif block.settings.icon == 'heart' -%}
+            <svg class="w-3.5 h-3.5 {% if block.settings.highlight %}text-brand-gold{% else %}text-brand-aqua/60{% endif %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          {%- else -%}
+             <svg class="w-3.5 h-3.5 {% if block.settings.highlight %}text-brand-gold{% else %}text-brand-aqua/60{% endif %}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+          {%- endif -%}
+          <span class="text-[10px] uppercase tracking-[0.2em] font-accent font-bold text-brand-slate/50 whitespace-nowrap">
+            {{ block.settings.text | escape }}
+          </span>
+          <span class="text-brand-marble/40 ml-4">·</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+  }
+  .marquee-content {
+    display: flex;
+    animation: marquee 25s linear infinite;
+  }
+  .marquee-container:hover .marquee-content {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Trust Marquee",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Premium Formula"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "star", "label": "Star" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "flask", "label": "Flask" },
+            { "value": "heart", "label": "Heart" }
+          ],
+          "default": "star"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Highlight Icon (Gold)",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Marquee",
+      "blocks": [
+        { "type": "trust_item", "settings": { "text": "Premium Formula", "icon": "star", "highlight": true } },
+        { "type": "trust_item", "settings": { "text": "Free Shipping ₹999+", "icon": "truck", "highlight": false } },
+        { "type": "trust_item", "settings": { "text": "Cruelty Free", "icon": "leaf", "highlight": false } },
+        { "type": "trust_item", "settings": { "text": "Premium Actives", "icon": "flask", "highlight": false } },
+        { "type": "trust_item", "settings": { "text": "Made in India", "icon": "heart", "highlight": false } },
+        { "type": "trust_item", "settings": { "text": "Formulated for Indian Skin", "icon": "star", "highlight": false } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,283 @@
+<section class="relative w-full min-h-[100svh] flex flex-col items-center justify-center bg-[#b2f9fe] overflow-hidden">
+  
+  <!-- Ferrofluid Background -->
+  <div class="absolute inset-0 z-0" id="ferrofluid-container" data-colors="{{ section.settings.colors }}"></div>
+
+  <!-- Content Overlaid in a Glassmorphic Box -->
+  <div class="relative z-10 mt-28 lg:mt-0 max-w-2xl mx-4 px-8 py-12 lg:px-14 lg:py-14 rounded-[2rem] glass border border-white/40 shadow-2xl flex flex-col items-center justify-center text-center">
+    
+    <h1 class="font-serif text-[2.2rem] leading-[1.1] lg:text-5xl text-brand-slate tracking-tight mb-4 blur-in opacity-0" style="animation-delay: 0.1s; animation-duration: 0.9s;">
+      {{ section.settings.heading | escape }}
+    </h1>
+
+    <p class="font-serif italic font-light text-brand-slate/85 text-xl lg:text-3xl mb-5 blur-in opacity-0" style="animation-delay: 0.3s;">
+      {{ section.settings.subheading | escape }}
+    </p>
+
+    <p class="text-brand-slate/75 text-sm lg:text-base max-w-md leading-relaxed font-light mb-8 blur-in opacity-0" style="animation-delay: 0.5s;">
+      {{ section.settings.description | escape }}
+    </p>
+
+    <!-- Dual CTAs -->
+    <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto opacity-0 translate-y-5 animate-fade-up" style="animation-delay: 0.7s; animation-fill-mode: forwards;">
+      <a href="{{ section.settings.primary_link }}" class="group flex items-center justify-center space-x-3 bg-brand-slate text-white w-full sm:w-auto px-8 py-4 rounded-full text-[11px] uppercase tracking-[0.2em] font-accent font-bold hover:bg-brand-slate/90 transition-all duration-300 shadow-lg shadow-brand-slate/15 active:scale-[0.97]">
+        <span>{{ section.settings.primary_label | escape }}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+
+      <a href="{{ section.settings.secondary_link }}" class="group flex items-center justify-center space-x-3 border border-brand-slate/20 bg-white/20 backdrop-blur-sm text-brand-slate w-full sm:w-auto px-8 py-4 rounded-full text-[11px] uppercase tracking-[0.2em] font-accent font-bold hover:bg-white/40 transition-all duration-300 active:scale-[0.97]">
+        <span>{{ section.settings.secondary_label | escape }}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes blurIn {
+    0% { filter: blur(10px); opacity: 0; transform: translateY(10px); }
+    100% { filter: blur(0px); opacity: 1; transform: translateY(0); }
+  }
+  .blur-in {
+    animation-name: blurIn;
+    animation-duration: 0.8s;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-up {
+    animation-name: fadeUp;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+  }
+</style>
+
+<script type="module">
+  import { Renderer, Program, Mesh, Triangle } from 'https://unpkg.com/ogl?module';
+
+  const container = document.getElementById('ferrofluid-container');
+  const hexColors = ['#34ffe7', '#aaf2ea', '#72fdff'];
+  
+  const hexToRGB = (hex) => {
+    const c = hex.replace('#', '').padEnd(6, '0');
+    return [
+      parseInt(c.slice(0, 2), 16) / 255,
+      parseInt(c.slice(2, 4), 16) / 255,
+      parseInt(c.slice(4, 6), 16) / 255
+    ];
+  };
+
+  const colorsArr = hexColors.map(hexToRGB);
+  while(colorsArr.length < 8) colorsArr.push(colorsArr[colorsArr.length-1]);
+  
+  const avg = [0,0,0];
+  hexColors.forEach((_, i) => {
+    avg[0] += colorsArr[i][0];
+    avg[1] += colorsArr[i][1];
+    avg[2] += colorsArr[i][2];
+  });
+  avg[0] /= hexColors.length; avg[1] /= hexColors.length; avg[2] /= hexColors.length;
+
+  const renderer = new Renderer({
+    dpr: Math.min(window.devicePixelRatio || 1, 2),
+    alpha: true,
+    antialias: true
+  });
+  const gl = renderer.gl;
+  container.appendChild(gl.canvas);
+  gl.clearColor(0, 0, 0, 0);
+
+  const vertex = `
+    attribute vec2 position;
+    attribute vec2 uv;
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = vec4(position, 0.0, 1.0);
+    }
+  `;
+
+  const fragment = `
+    precision highp float;
+    uniform vec3 iResolution;
+    uniform float iTime;
+    uniform vec3 uColor0; uniform vec3 uColor1; uniform vec3 uColor2;
+    uniform vec3 uColor3; uniform vec3 uColor4; uniform vec3 uColor5;
+    uniform vec3 uColor6; uniform vec3 uColor7;
+    uniform int uColorCount;
+    uniform vec2 uFlow;
+    uniform float uSpeed; uniform float uScale; uniform float uTurbulence;
+    uniform float uFluidity; uniform float uRimWidth; uniform float uSharpness;
+    uniform float uShimmer; uniform float uGlow; uniform float uOpacity;
+    varying vec2 vUv;
+    
+    #define PI 3.14159265
+    
+    vec3 palette(float h) {
+      int idx = int(floor(clamp(h, 0.0, 0.999999) * float(uColorCount)));
+      if (idx <= 0) return uColor0; if (idx == 1) return uColor1;
+      if (idx == 2) return uColor2; if (idx == 3) return uColor3;
+      if (idx == 4) return uColor4; if (idx == 5) return uColor5;
+      if (idx == 6) return uColor6; return uColor7;
+    }
+    
+    float hash(vec3 p3) {
+      p3 = fract(p3 * 0.1031);
+      p3 += dot(p3, p3.zyx + 33.33);
+      return fract((p3.x + p3.y) * p3.z);
+    }
+    
+    float smin(float a, float b, float k) {
+      float r = exp2(-a / k) + exp2(-b / k);
+      return -k * log2(r);
+    }
+    
+    float sinlerp(float a, float b, float w) {
+      return mix(a, b, (sin(w * PI - PI / 2.0) + 1.0) / 2.0);
+    }
+    
+    float vn(vec2 p, float s, float seed) {
+      vec2 cellp = floor(p / s); vec2 relp = mod(p, s);
+      float g1 = hash(vec3(cellp, seed));
+      float g2 = hash(vec3(cellp.x + 1.0, cellp.y, seed));
+      float g3 = hash(vec3(cellp.x + 1.0, cellp.y + 1.0, seed));
+      float g4 = hash(vec3(cellp.x, cellp.y + 1.0, seed));
+      float bx = sinlerp(g1, g2, relp.x / s);
+      float tx = sinlerp(g4, g3, relp.x / s);
+      return sinlerp(bx, tx, relp.y / s);
+    }
+    
+    float dbn(vec2 p, float s, float seed) {
+      float o = s / 2.0;
+      float n0 = vn(p, s, seed);
+      float n1 = vn(p + vec2(o, o), s, seed + 0.1);
+      float n2 = vn(p + vec2(-o, o), s, seed + 0.2);
+      float n3 = vn(p + vec2(o, -o), s, seed + 0.3);
+      float n4 = vn(p + vec2(-o, -o), s, seed + 0.4);
+      return (2.0 * n0 + 1.5 * n1 + 1.25 * n2 + 1.125 * n3 + n4) / 7.0;
+    }
+    
+    void main() {
+      float ref = 700.0 / max(uScale, 0.05);
+      vec2 p = (vUv * iResolution.xy) / iResolution.y * ref;
+      float spd = 200.0 * uSpeed;
+      float t = iTime;
+      vec2 dir = uFlow; vec2 perp = vec2(-dir.y, dir.x);
+      
+      float distort1 = vn(p + perp * (t * spd), 60.0, 10.0) * 50.0 * uTurbulence;
+      float distort2 = vn(p - perp * (t * spd), 120.0, 15.0) * 100.0 * uTurbulence;
+      
+      float peaks = dbn(p + distort1 + dir * (t * spd * 0.5), 40.0, 1.0);
+      float peaks2 = dbn(p + distort2 - dir * (t * spd * 0.5), 40.0, 0.0);
+      
+      float mapeaks = smin(peaks, peaks2, max(uFluidity, 0.001));
+      
+      float band = (uRimWidth - abs((mapeaks - 0.4) * 2.0)) * 5.0;
+      float ltn = clamp(band - vn(p + dir * (t * spd * 0.5), 60.0, 12.0) * uShimmer, 0.0, 1.0);
+      ltn = pow(ltn, uSharpness) * uGlow;
+      
+      float h = clamp(0.5 + (peaks - peaks2) * 0.8, 0.0, 1.0);
+      vec3 col = palette(h);
+      vec3 outc = col * ltn;
+      float a = clamp(max(outc.r, max(outc.g, outc.b)), 0.0, 1.0);
+      gl_FragColor = vec4(outc, a * uOpacity);
+    }
+  `;
+
+  const program = new Program(gl, {
+    vertex,
+    fragment,
+    uniforms: {
+      iResolution: { value: [gl.canvas.width, gl.canvas.height, 1] },
+      iTime: { value: 0 },
+      uColor0: { value: colorsArr[0] }, uColor1: { value: colorsArr[1] },
+      uColor2: { value: colorsArr[2] }, uColor3: { value: colorsArr[3] },
+      uColor4: { value: colorsArr[4] }, uColor5: { value: colorsArr[5] },
+      uColor6: { value: colorsArr[6] }, uColor7: { value: colorsArr[7] },
+      uColorCount: { value: hexColors.length },
+      uFlow: { value: [0, -1] },
+      uSpeed: { value: 0.5 },
+      uScale: { value: 1.4 },
+      uTurbulence: { value: 1 },
+      uFluidity: { value: 0.07 },
+      uRimWidth: { value: 0.2 },
+      uSharpness: { value: 3 },
+      uShimmer: { value: 1 },
+      uGlow: { value: 2 },
+      uOpacity: { value: 1 }
+    }
+  });
+
+  const geometry = new Triangle(gl);
+  const mesh = new Mesh(gl, { geometry, program });
+
+  function resize() {
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    program.uniforms.iResolution.value = [gl.canvas.width, gl.canvas.height, 1];
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function render(t) {
+    requestAnimationFrame(render);
+    program.uniforms.iTime.value = t * 0.001;
+    renderer.render({ scene: mesh });
+  }
+  requestAnimationFrame(render);
+</script>
+
+{% schema %}
+{
+  "name": "Hero V2",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Clinical-grade routines"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "for resilient, luminous skin"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Scientifically advanced formulations engineered for India's unique climate."
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary Button Label",
+      "default": "Shop Bestsellers"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary Button Label",
+      "default": "Build My Routine"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero V2"
+    }
+  ]
+}
+{% endschema %}

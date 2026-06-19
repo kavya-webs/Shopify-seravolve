@@ -1,0 +1,36 @@
+<div class="w-full" style="height: {{ section.settings.height }}px; background-image: linear-gradient(to bottom, {{ section.settings.from_color }}, {{ section.settings.to_color }});"></div>
+
+{% schema %}
+{
+  "name": "Gradient Divider",
+  "settings": [
+    {
+      "type": "range",
+      "id": "height",
+      "min": 10,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Height",
+      "default": 48
+    },
+    {
+      "type": "color",
+      "id": "from_color",
+      "label": "Top Color",
+      "default": "#e6f6f5"
+    },
+    {
+      "type": "color",
+      "id": "to_color",
+      "label": "Bottom Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gradient Divider"
+    }
+  ]
+}
+{% endschema %}

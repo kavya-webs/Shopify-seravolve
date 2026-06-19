@@ -1,0 +1,86 @@
+<section aria-labelledby="testimonials-heading" class="bg-transparent py-20 relative overflow-hidden">
+  <div class="container px-4 mx-auto animate-fade-up" style="animation-duration: 0.65s; animation-fill-mode: forwards;">
+    
+    <!-- Header -->
+    <div class="flex flex-col items-center max-w-xl mx-auto mb-14 text-center">
+      <span class="border border-neutral-300 py-1 px-4 rounded-full text-[10px] font-bold tracking-widest uppercase text-neutral-500 bg-neutral-100/60">
+        {{ section.settings.tagline | escape }}
+      </span>
+      <h2 id="testimonials-heading" class="font-serif text-4xl md:text-5xl tracking-tight mt-5 text-brand-slate">
+        {{ section.settings.heading }}
+      </h2>
+      <p class="mt-4 text-brand-slate/60 text-base leading-relaxed max-w-sm font-light">
+        {{ section.settings.description | escape }}
+      </p>
+    </div>
+
+    <!-- App Blocks (e.g. Judge.me Carousel) -->
+    <div class="w-full">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            {% render block %}
+        {%- endcase -%}
+      {%- else -%}
+        <!-- Fallback if no App Block is added -->
+        <div class="flex flex-col items-center text-center mt-4">
+          <div class="w-16 h-16 rounded-full bg-brand-aqua-mist flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-brand-aqua" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="9" x2="15" y1="10" y2="10"/><line x1="12" x2="12" y1="7" y2="13"/></svg>
+          </div>
+          <h3 class="font-serif text-2xl md:text-3xl text-brand-slate mb-3">
+            Be the first to review!
+          </h3>
+          <p class="text-brand-slate/50 text-sm max-w-md mb-8 font-light leading-relaxed">
+            Your reviews are helpful to us! Share your experience with SERAVOLVE products and help others discover their perfect skincare ritual.
+          </p>
+          <a href="{{ section.settings.button_link | default: routes.collections_url }}" class="inline-flex items-center gap-2 bg-brand-aqua text-white px-8 py-3.5 rounded-full text-[11px] uppercase tracking-[0.2em] font-accent font-bold hover:bg-brand-aqua/90 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5">
+            <span>Write a Review</span>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <p class="text-xs text-brand-slate/40 mt-4 italic">Note: You can add the free Judge.me App Block to this section via the Theme Editor.</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonial Spotlight",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Testimonials"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Loved by skin, <span class=\"italic font-light text-brand-aqua\">backed by science</span>"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Real reviews from real customers — your experience matters to us."
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Review Link Fallback"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial Spotlight"
+    }
+  ]
+}
+{% endschema %}

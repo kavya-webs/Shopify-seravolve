@@ -1,0 +1,60 @@
+# SERAVOLVE
+
+> Clinical-grade skincare brand from India. Products include Vitamin C serums, SPF 50 sunscreen, hyaluronic acid moisturisers, niacinamide toners, and salicylic acid face wash. Manufactured by ELISENSE ENTERPRISE LLP, Surat, Gujarat, India.
+
+SERAVOLVE formulates advanced skincare sequences engineered specifically for India's harsh climate — extreme UV, high humidity, urban pollution, and heat-triggered inflammation. Every product is non-comedogenic, cruelty-free, and backed by clinical ingredient concentrations.
+
+## Products
+
+- [Luminosity 10% Vitamin C Serum](/products/luminosity-10-vitamin-c-serum) — ₹599 — Ultra-stable 3-O-Ethyl Ascorbic Acid for deep brightening. Reduces dark spots in 21 days. Suitable for all skin types.
+- [Ultra-Light SPF 50 PA++++ Sunscreen](/products/ultra-light-spf-50-pa-sunscreen-for-broad-spectrum-protection-description) — Broad spectrum hybrid UV filters. Zero white-cast, zero oiliness. Re-apply every 3–4 hours in direct sun.
+- [Oil-Free Hydrating Face Moisturiser](/products/oil-free-hydrating-face-moisturizer-for-all-skin-types) — Triple Ceramide Complex (2.5%) + Squalane (2%). 240% increase in hydration for 48 hours. Non-greasy for Indian summers.
+- [Rice Water 3% Niacinamide Brightening Toner](/products/rice-water-3-niacinamide-brightening-toner-for-pore-refining) — Fermented rice water + Niacinamide. 88% reduction in visible pores. 100% alcohol-free.
+- [2% Salicylic Acid Deep Cleansing Face Wash](/products/2-salicylic-acid-deep-cleansing-face-wash-for-acne-control) — Encapsulated BHA for deep-pore purification. 91% reduction in active acne. Safe for daily use.
+
+## Features
+
+- All products formulated for Indian climate conditions (humidity, UV, pollution)
+- Cruelty-free and PETA certified
+- Free shipping on orders ₹999+
+- Personalized AM/PM skincare routine via the [Routine Builder](/routine-builder) quiz
+- Shop by skin concern (acne, dryness, pigmentation, UV protection, pores) at [/concern](/concern)
+- Minimum 6-month shelf life after opening; 24-month if unopened
+
+## Key Ingredients and Concentrations
+
+- 3-O-Ethyl Ascorbic Acid (10%) — ultra-stable Vitamin C
+- Ferulic Acid (0.5%) — potentiates Vitamin C and SPF
+- Triple Ceramide Complex (2.5%) — barrier repair
+- Squalane (2%) — lightweight emollient
+- Niacinamide (3%) — pore refinement and sebum regulation
+- Salicylic Acid / BHA (2%) — oil-soluble exfoliant for acne
+- Fermented Rice Water — amino acids for skin softening
+- Liquorice Root Extract (1%) — hyperpigmentation reduction
+- Allantoin (0.5%) — soothing anti-irritant
+- Zinc PCA (1%) — sebum regulation
+
+## Brand Identity
+
+SERAVOLVE is positioned as a clinical-grade, science-backed skincare brand. Brand language: glacial-pure, bio-catalyst, molecular sequences, clinical efficacy. Target audience: Indian consumers aged 16–45 seeking dermatologist-grade formulations without the clinical price tag.
+
+## Contact
+
+- Website: https://seravolve.com
+- Email: info@seravolve.com
+- WhatsApp: +91 9978099097
+- Instagram: https://www.instagram.com/seravolve/
+- Studio Address: 333 Shayona Plaza, Puna-Saroli Junction, BRTS Road, Surat, Gujarat 395010, India
+
+## Legal Entity
+
+ELISENSE ENTERPRISE LLP
+333 Shayona Plaza, Surat, Gujarat 395010, India
+
+## Optional
+
+- [Privacy Policy](/legal/privacy)
+- [Terms of Service](/legal/terms)
+- [Refund Policy](/legal/refunds)
+- [Shipping Policy](/legal/shipping)
+- [Contact & FAQ](/contact)

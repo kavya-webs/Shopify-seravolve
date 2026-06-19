@@ -1,0 +1,105 @@
+<section class="w-full bg-[#defffd] relative overflow-hidden py-16 lg:py-24">
+  <!-- Subtle caustic overlay -->
+  <div class="absolute inset-0 water-caustic opacity-20"></div>
+
+  <div class="max-w-xl lg:max-w-4xl mx-auto px-6 lg:px-12 relative z-10">
+    <!-- Section tag -->
+    <div class="flex items-center justify-center space-x-2 mb-6 animate-fade-in">
+      <svg class="w-4 h-4 text-brand-aqua" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+      <p class="text-[10px] uppercase tracking-[0.3em] font-accent font-bold text-brand-aqua">
+        {{ section.settings.tagline | escape }}
+      </p>
+    </div>
+
+    <!-- Main interactive card -->
+    <div class="bg-white rounded-[2rem] p-8 lg:p-12 shadow-xl shadow-brand-aqua/5 border border-brand-marble/20 animate-fade-up" style="animation-duration: 0.7s; animation-fill-mode: forwards;">
+      <h2 class="font-serif text-2xl lg:text-4xl text-brand-slate text-center mb-3 leading-tight">
+        {{ section.settings.heading }}
+      </h2>
+      <p class="text-brand-slate/70 text-base text-center mb-8 max-w-md mx-auto font-light">
+        {{ section.settings.description | escape }}
+      </p>
+
+      <!-- Mini quiz preview — step 1 teaser -->
+      <p class="text-xs uppercase tracking-[0.25em] font-accent font-bold text-brand-slate/80 text-center mb-4">
+        {{ section.settings.quiz_title | escape }}
+      </p>
+      
+      <div class="grid grid-cols-3 gap-3 mb-8">
+        <a href="/pages/routine-builder" class="flex flex-col items-center text-center p-4 lg:p-6 rounded-2xl border border-brand-marble/30 hover:border-brand-aqua/40 hover:bg-brand-aqua-mist/50 transition-all duration-300 group active:scale-[0.97]">
+          <svg class="w-6 h-6 text-brand-aqua/60 group-hover:text-brand-aqua mb-3 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></svg>
+          <span class="text-xs font-serif font-bold text-brand-slate mb-1">Dry</span>
+          <span class="text-xs text-brand-slate/70 font-medium hidden sm:block mt-1">Tightness & flaking</span>
+        </a>
+
+        <a href="/pages/routine-builder" class="flex flex-col items-center text-center p-4 lg:p-6 rounded-2xl border border-brand-marble/30 hover:border-brand-aqua/40 hover:bg-brand-aqua-mist/50 transition-all duration-300 group active:scale-[0.97]">
+          <svg class="w-6 h-6 text-brand-aqua/60 group-hover:text-brand-aqua mb-3 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          <span class="text-xs font-serif font-bold text-brand-slate mb-1">Oily</span>
+          <span class="text-xs text-brand-slate/70 font-medium hidden sm:block mt-1">Shine & congestion</span>
+        </a>
+
+        <a href="/pages/routine-builder" class="flex flex-col items-center text-center p-4 lg:p-6 rounded-2xl border border-brand-marble/30 hover:border-brand-aqua/40 hover:bg-brand-aqua-mist/50 transition-all duration-300 group active:scale-[0.97]">
+          <svg class="w-6 h-6 text-brand-aqua/60 group-hover:text-brand-aqua mb-3 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+          <span class="text-xs font-serif font-bold text-brand-slate mb-1">Combination</span>
+          <span class="text-xs text-brand-slate/70 font-medium hidden sm:block mt-1">Mixed zones</span>
+        </a>
+      </div>
+
+      <!-- CTA -->
+      <div class="text-center">
+        <a href="{{ section.settings.button_link }}" class="group inline-flex items-center space-x-3 bg-brand-aqua-deep hover:bg-brand-aqua text-white px-8 py-4 rounded-full text-[11px] uppercase tracking-[0.2em] font-accent font-bold transition-all duration-300 shadow-lg shadow-brand-aqua/20 pulse-border active:scale-[0.97]">
+          <span>{{ section.settings.button_label | escape }}</span>
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Routine CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Personalized For You"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Build Your <span class=\"italic font-light\">Perfect</span> Routine"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Answer 4 quick questions. Get a personalized AM/PM ritual in under 2 minutes."
+    },
+    {
+      "type": "text",
+      "id": "quiz_title",
+      "label": "Quiz Title",
+      "default": "Start with your skin type"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Start Your Ritual"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Routine CTA"
+    }
+  ]
+}
+{% endschema %}

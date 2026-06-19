@@ -1,0 +1,562 @@
+<div class="w-full min-h-screen bg-white">
+  <!-- Load Enrichment Data -->
+  {% capture enrichment_json %}{% render 'product-enrichment' %}{% endcapture %}
+  
+  <script>
+    // Make enrichment data available to JS if needed
+    window.productEnrichmentData = {{ enrichment_json }};
+  </script>
+
+  <!-- 1. HERO SPLIT SECTION -->
+  <section id="product-hero-{{ section.id }}" class="relative w-full flex flex-col lg:flex-row min-h-screen bg-white">
+    <!-- Slider Column (Sticky) -->
+    <div class="w-full lg:w-1/2 lg:sticky lg:top-32 lg:h-[calc(100vh-128px)] bg-brand-aqua-mist/30 flex flex-col items-center justify-center p-8 lg:p-20 overflow-hidden">
+      <div class="relative w-full aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl bg-white mb-10 group mt-24 lg:mt-0">
+        
+        <!-- Sliding Track -->
+        <div id="product-gallery-track" class="absolute inset-0 flex transition-transform duration-500 ease-out" style="transform: translateX(0%);">
+          {% for media in product.media %}
+            <div class="w-full h-full flex-shrink-0">
+              <img
+                src="{{ media | image_url: width: 800 }}"
+                alt="{{ media.alt | escape }}"
+                class="w-full h-full object-cover"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                width="800"
+                height="1000"
+              >
+            </div>
+          {% endfor %}
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="absolute inset-0 flex items-center justify-between px-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+           <button id="gallery-prev" class="pointer-events-auto w-12 h-12 glass rounded-full flex items-center justify-center text-brand-slate hover:bg-brand-aqua hover:text-white transition-all transform hover:scale-110">
+             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+           </button>
+           <button id="gallery-next" class="pointer-events-auto w-12 h-12 glass rounded-full flex items-center justify-center text-brand-slate hover:bg-brand-aqua hover:text-white transition-all transform hover:scale-110">
+             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+           </button>
+        </div>
+
+        <!-- Soft Branding Overlay -->
+        <div class="absolute top-8 left-8">
+          <p id="gallery-label" class="text-[9px] uppercase tracking-[0.4em] font-bold text-brand-slate/40">
+            Biological Focus 1
+          </p>
+        </div>
+      </div>
+
+      <!-- Progress Indicators (Dots) -->
+      <div id="gallery-dots" class="flex space-x-3 items-center">
+         {% for media in product.media %}
+            <button
+              data-index="{{ forloop.index0 }}"
+              class="gallery-dot h-1.5 rounded-full transition-all duration-500 {% if forloop.first %}w-12 bg-brand-aqua{% else %}w-3 bg-brand-marble hover:bg-brand-aqua/40{% endif %}"
+            ></button>
+         {% endfor %}
+      </div>
+    </div>
+
+    <!-- Info Column -->
+    <div class="w-full lg:w-1/2 p-8 lg:p-24 lg:pt-64 flex flex-col justify-center">
+       <div class="animate-fade-up" style="animation-delay: 0.2s; animation-fill-mode: forwards;">
+          <nav class="mb-16 flex items-center space-x-4">
+            <a href="{{ routes.collections_url }}" class="text-[9px] uppercase tracking-[0.3em] font-bold text-brand-slate-light/40 hover:text-brand-aqua transition-colors">
+               Library
+             </a>
+             <div class="h-px w-6 bg-brand-marble"></div>
+             <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-brand-aqua enrichment-concern">
+               {{ product.type | default: 'Skincare' }}
+             </span>
+          </nav>
+
+           <h1 class="font-serif text-5xl lg:text-8xl font-light text-brand-slate mb-8 leading-[1.05]">
+             {{ product.title }}
+           </h1>
+           <p class="text-[10px] lg:text-xs font-sans uppercase tracking-[0.4em] text-brand-slate-light font-bold mb-16 enrichment-tagline">
+             {{ product.type | default: 'Treatment' }}
+          </p>
+
+           <div class="h-px w-full bg-brand-marble/50 mb-16"></div>
+
+          <div class="flex items-center justify-between mb-16">
+             <div class="space-y-2">
+                <p class="text-[9px] uppercase tracking-[0.4em] font-bold text-brand-aqua opacity-80">Biological Mission</p>
+                <p class="text-sm lg:text-base font-medium text-brand-slate-light max-w-sm enrichment-mission">{{ product.description | strip_html | truncate: 60 }}</p>
+              </div>
+              <p class="font-mono text-4xl lg:text-5xl font-light text-brand-slate tracking-tighter">{{ product.price | money_without_trailing_zeros }}</p>
+          </div>
+
+           <div class="text-sm lg:text-base leading-relaxed text-brand-slate-light/80 mb-20 font-medium">
+             {{ product.description }}
+           </div>
+
+          <div class="flex flex-col sm:flex-row gap-8 mt-12">
+             {% form 'product', product, id: 'product-form', class: 'w-full sm:w-auto' %}
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button 
+                  type="submit"
+                  name="add"
+                  {% unless product.available %}disabled{% endunless %}
+                  class="w-full sm:w-[240px] py-6 rounded-full text-[10px] uppercase tracking-[0.3em] font-black shadow-2xl flex items-center justify-center space-x-3 transition-all duration-500 {% if product.available %}bg-brand-aqua-deep text-white hover:bg-brand-aqua hover:-translate-y-1{% else %}bg-brand-aqua-deep/50 text-white opacity-50 cursor-not-allowed{% endif %}"
+                >
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                  <span>
+                    {% if product.available %}Add to Routine{% else %}Sold Out{% endif %}
+                  </span>
+                </button>
+             {% endform %}
+             
+             <a href="{{ routes.collections_url }}" class="flex-1 glass text-brand-slate py-6 rounded-full text-[10px] uppercase tracking-[0.3em] font-black border border-brand-marble hover:border-brand-aqua hover:-translate-y-1 transition-all duration-500 text-center flex items-center justify-center">
+               Browse Collection
+             </a>
+          </div>
+
+          <div class="mt-12 flex flex-col space-y-3 items-center lg:items-start">
+            <p class="text-[10px] lg:text-[11px] uppercase tracking-[0.2em] font-black text-brand-slate-light">
+              FREE DELIVERY ON ORDERS ₹999+
+            </p>
+            <p class="text-[10px] uppercase tracking-[0.3em] font-black text-brand-aqua/40 italic">
+              CLINICAL CLEARANCE: FINAL SALE 
+            </p>
+          </div>
+
+          <div class="mt-24 grid grid-cols-2 gap-12 pt-12 border-t border-brand-marble/30">
+             <div>
+               <p class="text-[10px] font-black text-brand-aqua uppercase tracking-[0.4em] mb-3">Target Concern</p>
+               <p class="text-xs lg:text-sm font-black uppercase tracking-[0.2em] text-brand-slate enrichment-concern">{{ product.type }}</p>
+             </div>
+             <div>
+               <p class="text-[10px] font-black text-brand-aqua uppercase tracking-[0.4em] mb-3">Potency Level</p>
+               <p class="text-xs lg:text-sm font-black uppercase tracking-[0.2em] text-brand-slate">Molecular Grade</p>
+             </div>
+          </div>
+       </div>
+    </div>
+  </section>
+
+  <!-- 2. PRODUCT HIGHLIGHTS / TRUST BADGES -->
+  <section class="py-20 lg:py-28 px-6 lg:px-20 bg-white border-t border-brand-marble/30">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <!-- Badge 1 -->
+        <div class="flex flex-col items-center text-center group animate-fade-up" style="animation-delay: 0s;">
+          <div class="w-16 h-16 rounded-2xl bg-brand-aqua-mist border border-brand-aqua/10 flex items-center justify-center text-brand-aqua mb-5 group-hover:bg-brand-aqua group-hover:text-white transition-all duration-500 group-hover:shadow-lg group-hover:shadow-brand-aqua/10">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+          </div>
+          <h4 class="text-[11px] uppercase tracking-[0.2em] font-black text-brand-slate mb-2">Clean Formula</h4>
+          <p class="text-[11px] text-brand-slate-light/60 font-medium leading-relaxed max-w-[180px]">No synthetic fragrances or sulfates</p>
+        </div>
+        <!-- Badge 2 -->
+        <div class="flex flex-col items-center text-center group animate-fade-up" style="animation-delay: 0.08s;">
+          <div class="w-16 h-16 rounded-2xl bg-brand-aqua-mist border border-brand-aqua/10 flex items-center justify-center text-brand-aqua mb-5 group-hover:bg-brand-aqua group-hover:text-white transition-all duration-500 group-hover:shadow-lg group-hover:shadow-brand-aqua/10">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h4 class="text-[11px] uppercase tracking-[0.2em] font-black text-brand-slate mb-2">Rigorous Testing</h4>
+          <p class="text-[11px] text-brand-slate-light/60 font-medium leading-relaxed max-w-[180px]">Batch-validated for consistency</p>
+        </div>
+        <!-- Badge 3 -->
+        <div class="flex flex-col items-center text-center group animate-fade-up" style="animation-delay: 0.16s;">
+          <div class="w-16 h-16 rounded-2xl bg-brand-aqua-mist border border-brand-aqua/10 flex items-center justify-center text-brand-aqua mb-5 group-hover:bg-brand-aqua group-hover:text-white transition-all duration-500 group-hover:shadow-lg group-hover:shadow-brand-aqua/10">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <h4 class="text-[11px] uppercase tracking-[0.2em] font-black text-brand-slate mb-2">Cruelty-Free</h4>
+          <p class="text-[11px] text-brand-slate-light/60 font-medium leading-relaxed max-w-[180px]">Never tested on animals</p>
+        </div>
+        <!-- Badge 4 -->
+        <div class="flex flex-col items-center text-center group animate-fade-up" style="animation-delay: 0.24s;">
+          <div class="w-16 h-16 rounded-2xl bg-brand-aqua-mist border border-brand-aqua/10 flex items-center justify-center text-brand-aqua mb-5 group-hover:bg-brand-aqua group-hover:text-white transition-all duration-500 group-hover:shadow-lg group-hover:shadow-brand-aqua/10">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          </div>
+          <h4 class="text-[11px] uppercase tracking-[0.2em] font-black text-brand-slate mb-2">Fresh Formula</h4>
+          <p class="text-[11px] text-brand-slate-light/60 font-medium leading-relaxed max-w-[180px]">Small-batch production for peak freshness</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. MOLECULAR SCIENCE SECTION (Loaded via JS if enrichment exists) -->
+  <section id="science-section" class="bg-brand-aqua-mist/30 py-32 lg:py-48 px-6 lg:px-20 relative overflow-hidden hidden">
+    <div class="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-brand-aqua/5 blur-[120px] rounded-full pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-20 text-center lg:text-left">
+        <p class="text-[9px] uppercase tracking-[0.5em] font-bold mb-4 text-brand-aqua">Key Actives</p>
+        <h2 class="font-serif text-5xl lg:text-8xl font-light leading-[1.05] text-brand-slate">Molecular Science</h2>
+      </div>
+      
+      <div id="ingredients-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-32">
+        <!-- Ingredients injected via JS -->
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+         <div class="bg-brand-charcoal p-16 rounded-[48px] text-white shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-brand-aqua/5 blur-[80px] rounded-full"></div>
+            <h3 class="font-serif text-3xl lg:text-5xl mb-12 font-light">Key Benefits</h3>
+            <div class="space-y-8">
+               <div class="flex items-start space-x-4">
+                 <svg class="w-6 h-6 text-brand-aqua flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                 <p class="text-lg font-medium text-white/80">Formulated with carefully selected active ingredients</p>
+               </div>
+               <div class="flex items-start space-x-4">
+                 <svg class="w-6 h-6 text-brand-aqua flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                 <p class="text-lg font-medium text-white/80">Designed for the Indian climate and skin types</p>
+               </div>
+               <div class="flex items-start space-x-4">
+                 <svg class="w-6 h-6 text-brand-aqua flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                 <p class="text-lg font-medium text-white/80">Clean, cruelty-free formulation</p>
+               </div>
+            </div>
+         </div>
+         <div class="p-10 border border-brand-marble/30 rounded-[48px] flex flex-col justify-center bg-white/50 backdrop-blur-sm">
+            <div class="mb-8">
+              <svg class="w-8 h-8 text-brand-aqua mb-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.275 1.275L3 12l5.8 1.9a2 2 0 0 1 1.275 1.275L12 21l1.9-5.8a2 2 0 0 1 1.275-1.275L21 12l-5.8-1.9a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+              <h3 class="font-serif text-3xl font-light text-brand-slate mb-6">Biological Intelligence</h3>
+              <p id="bio-notes" class="text-brand-slate-light font-medium leading-relaxed"></p>
+            </div>
+            <div class="h-px w-24 bg-brand-aqua/30"></div>
+            <p class="mt-8 text-[9px] uppercase tracking-[0.3em] font-bold text-brand-slate">Stabilized Potency Guaranteed</p>
+         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. DAILY ROUTINE SECTION (Loaded via JS if enrichment exists) -->
+  <section id="routine-section" class="py-32 lg:py-48 px-6 lg:px-20 bg-white hidden">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-20 text-center lg:text-left">
+        <p class="text-[9px] uppercase tracking-[0.5em] font-bold mb-4 text-brand-aqua">The Performance</p>
+        <h2 class="font-serif text-5xl lg:text-8xl font-light leading-[1.05] text-brand-slate">Application Routine</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-16 relative">
+         <div class="hidden md:block absolute top-[28px] left-[10%] right-[10%] h-px bg-brand-aqua/20 z-0"></div>
+         <div id="routine-steps-container" class="contents">
+            <!-- Routine steps injected via JS -->
+         </div>
+      </div>
+
+      <div class="mt-24 p-12 lg:p-16 bg-brand-aqua-mist/20 rounded-[48px] border border-brand-aqua/10 flex flex-col lg:flex-row items-center justify-between gap-12">
+         <div class="flex items-center space-x-6">
+            <div class="w-16 h-16 rounded-full bg-brand-aqua/10 flex items-center justify-center text-brand-aqua">
+               <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+            </div>
+            <div>
+               <p class="text-[9px] uppercase tracking-widest font-bold text-brand-aqua">Routine Frequency</p>
+               <p id="routine-frequency" class="text-xl font-serif text-brand-slate"></p>
+            </div>
+         </div>
+         <div class="h-px w-full lg:w-px lg:h-16 bg-brand-marble"></div>
+         <div class="max-w-md">
+            <p class="text-[10px] uppercase tracking-widest font-bold text-brand-slate opacity-40 mb-2">Concierge Tip</p>
+            <p id="routine-protip" class="text-sm text-brand-slate-light font-medium leading-relaxed"></p>
+         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. FAQ ACCORDION -->
+  <section class="py-32 lg:py-48 px-6 lg:px-20 bg-brand-aqua-mist/20 relative overflow-hidden">
+    <div class="absolute bottom-0 right-0 w-80 h-80 bg-brand-aqua/5 blur-[120px] rounded-full pointer-events-none"></div>
+    <div class="max-w-4xl mx-auto relative z-10">
+      <div class="mb-20 text-center lg:text-left">
+        <p class="text-[9px] uppercase tracking-[0.5em] font-bold mb-4 text-brand-aqua">Knowledge Base</p>
+        <h2 class="font-serif text-5xl lg:text-8xl font-light leading-[1.05] text-brand-slate">Common Questions</h2>
+      </div>
+
+      <div class="bg-white rounded-[40px] p-8 lg:p-16 border border-brand-marble/30 shadow-sm" id="faq-container">
+        <!-- FAQs will be generated here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. SHIPPING & POLICY INFO -->
+  <section class="py-32 lg:py-48 px-6 lg:px-20 bg-white">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-20 text-center lg:text-left">
+        <p class="text-[9px] uppercase tracking-[0.5em] font-bold mb-4 text-brand-aqua">Good to Know</p>
+        <h2 class="font-serif text-5xl lg:text-8xl font-light leading-[1.05] text-brand-slate">Shipping & Policies</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-brand-aqua-mist/20 p-10 lg:p-14 rounded-[40px] border border-brand-marble/30 hover:shadow-lg hover:border-brand-aqua/20 transition-all duration-500">
+          <div class="w-14 h-14 rounded-2xl bg-brand-slate flex items-center justify-center text-white mb-8 shadow-md">
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5"/><path d="M14 17h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+          </div>
+          <h4 class="font-serif text-2xl lg:text-3xl font-light text-brand-slate mb-6">Free Delivery</h4>
+          <ul class="space-y-4">
+            <li class="flex items-start space-x-3"><svg class="w-4 h-4 text-brand-aqua flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg><span class="text-sm text-brand-slate-light/70 font-medium leading-relaxed">Free shipping on orders ₹999+</span></li>
+            <li class="flex items-start space-x-3"><svg class="w-4 h-4 text-brand-aqua flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg><span class="text-sm text-brand-slate-light/70 font-medium leading-relaxed">Standard delivery: 5–7 business days</span></li>
+            <li class="flex items-start space-x-3"><svg class="w-4 h-4 text-brand-aqua flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg><span class="text-sm text-brand-slate-light/70 font-medium leading-relaxed">Pan-India coverage via premium logistics</span></li>
+          </ul>
+        </div>
+        <div class="bg-brand-aqua-mist/20 p-10 lg:p-14 rounded-[40px] border border-brand-marble/30 hover:shadow-lg hover:border-brand-aqua/20 transition-all duration-500">
+          <div class="w-14 h-14 rounded-2xl bg-brand-slate flex items-center justify-center text-white mb-8 shadow-md">
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+          </div>
+          <h4 class="font-serif text-2xl lg:text-3xl font-light text-brand-slate mb-6">Packaging</h4>
+          <ul class="space-y-4">
+            <li class="flex items-start space-x-3"><svg class="w-4 h-4 text-brand-aqua flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg><span class="text-sm text-brand-slate-light/70 font-medium leading-relaxed">Recyclable outer packaging</span></li>
+            <li class="flex items-start space-x-3"><svg class="w-4 h-4 text-brand-aqua flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg><span class="text-sm text-brand-slate-light/70 font-medium leading-relaxed">Sealed for active preservation</span></li>
+            <li class="flex items-start space-x-3"><svg class="w-4 h-4 text-brand-aqua flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg><span class="text-sm text-brand-slate-light/70 font-medium leading-relaxed">Discreet, unmarked exterior</span></li>
+          </ul>
+        </div>
+        <div class="bg-brand-aqua-mist/20 p-10 lg:p-14 rounded-[40px] border border-brand-marble/30 hover:shadow-lg hover:border-brand-aqua/20 transition-all duration-500">
+          <div class="w-14 h-14 rounded-2xl bg-brand-slate flex items-center justify-center text-white mb-8 shadow-md">
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M12 5 9.04 9.53a11 11 0 0 0-2.29 2.77 2 2 0 0 0-.04 1.9A2 2 0 0 0 8.4 15.5h7.1a2 2 0 0 0 1.69-1.3 2 2 0 0 0-.04-1.9 10.6 10.6 0 0 0-2.29-2.77L12 5Z"/></svg>
+          </div>
+          <h4 class="font-serif text-2xl lg:text-3xl font-light text-brand-slate mb-6">Our Promise</h4>
+          <ul class="space-y-4">
+            <li class="flex items-start space-x-3"><svg class="w-4 h-4 text-brand-aqua flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg><span class="text-sm text-brand-slate-light/70 font-medium leading-relaxed">Expertly crafted formulas</span></li>
+            <li class="flex items-start space-x-3"><svg class="w-4 h-4 text-brand-aqua flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg><span class="text-sm text-brand-slate-light/70 font-medium leading-relaxed">Batch-tested for purity & potency</span></li>
+            <li class="flex items-start space-x-3"><svg class="w-4 h-4 text-brand-aqua flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg><span class="text-sm text-brand-slate-light/70 font-medium leading-relaxed">Responsive customer concierge</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. STICKY BOTTOM CTA BAR -->
+  <div id="sticky-bar" class="fixed bottom-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-2xl border-t border-brand-marble/30 shadow-[0_-8px_30px_-10px_rgba(44,62,80,0.08)] transform translate-y-full transition-transform duration-400 ease-out">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-4 flex items-center justify-between gap-4">
+      <!-- Product info -->
+      <div class="flex items-center space-x-4 min-w-0">
+        <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-brand-marble/30">
+          <img src="{{ product.featured_media | image_url: width: 100 }}" alt="{{ product.title | escape }}" class="w-full h-full object-cover">
+        </div>
+        <div class="min-w-0">
+          <p class="text-sm font-serif text-brand-slate truncate">{{ product.title }}</p>
+          <p class="text-xs font-mono text-brand-slate-light/60">{{ product.price | money_without_trailing_zeros }}</p>
+        </div>
+      </div>
+      <!-- CTA -->
+      {% form 'product', product, id: 'sticky-product-form' %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" name="add" {% unless product.available %}disabled{% endunless %} class="px-8 py-3.5 rounded-full text-[10px] uppercase tracking-[0.25em] font-black flex items-center space-x-2.5 transition-all duration-500 flex-shrink-0 shadow-lg {% if product.available %}bg-brand-aqua-deep text-white hover:bg-brand-aqua{% else %}bg-brand-aqua-deep/50 text-white opacity-50 cursor-not-allowed{% endif %}">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span>{% if product.available %}Add to Cart{% else %}Sold Out{% endif %}</span>
+        </button>
+      {% endform %}
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const handle = "{{ product.handle }}";
+    const data = window.productEnrichmentData;
+    const enrichment = data ? data[handle] : null;
+
+    // Apply Enrichment Data to HTML
+    if (enrichment) {
+      document.querySelectorAll('.enrichment-tagline').forEach(el => el.textContent = enrichment.tagline);
+      document.querySelectorAll('.enrichment-concern').forEach(el => el.textContent = enrichment.concern);
+      document.querySelectorAll('.enrichment-mission').forEach(el => el.textContent = enrichment.mission);
+
+      // Render Science
+      const scienceSection = document.getElementById('science-section');
+      const ingredientsContainer = document.getElementById('ingredients-container');
+      const bioNotes = document.getElementById('bio-notes');
+      
+      if (scienceSection && enrichment.science) {
+        scienceSection.classList.remove('hidden');
+        bioNotes.textContent = enrichment.science.bioNotes;
+        
+        let ingredientsHtml = '';
+        enrichment.science.ingredients.forEach((ing, i) => {
+          ingredientsHtml += `
+            <div class="bg-white p-12 rounded-[40px] border border-brand-marble/30 shadow-sm hover:shadow-xl hover:border-brand-aqua/20 transition-all duration-500 animate-fade-up" style="animation-delay: ${i * 0.1}s;">
+              <div class="flex items-center space-x-4 mb-8">
+                <div class="w-12 h-12 rounded-full bg-brand-aqua-mist flex items-center justify-center text-brand-aqua">
+                   <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.52 16h12.96"/></svg>
+                </div>
+                 <div>
+                  <h4 class="font-serif text-2xl font-light text-brand-slate">${ing.name}</h4>
+                 </div>
+              </div>
+              <p class="text-sm text-brand-slate-light font-medium leading-relaxed border-t border-brand-marble/30 pt-6">
+                ${ing.benefit}
+              </p>
+            </div>
+          `;
+        });
+        ingredientsContainer.innerHTML = ingredientsHtml;
+      }
+
+      // Render Routine
+      const routineSection = document.getElementById('routine-section');
+      const stepsContainer = document.getElementById('routine-steps-container');
+      const frequency = document.getElementById('routine-frequency');
+      const protip = document.getElementById('routine-protip');
+
+      if (routineSection && enrichment.routine) {
+        routineSection.classList.remove('hidden');
+        frequency.textContent = enrichment.routine.frequency;
+        protip.textContent = '"' + enrichment.routine.proTip + '"';
+
+        let stepsHtml = '';
+        enrichment.routine.steps.forEach((step, i) => {
+          stepsHtml += `
+            <div class="relative z-10 flex flex-col items-center md:items-start text-center md:text-left animate-fade-up" style="animation-delay: ${i * 0.2}s;">
+              <div class="w-14 h-14 bg-brand-slate text-white rounded-full flex items-center justify-center font-serif text-xl font-light mb-10 shadow-lg border-4 border-white">
+                ${step.phase}
+              </div>
+              <h4 class="font-serif text-3xl font-light text-brand-slate mb-4">${step.title}</h4>
+              <p class="text-sm text-brand-slate-light leading-relaxed font-medium">
+                ${step.instruction}
+              </p>
+            </div>
+          `;
+        });
+        stepsContainer.innerHTML = stepsHtml;
+      }
+    }
+
+    // Default FAQs
+    let faqs = [
+      {
+        question: `What skin types is {{ product.title | escape }} suitable for?`,
+        answer: "This formula is designed for all skin types. It is non-comedogenic, meaning it won't clog pores. If you have highly reactive or sensitised skin, we recommend a patch test before first use.",
+      },
+      {
+        question: "How long before I see visible results?",
+        answer: enrichment
+          ? "Studies show initial improvements within 14 days of consistent use, with full results visible at the 8-week mark. Individual results may vary based on skin condition and routine consistency."
+          : "Most users begin to notice improvements within 2–4 weeks of daily use. For optimal results, we recommend consistent application as part of your morning and evening routine.",
+      },
+      {
+        question: "Can I use this with other active ingredients?",
+        answer: "Yes. This product is compatible with most skincare actives. However, if you are using prescription retinoids or strong chemical exfoliants (AHA/BHA), we suggest alternating usage days to prevent over-sensitisation.",
+      },
+      {
+        question: "Is this product tested on animals?",
+        answer: "Absolutely not. SERAVOLVE is proudly cruelty-free and never tests on animals at any stage of development. All efficacy testing is conducted through in-vitro studies and voluntary human trials.",
+      },
+      {
+        question: "What is the shelf life after opening?",
+        answer: "Once opened, this product retains full potency for 12 months (12M PAO). Store in a cool, dry place away from direct sunlight to preserve the active ingredients.",
+      }
+    ];
+
+    const faqContainer = document.getElementById('faq-container');
+    if (faqContainer) {
+      let faqHtml = '';
+      faqs.forEach((faq, i) => {
+        faqHtml += `
+          <div class="border-b border-brand-marble/30 last:border-b-0 faq-item">
+            <button class="faq-toggle w-full flex items-center justify-between py-8 text-left group">
+              <span class="font-serif text-lg lg:text-xl text-brand-slate group-hover:text-brand-aqua transition-colors duration-300 pr-8">
+                ${faq.question}
+              </span>
+              <div class="faq-icon flex-shrink-0 w-10 h-10 rounded-full bg-brand-aqua-mist flex items-center justify-center text-brand-aqua transition-transform duration-300">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </div>
+            </button>
+            <div class="faq-content overflow-hidden" style="max-height: 0; transition: max-height 0.3s ease-in-out;">
+              <p class="pb-8 text-sm lg:text-base text-brand-slate-light/70 leading-relaxed font-medium pl-1">
+                ${faq.answer}
+              </p>
+            </div>
+          </div>
+        `;
+      });
+      faqContainer.innerHTML = faqHtml;
+
+      // Add FAQ Toggle Logic
+      const toggles = document.querySelectorAll('.faq-toggle');
+      toggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+          const content = this.nextElementSibling;
+          const icon = this.querySelector('.faq-icon');
+          
+          if (content.style.maxHeight !== '0px' && content.style.maxHeight !== '') {
+            content.style.maxHeight = '0px';
+            icon.style.transform = 'rotate(0deg)';
+          } else {
+            // Close all other FAQs
+            document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = '0px');
+            document.querySelectorAll('.faq-icon').forEach(i => i.style.transform = 'rotate(0deg)');
+            
+            content.style.maxHeight = content.scrollHeight + 'px';
+            icon.style.transform = 'rotate(180deg)';
+          }
+        });
+      });
+    }
+
+    // Gallery Slider Logic
+    const track = document.getElementById('product-gallery-track');
+    const dots = document.querySelectorAll('.gallery-dot');
+    const prevBtn = document.getElementById('gallery-prev');
+    const nextBtn = document.getElementById('gallery-next');
+    const label = document.getElementById('gallery-label');
+    let currentIndex = 0;
+    const totalImages = {{ product.media.size }};
+
+    function updateGallery() {
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      label.textContent = `Biological Focus ${currentIndex + 1}`;
+      
+      dots.forEach((dot, index) => {
+        if (index === currentIndex) {
+          dot.classList.replace('w-3', 'w-12');
+          dot.classList.replace('bg-brand-marble', 'bg-brand-aqua');
+          dot.classList.remove('hover:bg-brand-aqua/40');
+        } else {
+          dot.classList.replace('w-12', 'w-3');
+          dot.classList.replace('bg-brand-aqua', 'bg-brand-marble');
+          dot.classList.add('hover:bg-brand-aqua/40');
+        }
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+        updateGallery();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % totalImages;
+        updateGallery();
+      });
+    }
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        currentIndex = parseInt(dot.getAttribute('data-index'));
+        updateGallery();
+      });
+    });
+
+    // Sticky Bottom Bar Logic
+    const heroSection = document.getElementById('product-hero-{{ section.id }}');
+    const stickyBar = document.getElementById('sticky-bar');
+    
+    if (heroSection && stickyBar) {
+      window.addEventListener('scroll', () => {
+        const rect = heroSection.getBoundingClientRect();
+        if (rect.bottom < 0) {
+          stickyBar.classList.remove('translate-y-full');
+        } else {
+          stickyBar.classList.add('translate-y-full');
+        }
+      }, { passive: true });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Main Product",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Main Product"
+    }
+  ]
+}
+{% endschema %}

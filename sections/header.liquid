@@ -1,0 +1,270 @@
+{%- style -%}
+  /* Optional specific header styles here */
+  #shopify-section-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+{%- endstyle -%}
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const headerNav = document.getElementById('main-nav');
+    const logoText = document.getElementById('header-logo-text');
+    const desktopLinks = document.querySelectorAll('.desktop-nav-link');
+    const headerIcons = document.querySelectorAll('.header-icon-stroke');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenuBtnIcon = document.getElementById('mobile-menu-btn-icon');
+    
+    // Scroll effect
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        headerNav.classList.remove('glass', 'border-white/30');
+        headerNav.classList.add('glass-dark', '!bg-brand-charcoal/90', 'shadow-2xl', 'mt-2', 'border-white/10');
+        
+        logoText.classList.remove('text-brand-slate');
+        logoText.classList.add('!text-white');
+        
+        desktopLinks.forEach(link => {
+          link.classList.remove('text-brand-slate');
+          link.classList.add('!text-white');
+        });
+
+        headerIcons.forEach(icon => {
+          icon.classList.remove('text-brand-slate');
+          icon.classList.add('!text-white');
+        });
+
+        mobileMenuBtn.classList.remove('text-brand-slate');
+        mobileMenuBtn.classList.add('text-white');
+      } else {
+        headerNav.classList.add('glass', 'border-white/30');
+        headerNav.classList.remove('glass-dark', '!bg-brand-charcoal/90', 'shadow-2xl', 'mt-2', 'border-white/10');
+        
+        logoText.classList.add('text-brand-slate');
+        logoText.classList.remove('!text-white');
+        
+        desktopLinks.forEach(link => {
+          link.classList.add('text-brand-slate');
+          link.classList.remove('!text-white');
+        });
+
+        headerIcons.forEach(icon => {
+          icon.classList.add('text-brand-slate');
+          icon.classList.remove('!text-white');
+        });
+
+        mobileMenuBtn.classList.add('text-brand-slate');
+        mobileMenuBtn.classList.remove('text-white');
+      }
+    });
+
+    // Mobile Menu Toggle
+    const mobileMenuDrawer = document.getElementById('mobile-menu-drawer');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const closeMobileMenuBtn = document.getElementById('close-mobile-menu');
+
+    function openMenu() {
+      mobileMenuDrawer.classList.remove('-translate-x-full');
+      mobileMenuDrawer.classList.add('translate-x-0');
+      mobileMenuOverlay.classList.remove('hidden');
+      setTimeout(() => mobileMenuOverlay.classList.remove('opacity-0'), 10);
+    }
+
+    function closeMenu() {
+      mobileMenuDrawer.classList.add('-translate-x-full');
+      mobileMenuDrawer.classList.remove('translate-x-0');
+      mobileMenuOverlay.classList.add('opacity-0');
+      setTimeout(() => mobileMenuOverlay.classList.add('hidden'), 300);
+    }
+
+    mobileMenuBtn.addEventListener('click', openMenu);
+    closeMobileMenuBtn.addEventListener('click', closeMenu);
+    mobileMenuOverlay.addEventListener('click', closeMenu);
+
+    // Account Dropdown Toggle
+    const accountDropdownBtn = document.getElementById('account-dropdown-btn');
+    const accountDropdownMenu = document.getElementById('account-dropdown-menu');
+    if (accountDropdownBtn && accountDropdownMenu) {
+      accountDropdownBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        accountDropdownMenu.classList.toggle('hidden');
+      });
+      document.addEventListener('click', () => {
+        accountDropdownMenu.classList.add('hidden');
+      });
+    }
+  });
+</script>
+
+<header class="fixed top-0 z-50 w-full flex flex-col items-center transition-all duration-300">
+  {%- unless request.page_type == 'customers/login' or request.page_type == 'customers/register' -%}
+    <div class="w-full h-8 bg-brand-slate flex items-center justify-center">
+      <p class="text-white text-[10px] uppercase tracking-[0.3em] font-accent font-bold">
+        FREE SHIPPING ON ORDERS ₹999+
+      </p>
+    </div>
+  {%- endunless -%}
+
+  <nav id="main-nav" class="w-[95%] max-w-7xl mt-4 lg:mt-6 px-8 py-4 rounded-2xl relative flex items-center justify-between lg:justify-center shadow-lg transition-all duration-500 border glass border-white/30">
+    
+    <!-- Mobile Hamburger -->
+    <button id="mobile-menu-btn" aria-label="Open menu" class="lg:hidden p-2 transition-colors text-brand-slate">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+    </button>
+
+    <!-- Left Links (Desktop) -->
+    <div class="hidden lg:flex items-center space-x-12 absolute left-12">
+      {%- if section.settings.menu != blank -%}
+        {%- for link in section.settings.menu.links limit: 2 -%}
+          <a href="{{ link.url }}" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
+            {{ link.title }}
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.collections_url }}/all" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
+          Bestsellers
+        </a>
+        <a href="/pages/concern" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
+          Shop by Concern
+        </a>
+      {%- endif -%}
+    </div>
+
+    <!-- Logo (Centered) -->
+    <a href="{{ routes.root_url }}" class="flex flex-col items-center">
+      <span id="header-logo-text" class="font-serif text-2xl lg:text-3xl tracking-[0.05em] uppercase transition-colors duration-500 text-brand-slate">
+        SERAVOLVE
+      </span>
+    </a>
+
+    <!-- Right Icons (Desktop) -->
+    <div class="hidden lg:flex items-center space-x-8 absolute right-12">
+      <a href="/pages/routine-builder" class="header-icon-stroke hover:text-brand-aqua transition-all duration-200 text-brand-slate" title="Routine Builder">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+      </a>
+
+      <div class="relative h-10 flex items-center justify-center min-w-[20px]">
+        {%- if customer -%}
+          <div class="relative items-center flex">
+            <button id="account-dropdown-btn" class="header-icon-stroke flex items-center space-x-2 transition-colors text-brand-slate hover:text-brand-aqua">
+              <div class="w-8 h-8 rounded-full border border-brand-aqua/30 bg-brand-aqua-mist overflow-hidden flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user text-brand-aqua"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down transition-transform duration-300"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+
+            <div id="account-dropdown-menu" class="hidden absolute top-full right-0 mt-4 w-56 bg-white/95 backdrop-blur-xl border border-brand-marble rounded-2xl shadow-xl p-3 z-[60]">
+              <div class="px-4 py-3 border-b border-brand-marble/50 mb-2">
+                <p class="text-[9px] uppercase tracking-widest text-brand-slate-light font-bold mb-1">Account Details</p>
+                <p class="text-[11px] font-serif text-brand-slate truncate">{{ customer.first_name }} {{ customer.last_name }}</p>
+              </div>
+              <a href="{{ routes.account_url }}" class="flex items-center space-x-3 w-full p-3 rounded-xl hover:bg-brand-aqua-mist text-brand-slate transition-colors group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard group-hover:text-brand-aqua"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                <span class="text-[10px] uppercase tracking-[0.2em] font-accent font-bold">My Account</span>
+              </a>
+              <a href="{{ routes.account_logout_url }}" class="flex items-center space-x-3 w-full p-3 rounded-xl hover:bg-red-500/5 text-brand-slate hover:text-red-500 transition-colors group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                <span class="text-[10px] uppercase tracking-[0.2em] font-accent font-bold">Sign Out</span>
+              </a>
+            </div>
+          </div>
+        {%- else -%}
+          <a href="{{ routes.account_login_url }}" aria-label="Login" class="header-icon-stroke hover:text-brand-aqua transition-all duration-200 text-brand-slate">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </a>
+        {%- endif -%}
+      </div>
+
+      <!-- Native Shopify Drawer Cart Trigger -->
+      <a href="{{ routes.cart_url }}" class="header-icon-stroke relative hover:text-brand-aqua transition-all duration-200 text-brand-slate" id="cart-icon-bubble">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        {%- if cart != empty -%}
+          <span class="absolute -top-1 -right-1 bg-brand-aqua text-white text-[8px] w-4 h-4 flex items-center justify-center rounded-full">
+            {%- if cart.item_count < 100 -%}
+              {{ cart.item_count }}
+            {%- else -%}
+              99+
+            {%- endif -%}
+          </span>
+        {%- endif -%}
+      </a>
+    </div>
+
+    <!-- Mobile Icons -->
+    <div class="flex lg:hidden items-center space-x-4">
+      <a href="{{ routes.cart_url }}" class="header-icon-stroke p-2 relative transition-colors text-brand-slate" id="cart-icon-bubble-mobile">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        {%- if cart != empty -%}
+          <span class="absolute -top-0.5 -right-0.5 bg-brand-aqua text-white text-[7px] w-3.5 h-3.5 flex items-center justify-center rounded-full">
+            {%- if cart.item_count < 100 -%}
+              {{ cart.item_count }}
+            {%- else -%}
+              99+
+            {%- endif -%}
+          </span>
+        {%- endif -%}
+      </a>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Drawer -->
+  <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] hidden opacity-0 transition-opacity duration-300"></div>
+  <div id="mobile-menu-drawer" class="fixed top-0 left-0 bottom-0 w-[80%] max-w-sm bg-brand-glacial z-[70] p-8 flex flex-col -translate-x-full transition-transform duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]">
+    <div class="flex justify-between items-center mb-12">
+      <span class="font-serif text-xl tracking-widest text-brand-slate">SERAVOLVE</span>
+      <button id="close-mobile-menu" aria-label="Close menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x text-brand-slate"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="flex flex-col space-y-8">
+      {%- if section.settings.menu != blank -%}
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.collections_url }}/all" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Bestsellers</a>
+        <a href="/pages/concern" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Shop by Concern</a>
+        <a href="/pages/routine-builder" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Build Routine</a>
+        <a href="/pages/contact" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Contact Us</a>
+      {%- endif -%}
+    </div>
+
+    <div class="mt-auto pt-8 border-t border-brand-marble/50 flex flex-col space-y-4">
+      {%- if customer -%}
+        <a href="{{ routes.account_url }}" class="flex items-center space-x-3 text-brand-slate">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard text-brand-aqua"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+          <span class="text-sm font-medium">My Dashboard</span>
+        </a>
+        <a href="{{ routes.account_logout_url }}" class="flex items-center space-x-3 text-brand-slate hover:text-red-500 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+          <span class="text-sm font-medium">Sign Out</span>
+        </a>
+      {%- else -%}
+        <a href="{{ routes.account_login_url }}" class="flex items-center space-x-3 text-brand-slate">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="text-sm font-medium">Log In</span>
+        </a>
+      {%- endif -%}
+      <a href="/pages/routine-builder" class="flex items-center space-x-3 text-brand-slate">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+        <span class="text-sm font-medium">Routine Builder</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Menu"
+    }
+  ]
+}
+{% endschema %}

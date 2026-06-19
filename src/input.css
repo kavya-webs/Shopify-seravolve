@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(44, 62, 80, 0.08);
+  }
+  
+  .glass-aqua {
+    background: rgba(123, 184, 212, 0.08);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(123, 184, 212, 0.15);
+  }
+
+  .glass-dark {
+    background: rgba(26, 35, 50, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .water-caustic {
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(123, 184, 212, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(184, 217, 232, 0.10) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(197, 165, 90, 0.05) 0%, transparent 50%);
+    animation: caustic-shift 20s ease-in-out infinite;
+  }
+
+  .text-gradient-aqua {
+    background: linear-gradient(135deg, #7BB8D4 0%, #4A96B8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .snap-x-mandatory {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .snap-center {
+    scroll-snap-align: center;
+  }
+  .snap-start {
+    scroll-snap-align: start;
+  }
+
+  .chat-bubble {
+    position: relative;
+    border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
+  }
+  .chat-bubble-user {
+    border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
+  }
+
+  .section-fade-to-white {
+    background: linear-gradient(to bottom, #F4F8FB 0%, #ffffff 100%);
+  }
+  .section-fade-to-dark {
+    background: linear-gradient(to bottom, #ffffff 0%, #1A2332 100%);
+  }
+  .section-fade-dark-to-mist {
+    background: linear-gradient(to bottom, #1A2332 0%, #E8F2F8 100%);
+  }
+  .section-fade-mist-to-glacial {
+    background: linear-gradient(to bottom, #E8F2F8 0%, #F4F8FB 100%);
+  }
+}
+
+@keyframes caustic-shift {
+  0%, 100% {
+    background-position: 0% 0%, 100% 0%, 50% 100%;
+  }
+  33% {
+    background-position: 30% 20%, 70% 40%, 20% 60%;
+  }
+  66% {
+    background-position: 10% 40%, 90% 10%, 80% 80%;
+  }
+}
+
+body {
+  background: #F4F8FB;
+  color: #2C3E50;
+  font-family: "DM Sans", sans-serif;
+}

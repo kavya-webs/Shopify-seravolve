@@ -1,0 +1,84 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-v2",
+      "settings": {}
+    },
+    "trust": {
+      "type": "trust-marquee",
+      "settings": {},
+      "blocks": {
+        "block_1": { "type": "trust_item", "settings": { "text": "Premium Formula", "icon": "star", "highlight": true } },
+        "block_2": { "type": "trust_item", "settings": { "text": "Free Shipping ₹999+", "icon": "truck", "highlight": false } },
+        "block_3": { "type": "trust_item", "settings": { "text": "Cruelty Free", "icon": "leaf", "highlight": false } },
+        "block_4": { "type": "trust_item", "settings": { "text": "Premium Actives", "icon": "flask", "highlight": false } },
+        "block_5": { "type": "trust_item", "settings": { "text": "Made in India", "icon": "heart", "highlight": false } },
+        "block_6": { "type": "trust_item", "settings": { "text": "Formulated for Indian Skin", "icon": "star", "highlight": false } }
+      },
+      "block_order": ["block_1", "block_2", "block_3", "block_4", "block_5", "block_6"]
+    },
+    "div_1": {
+      "type": "gradient-divider",
+      "settings": {
+        "height": 48,
+        "from_color": "#e6f6f5",
+        "to_color": "#ffffff"
+      }
+    },
+    "bestsellers": {
+      "type": "bestsellers-v2",
+      "settings": {}
+    },
+    "routine_cta": {
+      "type": "routine-cta",
+      "settings": {}
+    },
+    "div_2": {
+      "type": "gradient-divider",
+      "settings": {
+        "height": 48,
+        "from_color": "#defffd",
+        "to_color": "#e6f6f5"
+      }
+    },
+    "testimonials": {
+      "type": "testimonial-spotlight",
+      "settings": {}
+    },
+    "div_3": {
+      "type": "gradient-divider",
+      "settings": {
+        "height": 48,
+        "from_color": "#e6f6f5",
+        "to_color": "#ffffff"
+      }
+    },
+    "faq": {
+      "type": "chat-faq",
+      "settings": {},
+      "blocks": {
+        "faq_1": { "type": "faq", "settings": { "question": "Which product should I start with?", "answer": "If you're new to clinical skincare, we recommend starting with our Bestsellers or using the Routine Builder." } },
+        "faq_2": { "type": "faq", "settings": { "question": "How long before I see visible changes?", "answer": "Skincare is a journey. While hydration effects are often immediate, cellular-level changes like evening skin tone typically take 4-6 weeks of consistent daily use." } },
+        "faq_3": { "type": "faq", "settings": { "question": "Can I use Seravolve with my existing routine?", "answer": "Yes, our products are designed to be layering-friendly. However, we recommend introducing one new active at a time." } },
+        "faq_4": { "type": "faq", "settings": { "question": "What is your shipping timeline?", "answer": "We ship nationwide across India. Orders are typically processed within 24 hours. Delivery takes 2-4 business days for metros and 5-7 days for other regions." } }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4"]
+    },
+    "final_cta": {
+      "type": "final-cta",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "trust",
+    "div_1",
+    "bestsellers",
+    "routine_cta",
+    "div_2",
+    "testimonials",
+    "div_3",
+    "faq",
+    "final_cta"
+  ]
+}

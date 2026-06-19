@@ -1,0 +1,43 @@
+User-agent: *
+Allow: /
+
+# Block internal/functional pages from crawling
+Disallow: /account
+Disallow: /account/
+Disallow: /cart
+Disallow: /api/
+Disallow: /cdn-cgi/
+
+# ─── AI Crawlers — explicitly allowed ───────────────────────────────────────
+# These bots power ChatGPT, Perplexity, Claude, Bing Copilot, and Google Gemini.
+# Allowing them is essential for LLM/AI discoverability.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# ─── Sitemap ────────────────────────────────────────────────────────────────
+Sitemap: https://seravolve.com/sitemap.xml
