@@ -47,7 +47,7 @@
 
       <!-- CTA -->
       <div class="text-center">
-        <a href="{{ section.settings.button_link }}" class="group inline-flex items-center space-x-3 bg-brand-aqua-deep hover:bg-brand-aqua text-white px-8 py-4 rounded-full text-[11px] uppercase tracking-[0.2em] font-accent font-bold transition-all duration-300 shadow-lg shadow-brand-aqua/20 pulse-border active:scale-[0.97]">
+        <a href="{% if section.settings.button_link != blank %}{{ section.settings.button_link }}{% else %}/pages/routine-builder{% endif %}" class="group inline-flex items-center space-x-3 bg-brand-aqua-deep hover:bg-brand-aqua text-white px-8 py-4 rounded-full text-[11px] uppercase tracking-[0.2em] font-accent font-bold transition-all duration-300 shadow-lg shadow-brand-aqua/20 pulse-border active:scale-[0.97]">
           <span>{{ section.settings.button_label | escape }}</span>
           <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>

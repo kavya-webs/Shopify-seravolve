@@ -115,20 +115,12 @@
 
     <!-- Left Links (Desktop) -->
     <div class="hidden lg:flex items-center space-x-12 absolute left-12">
-      {%- if section.settings.menu != blank -%}
-        {%- for link in section.settings.menu.links limit: 2 -%}
-          <a href="{{ link.url }}" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
-            {{ link.title }}
-          </a>
-        {%- endfor -%}
-      {%- else -%}
-        <a href="{{ routes.collections_url }}/all" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
-          Bestsellers
-        </a>
-        <a href="/pages/concern" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
-          Shop by Concern
-        </a>
-      {%- endif -%}
+      <a href="/collections/all" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
+        Bestsellers
+      </a>
+      <a href="/pages/concern" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
+        Shop by Concern
+      </a>
     </div>
 
     <!-- Logo (Centered) -->
@@ -138,10 +130,13 @@
       </span>
     </a>
 
-    <!-- Right Icons (Desktop) -->
+    <!-- Right Links + Icons (Desktop) -->
     <div class="hidden lg:flex items-center space-x-8 absolute right-12">
-      <a href="/pages/routine-builder" class="header-icon-stroke hover:text-brand-aqua transition-all duration-200 text-brand-slate" title="Routine Builder">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+      <a href="/pages/routine-builder" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
+        Build Routine
+      </a>
+      <a href="/pages/contact" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
+        Contact
       </a>
 
       <div class="relative h-10 flex items-center justify-center min-w-[20px]">
@@ -219,16 +214,10 @@
     </div>
 
     <div class="flex flex-col space-y-8">
-      {%- if section.settings.menu != blank -%}
-        {%- for link in section.settings.menu.links -%}
-          <a href="{{ link.url }}" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">{{ link.title }}</a>
-        {%- endfor -%}
-      {%- else -%}
-        <a href="{{ routes.collections_url }}/all" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Bestsellers</a>
-        <a href="/pages/concern" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Shop by Concern</a>
-        <a href="/pages/routine-builder" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Build Routine</a>
-        <a href="/pages/contact" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Contact Us</a>
-      {%- endif -%}
+      <a href="/collections/all" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Bestsellers</a>
+      <a href="/pages/concern" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Shop by Concern</a>
+      <a href="/pages/routine-builder" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Build Routine</a>
+      <a href="/pages/contact" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Contact Us</a>
     </div>
 
     <div class="mt-auto pt-8 border-t border-brand-marble/50 flex flex-col space-y-4">
