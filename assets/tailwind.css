@@ -994,10 +994,6 @@ video {
   height: 0.875rem;
 }
 
-.h-32 {
-  height: 8rem;
-}
-
 .h-4 {
   height: 1rem;
 }
@@ -2978,10 +2974,6 @@ body {
     height: 4rem;
   }
 
-  .lg\:h-40 {
-    height: 10rem;
-  }
-
   .lg\:h-\[calc\(100vh-128px\)\] {
     height: calc(100vh - 128px);
   }
@@ -3117,6 +3109,10 @@ body {
 
   .lg\:pt-20 {
     padding-top: 5rem;
+  }
+
+  .lg\:pt-48 {
+    padding-top: 12rem;
   }
 
   .lg\:pt-64 {
