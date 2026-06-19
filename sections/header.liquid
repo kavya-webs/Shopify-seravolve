@@ -115,12 +115,13 @@
 
     <!-- Left Links (Desktop) -->
     <div class="hidden lg:flex items-center space-x-12 absolute left-12">
-      <a href="/collections/all" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
-        Bestsellers
-      </a>
-      <a href="/pages/concern" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
-        Shop by Concern
-      </a>
+      {%- assign nav_links = linklists[section.settings.menu].links -%}
+      {%- assign half = nav_links.size | divided_by: 2 -%}
+      {%- for link in nav_links limit: half -%}
+        <a href="{{ link.url }}" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
+          {{ link.title }}
+        </a>
+      {%- endfor -%}
     </div>
 
     <!-- Logo (Centered) -->
@@ -132,12 +133,11 @@
 
     <!-- Right Links + Icons (Desktop) -->
     <div class="hidden lg:flex items-center space-x-8 absolute right-12">
-      <a href="/pages/routine-builder" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
-        Build Routine
-      </a>
-      <a href="/pages/contact" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
-        Contact
-      </a>
+      {%- for link in nav_links offset: half -%}
+        <a href="{{ link.url }}" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate">
+          {{ link.title }}
+        </a>
+      {%- endfor -%}
 
       <div class="relative h-10 flex items-center justify-center min-w-[20px]">
         {%- if customer -%}
@@ -214,10 +214,9 @@
     </div>
 
     <div class="flex flex-col space-y-8">
-      <a href="/collections/all" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Bestsellers</a>
-      <a href="/pages/concern" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Shop by Concern</a>
-      <a href="/pages/routine-builder" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Build Routine</a>
-      <a href="/pages/contact" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">Contact Us</a>
+      {%- for link in nav_links -%}
+        <a href="{{ link.url }}" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">{{ link.title }}</a>
+      {%- endfor -%}
     </div>
 
     <div class="mt-auto pt-8 border-t border-brand-marble/50 flex flex-col space-y-4">
