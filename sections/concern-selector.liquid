@@ -1,0 +1,210 @@
+{% schema %}
+{
+  "name": "Shop By Concern",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Shop By Concern"
+    }
+  ]
+}
+{% endschema %}
+
+<!-- Load Alpine.js -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<script>
+  window.catalogProducts = [
+    {% for product in collections['all'].products %}
+      {{ product | json }}{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
+
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('concernSelector', () => ({
+      selected: null,
+      isAdding: false,
+      
+      concerns: [
+        { id: "acne", title: "Acne & Breakouts", col: "col-span-1 md:col-span-2 row-span-2", img: "https://cdn.shopify.com/s/files/1/0885/8763/2932/files/acne.webp?v=1718873000" },
+        { id: "dryness", title: "Dryness & Dehydration", col: "col-span-1 md:col-span-1 row-span-1", img: "https://cdn.shopify.com/s/files/1/0885/8763/2932/files/dryness.webp?v=1718873000" },
+        { id: "pigment", title: "Dullness & Pigmentation", col: "col-span-1 md:col-span-1 row-span-1", img: "https://cdn.shopify.com/s/files/1/0885/8763/2932/files/dullness.webp?v=1718873000" },
+        { id: "sun", title: "UV & Sun Protection", col: "col-span-1 md:col-span-1 row-span-1", img: "https://cdn.shopify.com/s/files/1/0885/8763/2932/files/uvrays.webp?v=1718873000" },
+        { id: "pores", title: "Pores & Texture", col: "col-span-1 md:col-span-1 row-span-1", img: "https://cdn.shopify.com/s/files/1/0885/8763/2932/files/pores.webp?v=1718873000" }
+      ],
+
+      get filteredProducts() {
+        if (!this.selected) return [];
+        return window.catalogProducts.filter(p => {
+          const handle = p.handle.toLowerCase();
+          switch (this.selected) {
+            case "acne": return handle.includes("acne") || handle.includes("salicylic");
+            case "dryness": return handle.includes("hydrat") || handle.includes("moisturizer");
+            case "pigment": return handle.includes("vitamin-c") || handle.includes("brightening") || handle.includes("luminosity");
+            case "sun": return handle.includes("spf") || handle.includes("sunscreen");
+            case "pores": return handle.includes("pore") || handle.includes("toner") || handle.includes("rice-water");
+            default: return false;
+          }
+        });
+      },
+
+      get selectedData() {
+        return this.concerns.find(c => c.id === this.selected);
+      },
+
+      async addToCart(variantId) {
+        this.isAdding = true;
+        try {
+          const res = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] })
+          });
+          if (res.ok) {
+            window.location.href = '/cart';
+          }
+        } catch (error) {
+          console.error("Error adding to cart:", error);
+        } finally {
+          this.isAdding = false;
+        }
+      }
+    }));
+  });
+</script>
+
+<div x-data="concernSelector" class="w-full flex flex-col bg-white min-h-screen">
+  
+  <!-- Dedicated Navbar Spacer -->
+  <div class="w-full h-32 lg:h-40 bg-white shrink-0" aria-hidden="true"></div>
+
+  <!-- Header Section -->
+  <section class="pt-8 pb-16 px-6 lg:px-20 border-b border-brand-marble/5">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-end gap-12">
+      <div class="max-w-2xl">
+        <p class="text-[10px] uppercase tracking-[0.4em] font-bold text-brand-aqua mb-6">Discovery Routine</p>
+        <h1 class="font-serif text-5xl lg:text-7xl text-brand-slate leading-tight mb-8">
+          Targeted <br />
+          <span class="italic font-light text-brand-slate-light">Discovery</span>
+        </h1>
+        <p class="text-lg text-brand-slate-light/80 font-serif leading-relaxed italic">
+          "We decode your skin's unique signals to synchronize a clinical routine that respects your natural biology."
+        </p>
+      </div>
+
+      <div class="flex items-center space-x-12 pb-2">
+        <div class="flex flex-col items-center">
+          <span class="text-[10px] font-bold text-brand-aqua mb-2">01</span>
+          <span class="text-xs uppercase tracking-widest font-black opacity-40 text-brand-slate">Analyze</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-[10px] font-bold text-brand-aqua mb-2">02</span>
+          <span class="text-xs uppercase tracking-widest font-black opacity-40 text-brand-slate">Match</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-[10px] font-bold text-brand-aqua mb-2">03</span>
+          <span class="text-xs uppercase tracking-widest font-black opacity-40 text-brand-slate">Sequence</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento Selector -->
+  <section class="py-24 px-6 lg:px-20 bg-brand-glacial/10">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-12 flex justify-between items-center">
+        <h2 class="font-serif text-3xl text-brand-slate italic">Select Your Primary Concern</h2>
+        <div class="flex items-center space-x-2 text-brand-slate-light uppercase text-[10px] font-bold tracking-widest">
+          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+          <span>Concern Profile</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[250px]">
+        <template x-for="(concern, i) in concerns" :key="concern.id">
+          <button
+            @click="selected = concern.id"
+            :class="[
+              'relative group rounded-[40px] overflow-hidden border-2 transition-all duration-500',
+              concern.col,
+              selected === concern.id ? 'border-brand-aqua ring-4 ring-brand-gold/10 scale-[0.98]' : 'border-transparent'
+            ]"
+          >
+            <img
+              :src="concern.img"
+              class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              :alt="concern.title"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-all duration-500"></div>
+
+            <div class="absolute bottom-8 left-8 right-8 text-left flex justify-between items-end">
+              <h3 class="font-serif text-2xl text-white leading-tight max-w-[150px]" x-text="concern.title"></h3>
+              <div class="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white backdrop-blur-md transition-all group-hover:border-white group-hover:bg-white group-hover:text-brand-slate">
+                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </div>
+            </div>
+
+            <div x-show="selected === concern.id" class="absolute top-8 left-8 bg-brand-aqua text-white p-2 rounded-full shadow-xl">
+              <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+          </button>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results Section -->
+  <div x-show="selected && filteredProducts.length > 0" x-transition.opacity.duration.800ms style="display: none;" class="py-32 px-6 lg:px-20 bg-white">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col lg:flex-row justify-between gap-16 mb-24">
+        <div class="lg:w-1/2">
+          <p class="text-brand-aqua text-[10px] font-bold tracking-[0.4em] uppercase mb-8">Targeted Treatment</p>
+          <h2 class="font-serif text-4xl lg:text-7xl text-brand-slate mb-10 leading-[1.1]">
+            <span x-text="selectedData?.title.split(' & ')[0] || selectedData?.title"></span> & <br />
+            <span x-text="selectedData?.title.split(' & ')[1] || 'Solution'"></span> <span class="italic font-light">System</span>
+          </h2>
+        </div>
+        <div class="lg:w-1/2 flex flex-col justify-end pb-4">
+          <p class="text-brand-slate-light text-lg font-serif mb-10 leading-relaxed italic border-l-2 border-brand-aqua/20 pl-8">
+            "Our breakthrough targeted system designed to clear pores and refine texture without compromising the skin's vital barrier function."
+          </p>
+        </div>
+      </div>
+
+      <!-- Product Sequence -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <template x-for="(product, i) in filteredProducts" :key="product.id">
+          <div class="flex flex-col group">
+            <div class="relative aspect-[3/4] rounded-[32px] overflow-hidden bg-brand-glacial/10 mb-8">
+              <img
+                :src="product.featured_image || '//cdn.shopify.com/s/files/1/0885/8763/2932/files/heroimg.webp'"
+                class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                :alt="product.title"
+                loading="lazy"
+              />
+              <div class="absolute top-6 left-6 w-10 h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center font-serif text-brand-aqua text-lg" x-text="'0' + (i + 1)"></div>
+              
+              <button
+                @click="addToCart(product.variants[0].id)"
+                :disabled="isAdding"
+                class="absolute bottom-6 right-6 w-12 h-12 bg-brand-slate text-white rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform active:scale-90 z-20"
+              >
+                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              </button>
+            </div>
+            <span class="text-[9px] font-black tracking-widest text-brand-aqua mb-2 uppercase" x-text="product.type || 'TREAT'"></span>
+            <h4 class="font-serif text-xl text-brand-slate mb-2" x-text="product.title"></h4>
+            <p class="text-sm italic text-brand-slate-light font-medium" x-text="'₹' + (product.price / 100).toFixed(2)"></p>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State Placeholder -->
+  <div x-show="selected && filteredProducts.length === 0" x-transition.opacity style="display: none;" class="py-32 px-6 text-center bg-white">
+    <p class="font-serif text-2xl text-brand-slate-light italic">The solution for <span x-text="selectedData?.title"></span> is being synchronized...</p>
+  </div>
+
+</div>
