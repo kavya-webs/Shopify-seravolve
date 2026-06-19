@@ -1,0 +1,264 @@
+{% schema %}
+{
+  "name": "Custom Contact",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Custom Contact"
+    }
+  ]
+}
+{% endschema %}
+
+<!-- Load Alpine.js with Collapse Plugin -->
+<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<div class="w-full min-h-screen bg-white pb-48">
+  <!-- CONTACT HERO -->
+  <section class="relative min-h-[700px] h-screen w-full flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img
+        src="{{ 'contactpagehero.webp' | asset_url }}"
+        alt="SERAVOLVE Clinical Concierge"
+        class="w-full h-full object-cover"
+        loading="eager"
+      />
+      <div class="absolute inset-0 bg-brand-charcoal/40"></div>
+    </div>
+
+    <div class="relative z-10 text-center px-6 pt-32 lg:pt-40 w-full">
+      <div class="glass max-w-2xl mx-auto p-12 lg:p-20 rounded-[48px] border border-white/20 shadow-2xl transition-all duration-1000">
+        <p class="text-[11px] uppercase tracking-[0.6em] font-black text-brand-aqua mb-10">
+          Expert Guidance
+        </p>
+        <h1 class="font-serif text-5xl lg:text-8xl !text-white mb-10 leading-tight drop-shadow-lg">
+          Clinical <span class="italic font-light">Concierge</span>
+        </h1>
+        <p class="text-sm lg:text-base text-white/90 leading-relaxed font-medium mb-0">
+          Our clinical team is dedicated to your biological radiance. <br class="hidden lg:block" />Synchronize your support journey with our botanical experts.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHANNELS SECTION -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-20 py-32 relative z-20">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <!-- Direct Chat -->
+      <div class="bg-brand-glacial/5 p-12 rounded-[40px] border border-brand-marble/5 shadow-sm hover:shadow-xl hover:bg-white hover:-translate-y-2 transition-all duration-500 group">
+        <div class="w-14 h-14 bg-brand-glacial/30 rounded-full flex items-center justify-center text-brand-aqua mb-8 group-hover:bg-brand-aqua group-hover:text-white transition-colors duration-500">
+          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3 class="text-brand-slate font-serif text-3xl mb-4">Direct Chat</h3>
+        <p class="text-xs text-brand-slate-light/60 mb-10 leading-relaxed font-medium italic">
+          Speak with a clinical concierge.
+        </p>
+        <a href="https://wa.me/919978099097" target="_blank" rel="noopener noreferrer" class="text-[11px] uppercase tracking-widest font-black text-brand-aqua inline-block mt-auto">
+          Start Chat →
+        </a>
+      </div>
+
+      <!-- Clinical Support -->
+      <div class="bg-brand-glacial/5 p-12 rounded-[40px] border border-brand-marble/5 shadow-sm hover:shadow-xl hover:bg-white hover:-translate-y-2 transition-all duration-500 group">
+        <div class="w-14 h-14 bg-brand-glacial/30 rounded-full flex items-center justify-center text-brand-aqua mb-8 group-hover:bg-brand-aqua group-hover:text-white transition-colors duration-500">
+          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <h3 class="text-brand-slate font-serif text-3xl mb-4">Clinical Support</h3>
+        <p class="text-xs text-brand-slate-light/60 mb-10 leading-relaxed font-medium italic">
+          For inquiries regarding your routine.
+        </p>
+        <a href="mailto:info@seravolve.com" class="text-[11px] uppercase tracking-widest font-black text-brand-aqua inline-block mt-auto">
+          Email Us →
+        </a>
+      </div>
+
+      <!-- Studio Visit -->
+      <div class="bg-brand-glacial/5 p-12 rounded-[40px] border border-brand-marble/5 shadow-sm hover:shadow-xl hover:bg-white hover:-translate-y-2 transition-all duration-500 group">
+        <div class="w-14 h-14 bg-brand-glacial/30 rounded-full flex items-center justify-center text-brand-aqua mb-8 group-hover:bg-brand-aqua group-hover:text-white transition-colors duration-500">
+          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3 class="text-brand-slate font-serif text-3xl mb-4">Studio Visit</h3>
+        <p class="text-xs text-brand-slate-light/60 mb-10 leading-relaxed font-medium italic">
+          Book a botanical consultation.
+        </p>
+        <a href="https://maps.app.goo.gl/iThRaBp2j6i7kGgEA" target="_blank" rel="noopener noreferrer" class="text-[11px] uppercase tracking-widest font-black text-brand-aqua inline-block mt-auto">
+          Find Studio →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM + STUDIO MAP SECTION -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-20 grid grid-cols-1 lg:grid-cols-2 gap-32 py-32 border-t border-brand-marble/5">
+    <!-- Form Panel -->
+    <div class="space-y-12">
+      <div>
+        <h2 class="font-serif text-4xl lg:text-5xl text-brand-slate mb-4">Send an Inquiry</h2>
+        <p class="text-sm text-brand-slate-light/60 font-medium italic leading-relaxed">
+          For sequence consultations and clinical order updates, please utilize our encrypted botanical relay.
+        </p>
+      </div>
+
+      {% form 'contact', class: 'space-y-6' %}
+        {% if form.posted_successfully? %}
+          <div class="p-4 bg-green-50 text-green-800 rounded-2xl mb-6 text-sm">Thank you for your inquiry. Our Clinical Concierge will be in touch shortly.</div>
+        {% endif %}
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-1.5">
+            <label class="text-[9px] uppercase tracking-widest font-bold text-brand-slate-light/40 px-4">Full Name</label>
+            <input type="text" name="contact[name]" class="w-full bg-brand-glacial/10 border border-brand-marble/5 rounded-2xl py-3.5 px-6 text-sm focus:outline-none focus:border-brand-aqua/40" required />
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-[9px] uppercase tracking-widest font-bold text-brand-slate-light/40 px-4">Email Address</label>
+            <input type="email" name="contact[email]" class="w-full bg-brand-glacial/10 border border-brand-marble/5 rounded-2xl py-3.5 px-6 text-sm focus:outline-none focus:border-brand-aqua/40" required />
+          </div>
+        </div>
+        <div class="space-y-1.5">
+          <label class="text-[9px] uppercase tracking-widest font-bold text-brand-slate-light/40 px-4">Select Department</label>
+          <select name="contact[department]" class="w-full bg-brand-glacial/10 border border-brand-marble/5 rounded-2xl py-3.5 px-6 text-sm focus:outline-none focus:border-brand-aqua/40 appearance-none">
+            <option>Clinical Sequence Support</option>
+            <option>Wholesale Partnerships</option>
+            <option>Botanical Research</option>
+          </select>
+        </div>
+        <div class="space-y-1.5">
+          <label class="text-[9px] uppercase tracking-widest font-bold text-brand-slate-light/40 px-4">Your Intelligence</label>
+          <textarea name="contact[body]" rows="5" class="w-full bg-brand-glacial/10 border border-brand-marble/5 rounded-2xl py-4 px-6 text-sm focus:outline-none focus:border-brand-aqua/40 resize-none" required></textarea>
+        </div>
+        <button type="submit" class="w-full bg-brand-slate text-white rounded-full py-4 text-[10px] uppercase tracking-[0.3em] font-black hover:bg-brand-aqua transition-colors duration-500 flex items-center justify-center space-x-3">
+          <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <span>Send Message</span>
+        </button>
+      {% endform %}
+    </div>
+
+    <!-- Map Placeholder Panel -->
+    <div class="flex flex-col">
+      <div class="bg-brand-charcoal aspect-[4/5] rounded-[40px] relative overflow-hidden group shadow-2xl flex-grow mb-10">
+        <img
+          src="{{ 'contactimg.webp' | asset_url }}"
+          alt="SERAVOLVE Biological Studio"
+          class="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000"
+          loading="lazy"
+        />
+        <div class="absolute inset-0 flex flex-col items-center justify-center p-12 text-center">
+          <div class="w-16 h-16 bg-brand-gold/20 rounded-full flex items-center justify-center mb-8">
+            <svg class="text-brand-aqua w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3 class="!text-white font-serif text-3xl mb-4 italic">The Biological Studio</h3>
+          <p class="!text-white/60 text-xs font-medium tracking-widest leading-relaxed uppercase">
+            333 Shayona Plaza,<br />Puna-Saroli Junction, BRTS Road,<br />Surat, Gujarat 395010
+          </p>
+        </div>
+        <div class="absolute bottom-10 left-10 right-10">
+          <a 
+            href="https://maps.app.goo.gl/iThRaBp2j6i7kGgEA" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="w-full glass py-4 rounded-full text-[10px] !text-white uppercase tracking-[0.2em] font-black italic flex items-center justify-center hover:bg-white/10 transition-colors"
+           >
+            View Molecular Map
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ INTEGRATION -->
+  <section x-data="{ openIndex_Ord: null, openIndex_Prod: null }" class="bg-brand-glacial/10 py-32 px-6 lg:px-20">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-20">
+         <p class="text-[10px] uppercase tracking-[0.4em] font-black text-brand-aqua mb-4">Library of Knowledge</p>
+         <h2 class="font-serif text-4xl lg:text-6xl text-brand-slate italic">Common Inquiries</h2>
+      </div>
+
+      <div class="space-y-4">
+        
+        <!-- Ordering Category -->
+        <div class="space-y-4 mb-12">
+          <h4 class="text-[10px] uppercase tracking-[0.3em] font-black text-brand-aqua border-b border-brand-aqua/20 pb-2 mb-6">
+            Ordering
+          </h4>
+          
+          <div class="bg-white rounded-[24px] border border-brand-marble/5 overflow-hidden shadow-sm">
+            <button @click="openIndex_Ord = openIndex_Ord === 1 ? null : 1" class="w-full flex justify-between items-center py-6 px-8 text-left group">
+              <span class="font-serif text-xl text-brand-slate group-hover:text-brand-aqua transition-colors duration-300">How do I track my clinical sequence?</span>
+              <div class="flex-shrink-0 ml-4 p-2 rounded-full bg-brand-glacial/30 text-brand-slate group-hover:bg-brand-aqua group-hover:!text-white transition-all">
+                <svg x-show="openIndex_Ord !== 1" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <svg x-show="openIndex_Ord === 1" style="display:none;" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+            </button>
+            <div x-show="openIndex_Ord === 1" x-collapse>
+              <div class="px-8 pb-8 pt-2">
+                <p class="text-sm text-brand-slate-light leading-relaxed border-t border-brand-marble/5 pt-6">
+                  Once your order is processed, you will receive a tracking link via email. You can also view your order status in your Account dashboard under 'Routine History'.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-[24px] border border-brand-marble/5 overflow-hidden shadow-sm">
+            <button @click="openIndex_Ord = openIndex_Ord === 2 ? null : 2" class="w-full flex justify-between items-center py-6 px-8 text-left group">
+              <span class="font-serif text-xl text-brand-slate group-hover:text-brand-aqua transition-colors duration-300">Can I modify my routine after purchase?</span>
+              <div class="flex-shrink-0 ml-4 p-2 rounded-full bg-brand-glacial/30 text-brand-slate group-hover:bg-brand-aqua group-hover:!text-white transition-all">
+                <svg x-show="openIndex_Ord !== 2" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <svg x-show="openIndex_Ord === 2" style="display:none;" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+            </button>
+            <div x-show="openIndex_Ord === 2" x-collapse>
+              <div class="px-8 pb-8 pt-2">
+                <p class="text-sm text-brand-slate-light leading-relaxed border-t border-brand-marble/5 pt-6">
+                  We can modify or cancel orders within 2 hours of placement. Please contact our botanical support team immediately for assistance.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Products Category -->
+        <div class="space-y-4 mb-12">
+          <h4 class="text-[10px] uppercase tracking-[0.3em] font-black text-brand-aqua border-b border-brand-aqua/20 pb-2 mb-6">
+            Products
+          </h4>
+          
+          <div class="bg-white rounded-[24px] border border-brand-marble/5 overflow-hidden shadow-sm">
+            <button @click="openIndex_Prod = openIndex_Prod === 1 ? null : 1" class="w-full flex justify-between items-center py-6 px-8 text-left group">
+              <span class="font-serif text-xl text-brand-slate group-hover:text-brand-aqua transition-colors duration-300">Are these products safe for pregnancy?</span>
+              <div class="flex-shrink-0 ml-4 p-2 rounded-full bg-brand-glacial/30 text-brand-slate group-hover:bg-brand-aqua group-hover:!text-white transition-all">
+                <svg x-show="openIndex_Prod !== 1" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <svg x-show="openIndex_Prod === 1" style="display:none;" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+            </button>
+            <div x-show="openIndex_Prod === 1" x-collapse>
+              <div class="px-8 pb-8 pt-2">
+                <p class="text-sm text-brand-slate-light leading-relaxed border-t border-brand-marble/5 pt-6">
+                  While our botanicals are pure, we recommend avoiding high-concentration Retinoids and Salicylic Acid during pregnancy. Please consult your physician with our ingredient lists.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-[24px] border border-brand-marble/5 overflow-hidden shadow-sm">
+            <button @click="openIndex_Prod = openIndex_Prod === 2 ? null : 2" class="w-full flex justify-between items-center py-6 px-8 text-left group">
+              <span class="font-serif text-xl text-brand-slate group-hover:text-brand-aqua transition-colors duration-300">What is the shelf life of your botanical actives?</span>
+              <div class="flex-shrink-0 ml-4 p-2 rounded-full bg-brand-glacial/30 text-brand-slate group-hover:bg-brand-aqua group-hover:!text-white transition-all">
+                <svg x-show="openIndex_Prod !== 2" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <svg x-show="openIndex_Prod === 2" style="display:none;" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+            </button>
+            <div x-show="openIndex_Prod === 2" x-collapse>
+              <div class="px-8 pb-8 pt-2">
+                <p class="text-sm text-brand-slate-light leading-relaxed border-t border-brand-marble/5 pt-6">
+                  Our products are optimized for potency for 6 months after opening. Unopened products have a shelf life of 24 months if stored in a cool, dark place.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
