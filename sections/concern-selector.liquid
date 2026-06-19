@@ -26,11 +26,11 @@
       isAdding: false,
       
       concerns: [
-        { id: "acne", title: "Acne & Breakouts", col: "col-span-1 md:col-span-2 row-span-2", img: "https://cdn.shopify.com/s/files/1/0885/8763/2932/files/acne.webp?v=1718873000" },
-        { id: "dryness", title: "Dryness & Dehydration", col: "col-span-1 md:col-span-1 row-span-1", img: "https://cdn.shopify.com/s/files/1/0885/8763/2932/files/dryness.webp?v=1718873000" },
-        { id: "pigment", title: "Dullness & Pigmentation", col: "col-span-1 md:col-span-1 row-span-1", img: "https://cdn.shopify.com/s/files/1/0885/8763/2932/files/dullness.webp?v=1718873000" },
-        { id: "sun", title: "UV & Sun Protection", col: "col-span-1 md:col-span-1 row-span-1", img: "https://cdn.shopify.com/s/files/1/0885/8763/2932/files/uvrays.webp?v=1718873000" },
-        { id: "pores", title: "Pores & Texture", col: "col-span-1 md:col-span-1 row-span-1", img: "https://cdn.shopify.com/s/files/1/0885/8763/2932/files/pores.webp?v=1718873000" }
+        { id: "acne", title: "Acne & Breakouts", col: "col-span-1 md:col-span-2 row-span-2", img: "{{ 'acne.webp' | asset_url }}" },
+        { id: "dryness", title: "Dryness & Dehydration", col: "col-span-1 md:col-span-1 row-span-1", img: "{{ 'dryness.webp' | asset_url }}" },
+        { id: "pigment", title: "Dullness & Pigmentation", col: "col-span-1 md:col-span-1 row-span-1", img: "{{ 'dullness.webp' | asset_url }}" },
+        { id: "sun", title: "UV & Sun Protection", col: "col-span-1 md:col-span-1 row-span-1", img: "{{ 'uvrays.webp' | asset_url }}" },
+        { id: "pores", title: "Pores & Texture", col: "col-span-1 md:col-span-1 row-span-1", img: "{{ 'pores.webp' | asset_url }}" }
       ],
 
       get filteredProducts() {
@@ -139,13 +139,13 @@
             <div class="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-all duration-500"></div>
 
             <div class="absolute bottom-8 left-8 right-8 text-left flex justify-between items-end">
-              <h3 class="font-serif text-2xl text-white leading-tight max-w-[150px]" x-text="concern.title"></h3>
-              <div class="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white backdrop-blur-md transition-all group-hover:border-white group-hover:bg-white group-hover:text-brand-slate">
+              <h3 class="font-serif text-2xl !text-white leading-tight max-w-[150px]" x-text="concern.title"></h3>
+              <div class="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center !text-white backdrop-blur-md transition-all group-hover:border-white group-hover:bg-white group-hover:!text-brand-slate">
                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
               </div>
             </div>
 
-            <div x-show="selected === concern.id" class="absolute top-8 left-8 bg-brand-aqua text-white p-2 rounded-full shadow-xl">
+            <div x-show="selected === concern.id" class="absolute top-8 left-8 bg-brand-aqua !text-white p-2 rounded-full shadow-xl">
               <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             </div>
           </button>
