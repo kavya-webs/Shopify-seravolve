@@ -206,7 +206,7 @@
     
     <!-- STEP 1: Skin Type -->
     <div x-show="step === 1" x-transition.opacity.duration.500ms class="max-w-4xl w-full text-center">
-      <h1 class="font-serif text-4xl lg:text-7xl mb-12">How would you describe your <span class="italic font-light">Natural Texture</span>?</h1>
+      <h1 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">How would you describe your <span class="italic font-light">Natural Texture</span>?</h1>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <template x-for="type in skinTypes" :key="type.id">
           <button
@@ -214,8 +214,8 @@
             :class="answers.skinType === type.id ? 'border-brand-aqua bg-brand-gold/10' : 'border-white/10 glass-dark'"
             class="p-8 rounded-[32px] border text-left hover:border-brand-aqua transition-all duration-300 transform hover:scale-[1.02]"
           >
-            <h3 class="text-xl font-serif mb-2" x-text="type.title"></h3>
-            <p class="text-xs text-white/50 leading-relaxed font-light" x-text="type.desc"></p>
+            <h3 class="text-xl font-serif mb-2 !text-white" x-text="type.title"></h3>
+            <p class="text-xs leading-relaxed font-light !text-white/50" x-text="type.desc"></p>
           </button>
         </template>
       </div>
@@ -223,7 +223,7 @@
 
     <!-- STEP 2: Concern -->
     <div x-show="step === 2" x-transition.opacity.duration.500ms style="display: none;" class="max-w-5xl w-full text-center">
-      <h1 class="font-serif text-4xl lg:text-7xl mb-12">What is your primary <span class="italic font-light text-brand-aqua">Focus Area</span>?</h1>
+      <h1 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">What is your primary <span class="italic font-light text-brand-aqua">Focus Area</span>?</h1>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <template x-for="concern in concerns" :key="concern.id">
           <button
@@ -231,8 +231,8 @@
             :class="answers.mainConcern === concern.id ? 'border-brand-aqua bg-brand-gold/10' : 'border-white/10 glass-dark'"
             class="p-8 rounded-[32px] border text-left hover:border-brand-aqua transition-all duration-300 transform hover:scale-[1.02]"
           >
-            <h3 class="text-xl font-serif mb-2" x-text="concern.title"></h3>
-            <p class="text-xs text-white/50 leading-relaxed font-light" x-text="concern.desc"></p>
+            <h3 class="text-xl font-serif mb-2 !text-white" x-text="concern.title"></h3>
+            <p class="text-xs leading-relaxed font-light !text-white/50" x-text="concern.desc"></p>
           </button>
         </template>
       </div>
@@ -240,14 +240,14 @@
 
     <!-- STEP 3: Sensitivity -->
     <div x-show="step === 3" x-transition.opacity.duration.500ms style="display: none;" class="max-w-3xl w-full text-center">
-      <h1 class="font-serif text-4xl lg:text-7xl mb-12">Assess your skin's <span class="italic font-light">Sensitivity</span></h1>
+      <h1 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">Assess your skin's <span class="italic font-light">Sensitivity</span></h1>
       <div class="space-y-16">
         <input 
           type="range" min="1" max="5" 
           x-model="answers.sensitivity"
           class="w-full accent-brand-gold bg-white/10 h-1 rounded-full cursor-pointer"
         />
-        <div class="flex justify-between text-[10px] uppercase tracking-widest font-bold opacity-60">
+        <div class="flex justify-between text-[10px] uppercase tracking-widest font-bold opacity-60 !text-white">
           <span>Resilient</span>
           <span>Reactive</span>
         </div>
@@ -262,7 +262,7 @@
 
     <!-- STEP 4: Environment -->
     <div x-show="step === 4" x-transition.opacity.duration.500ms style="display: none;" class="max-w-4xl w-full text-center">
-      <h1 class="font-serif text-4xl lg:text-7xl mb-12">Your primary <span class="italic font-light">Daily Environment</span>?</h1>
+      <h1 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">Your primary <span class="italic font-light">Daily Environment</span>?</h1>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <template x-for="env in environments" :key="env.id">
           <button
@@ -277,8 +277,8 @@
             <!-- Wind Icon -->
             <svg x-show="env.icon === 'wind'" class="w-10 h-10 text-brand-aqua mb-6 group-hover:scale-110 transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
             
-            <h3 class="text-xl font-serif mb-2" x-text="env.title"></h3>
-            <p class="text-xs text-white/50 leading-relaxed font-light" x-text="env.desc"></p>
+            <h3 class="text-xl font-serif mb-2 !text-white" x-text="env.title"></h3>
+            <p class="text-xs leading-relaxed font-light !text-white/50" x-text="env.desc"></p>
           </button>
         </template>
       </div>
