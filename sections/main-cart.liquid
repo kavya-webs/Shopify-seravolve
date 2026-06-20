@@ -1,0 +1,186 @@
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Cart"
+    }
+  ]
+}
+{% endschema %}
+
+<!-- Load Alpine.js -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<script>
+  function formatMoney(cents) {
+    if (typeof cents === 'string') {
+      cents = cents.replace('.', '');
+    }
+    const formatter = new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      minimumFractionDigits: 0,
+    });
+    return formatter.format(cents / 100);
+  }
+
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('cartApp', () => ({
+      cart: {{ cart | json }},
+      loading: false,
+
+      async changeQuantity(line, quantity) {
+        if (this.loading) return;
+        this.loading = true;
+        try {
+          const response = await fetch(window.Shopify.routes.root + 'cart/change.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({ line, quantity })
+          });
+          const newCart = await response.json();
+          this.cart = newCart;
+        } catch (error) {
+          console.error("Error updating cart:", error);
+        } finally {
+          this.loading = false;
+        }
+      },
+
+      async removeItem(line) {
+        await this.changeQuantity(line, 0);
+      }
+    }));
+  });
+</script>
+
+<div x-data="cartApp" class="w-full min-h-screen bg-brand-aqua-mist/10 pb-32 pt-32 lg:pt-48">
+  <div class="max-w-7xl mx-auto px-6 lg:px-20">
+    
+    <div class="mb-12 flex items-center justify-between">
+      <h1 class="font-serif text-5xl lg:text-7xl font-light text-brand-slate leading-none">Your Cart</h1>
+      <a href="{{ routes.collections_url }}" class="text-[10px] uppercase tracking-[0.3em] font-bold text-brand-slate-light hover:text-brand-aqua transition-colors hidden md:block">
+        Continue Shopping
+      </a>
+    </div>
+
+    <!-- Empty Cart View -->
+    <div x-show="cart.item_count === 0" style="display: none;" class="glass p-16 lg:p-32 rounded-[40px] border border-brand-marble/30 text-center shadow-sm">
+      <div class="w-24 h-24 bg-brand-aqua-mist rounded-full mx-auto flex items-center justify-center text-brand-aqua mb-8">
+        <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      </div>
+      <h2 class="font-serif text-3xl lg:text-5xl font-light text-brand-slate mb-6">Your cart is empty</h2>
+      <p class="text-sm text-brand-slate-light font-medium mb-12 max-w-md mx-auto">Looks like you haven't added any formulas yet. Explore our botanical sequences to build your clinical routine.</p>
+      <a href="{{ routes.collections_url }}" class="inline-flex items-center justify-center space-x-3 px-10 py-5 bg-brand-aqua-deep text-white rounded-full text-[10px] uppercase tracking-[0.3em] font-black hover:bg-brand-aqua transition-all duration-300 shadow-xl hover:shadow-brand-aqua/20 hover:-translate-y-1">
+        <span>Browse Collection</span>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- Cart Items View -->
+    <div x-show="cart.item_count > 0" class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start relative">
+      
+      <!-- Items List -->
+      <div class="w-full lg:w-2/3 space-y-6">
+        <template x-for="(item, index) in cart.items" :key="item.key">
+          <div class="glass p-6 md:p-8 rounded-[32px] border border-brand-marble/30 flex flex-col md:flex-row items-center gap-8 shadow-sm transition-opacity duration-300" :class="{ 'opacity-50 pointer-events-none': loading }">
+            
+            <!-- Image -->
+            <a :href="item.url" class="block w-full md:w-32 h-32 flex-shrink-0 bg-white rounded-2xl overflow-hidden border border-brand-marble/10">
+              <img :src="item.image" :alt="item.product_title" class="w-full h-full object-cover mix-blend-multiply" />
+            </a>
+
+            <!-- Details -->
+            <div class="flex-1 w-full flex flex-col justify-between">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <a :href="item.url" class="font-serif text-2xl lg:text-3xl font-light text-brand-slate hover:text-brand-aqua transition-colors" x-text="item.product_title"></a>
+                  <template x-if="item.variant_title && item.variant_title !== 'Default Title'">
+                    <p class="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-slate-light/60 mt-1" x-text="item.variant_title"></p>
+                  </template>
+                </div>
+                <button @click="removeItem(index + 1)" class="w-10 h-10 rounded-full bg-brand-marble/10 flex items-center justify-center text-brand-slate-light hover:text-red-500 hover:bg-red-50 transition-colors flex-shrink-0 ml-4">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                </button>
+              </div>
+
+              <div class="flex flex-row items-center justify-between mt-auto">
+                <!-- Quantity Controls -->
+                <div class="flex items-center space-x-1 p-1 bg-white border border-brand-marble/30 rounded-full shadow-inner">
+                  <button @click="changeQuantity(index + 1, item.quantity - 1)" class="w-8 h-8 rounded-full flex items-center justify-center text-brand-slate hover:bg-brand-aqua-mist transition-colors">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>
+                  </button>
+                  <span class="w-8 text-center text-[11px] font-bold text-brand-slate" x-text="item.quantity"></span>
+                  <button @click="changeQuantity(index + 1, item.quantity + 1)" class="w-8 h-8 rounded-full flex items-center justify-center text-brand-slate hover:bg-brand-aqua-mist transition-colors">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                  </button>
+                </div>
+                
+                <!-- Price -->
+                <div class="text-right flex flex-col">
+                  <span class="text-2xl font-mono font-light text-brand-slate tracking-tighter" x-text="formatMoney(item.final_line_price)"></span>
+                  <template x-if="item.original_line_price > item.final_line_price">
+                     <span class="text-xs font-mono text-brand-slate-light/60 line-through" x-text="formatMoney(item.original_line_price)"></span>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <!-- Order Summary (Sticky) -->
+      <div class="w-full lg:w-1/3 lg:sticky lg:top-32">
+        <div class="glass p-8 lg:p-12 rounded-[40px] border border-brand-marble/30 shadow-2xl relative overflow-hidden transition-opacity duration-300" :class="{ 'opacity-50 pointer-events-none': loading }">
+          
+          <div class="absolute top-0 right-0 w-64 h-64 bg-brand-aqua/5 blur-[80px] rounded-full pointer-events-none"></div>
+
+          <h3 class="font-serif text-3xl font-light text-brand-slate mb-8 relative z-10">Order Summary</h3>
+          
+          <div class="space-y-4 mb-8 relative z-10 border-b border-brand-marble/30 pb-8">
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-brand-slate-light font-medium">Subtotal</span>
+              <span class="font-mono text-brand-slate font-medium" x-text="formatMoney(cart.items_subtotal_price)"></span>
+            </div>
+            
+            <!-- Discounts -->
+            <template x-if="cart.total_discount > 0">
+              <div class="flex justify-between items-center text-sm text-brand-aqua">
+                <span class="font-bold">Discounts</span>
+                <span class="font-mono font-bold" x-text="'-' + formatMoney(cart.total_discount)"></span>
+              </div>
+            </template>
+
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-brand-slate-light font-medium">Shipping</span>
+              <span class="text-[10px] uppercase tracking-widest font-bold text-brand-slate-light/60">Calculated at next step</span>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-end mb-10 relative z-10">
+            <span class="text-[10px] uppercase tracking-[0.3em] font-black text-brand-slate">Estimated Total</span>
+            <span class="font-mono text-4xl lg:text-5xl font-light text-brand-slate tracking-tighter" x-text="formatMoney(cart.total_price)"></span>
+          </div>
+
+          <form action="{{ routes.cart_url }}" method="post" id="cart-checkout-form" class="relative z-10">
+            <button type="submit" name="checkout" class="w-full py-6 rounded-full text-[10px] uppercase tracking-[0.3em] font-black shadow-2xl flex items-center justify-center space-x-3 transition-all duration-500 bg-brand-charcoal text-white hover:bg-brand-aqua hover:-translate-y-1">
+              <span>Secure Checkout</span>
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </button>
+          </form>
+
+          <div class="mt-8 flex justify-center space-x-4 opacity-40">
+             <svg class="h-6" viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="4" fill="#142C8E"/><path d="M22.84 10.45h-1.39l-1.04 4.84h1.39l1.04-4.84ZM12.78 10.45l-.46 3.1c-.04.28.1.37.28.37h.8c.2 0 .34-.1.38-.34l.43-3.13h1.3l-.97 4.84h-1.33c-.45 0-.77-.28-.68-.88l.64-3.96h-.39ZM34.78 10.45h-1.63c-.3 0-.5.15-.62.43l-1.9 4.41h1.4l.28-.77h1.72l.16.77h1.34l-1.6-4.84h.85ZM33.56 11.7l.56 1.6h-1.04l.48-1.6ZM28.53 10.45h-1.32c-.3 0-.48.16-.54.4l-1.37 3.3-1.03-3.7h-1.42l1.52 4.84h1.36l1.53-3.66.52 3.66h1.35l-1.4-4.84Z" fill="#fff"/></svg>
+             <svg class="h-6" viewBox="0 0 38 24" fill="none"><rect width="38" height="24" rx="4" fill="#000"/><path d="M19.5 15.3A4.5 4.5 0 1 1 19.5 6.3a4.5 4.5 0 0 1 0 9Z" fill="#FF5F00"/><path d="M14.5 15.3A4.5 4.5 0 1 1 14.5 6.3a4.5 4.5 0 0 1 0 9Z" fill="#EB001B"/><path d="M17 14a4.5 4.5 0 0 0 0-7.4 4.5 4.5 0 0 0 0 7.4Z" fill="#F79E1B"/></svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
