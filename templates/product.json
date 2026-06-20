@@ -48,30 +48,9 @@
         "judge_me_reviews_testimonials_carousel_KyMkCW"
       ],
       "settings": {}
-    },
-    "1781941779f3281fe7": {
-      "type": "apps",
-      "blocks": {
-        "judge_me_reviews_review_widget_nzDaLT": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "sample_data",
-            "max_width": 1200,
-            "show_shop_reviews": true,
-            "empty_state": "other_products_reviews"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_nzDaLT"
-      ],
-      "settings": {
-        "include_margins": true
-      }
     }
   },
   "order": [
-    "main",
-    "1781941779f3281fe7"
+    "main"
   ]
 }
