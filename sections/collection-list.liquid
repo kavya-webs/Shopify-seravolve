@@ -37,7 +37,7 @@
 
         {%- if section.settings.show_view_all and show_mobile_slider -%}
           <a
-            href="{{ routes.collections_url }}"
+            href="{{ routes.all_products_collection_url }}"
             id="ViewAll-{{ section.id }}"
             class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
             aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
@@ -121,7 +121,7 @@
         {% endif %}
       >
         <a
-          href="{{ routes.collections_url }}"
+          href="{{ routes.all_products_collection_url }}"
           class="button"
           id="ViewAllButton-{{ section.id }}"
           aria-labelledby="ViewAllButton-{{ section.id }} SectionHeading-{{ section.id }}"
