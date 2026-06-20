@@ -1,0 +1,53 @@
+<div id="sticky-bar" class="fixed bottom-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-2xl border-t border-brand-marble/30 shadow-[0_-8px_30px_-10px_rgba(44,62,80,0.08)] transform translate-y-full transition-transform duration-400 ease-out">
+  <div class="max-w-7xl mx-auto px-4 lg:px-8 py-4 flex items-center justify-between gap-4">
+    <!-- Product info -->
+    <div class="flex items-center space-x-4 min-w-0">
+      <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-brand-marble/30">
+        <img src="{{ product.featured_media | image_url: width: 100 }}" alt="{{ product.title | escape }}" class="w-full h-full object-cover">
+      </div>
+      <div class="min-w-0">
+        <p class="text-sm font-serif text-brand-slate truncate">{{ product.title }}</p>
+        <p class="text-xs font-mono text-brand-slate-light/60">{{ product.price | money_without_trailing_zeros }}</p>
+      </div>
+    </div>
+    <!-- CTA -->
+    {% form 'product', product, id: 'sticky-product-form' %}
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      <button type="submit" name="add" {% unless product.available %}disabled{% endunless %} class="px-8 py-3.5 rounded-full text-[10px] uppercase tracking-[0.25em] font-black flex items-center space-x-2.5 transition-all duration-500 flex-shrink-0 shadow-lg {% if product.available %}bg-brand-aqua-deep text-white hover:bg-brand-aqua{% else %}bg-brand-aqua-deep/50 text-white opacity-50 cursor-not-allowed{% endif %}">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span>{% if product.available %}Add to Cart{% else %}Sold Out{% endif %}</span>
+      </button>
+    {% endform %}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Sticky Bottom Bar Logic
+    const heroSection = document.getElementById('product-hero-main-product');
+    const stickyBar = document.getElementById('sticky-bar');
+    
+    if (heroSection && stickyBar) {
+      window.addEventListener('scroll', () => {
+        const rect = heroSection.getBoundingClientRect();
+        if (rect.bottom < 0) {
+          stickyBar.classList.remove('translate-y-full');
+        } else {
+          stickyBar.classList.add('translate-y-full');
+        }
+      }, { passive: true });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Product Sticky Bar",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product Sticky CTA Bar"
+    }
+  ]
+}
+{% endschema %}

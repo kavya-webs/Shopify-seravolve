@@ -1,0 +1,55 @@
+<section id="science-section" class="bg-brand-aqua-mist/30 py-32 lg:py-48 px-6 lg:px-20 relative overflow-hidden hidden">
+  <div class="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-brand-aqua/5 blur-[120px] rounded-full pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-20 text-center lg:text-left">
+      <p class="text-[9px] uppercase tracking-[0.5em] font-bold mb-4 text-brand-aqua">Key Actives</p>
+      <h2 class="font-serif text-4xl lg:text-6xl font-light leading-[1.05] text-brand-slate">Molecular Science</h2>
+    </div>
+    
+    <div id="ingredients-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-32">
+      <!-- Ingredients injected via JS -->
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div class="bg-brand-charcoal p-16 rounded-[48px] text-white shadow-2xl relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-brand-aqua/5 blur-[80px] rounded-full"></div>
+          <h3 class="font-serif text-2xl lg:text-4xl mb-10 font-light">Key Benefits</h3>
+          <div class="space-y-8">
+              <div class="flex items-start space-x-4">
+                <svg class="w-6 h-6 text-brand-aqua flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                <p class="text-lg font-medium text-white/80">Formulated with carefully selected active ingredients</p>
+              </div>
+              <div class="flex items-start space-x-4">
+                <svg class="w-6 h-6 text-brand-aqua flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                <p class="text-lg font-medium text-white/80">Designed for the Indian climate and skin types</p>
+              </div>
+              <div class="flex items-start space-x-4">
+                <svg class="w-6 h-6 text-brand-aqua flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                <p class="text-lg font-medium text-white/80">Clean, cruelty-free formulation</p>
+              </div>
+          </div>
+        </div>
+        <div class="p-10 border border-brand-marble/30 rounded-[48px] flex flex-col justify-center bg-white/50 backdrop-blur-sm">
+          <div class="mb-8">
+            <svg class="w-8 h-8 text-brand-aqua mb-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.275 1.275L3 12l5.8 1.9a2 2 0 0 1 1.275 1.275L12 21l1.9-5.8a2 2 0 0 1 1.275-1.275L21 12l-5.8-1.9a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+            <h3 class="font-serif text-3xl font-light text-brand-slate mb-6">Biological Intelligence</h3>
+            <p id="bio-notes" class="text-brand-slate-light font-medium leading-relaxed"></p>
+          </div>
+          <div class="h-px w-24 bg-brand-aqua/30"></div>
+          <p class="mt-8 text-[9px] uppercase tracking-[0.3em] font-bold text-brand-slate">Stabilized Potency Guaranteed</p>
+        </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Molecular Science",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product Molecular Science"
+    }
+  ]
+}
+{% endschema %}

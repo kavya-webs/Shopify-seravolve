@@ -1,0 +1,25 @@
+<section class="py-32 lg:py-48 px-6 lg:px-20 bg-brand-aqua-mist/20 relative overflow-hidden">
+  <div class="absolute bottom-0 right-0 w-80 h-80 bg-brand-aqua/5 blur-[120px] rounded-full pointer-events-none"></div>
+  <div class="max-w-4xl mx-auto relative z-10">
+    <div class="mb-20 text-center lg:text-left">
+      <p class="text-[9px] uppercase tracking-[0.5em] font-bold mb-4 text-brand-aqua">Knowledge Base</p>
+      <h2 class="font-serif text-4xl lg:text-6xl font-light leading-[1.05] text-brand-slate">Common Questions</h2>
+    </div>
+
+    <div class="bg-white rounded-[40px] p-8 lg:p-16 border border-brand-marble/30 shadow-sm" id="faq-container">
+      <!-- FAQs will be generated here -->
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product FAQ",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product FAQ"
+    }
+  ]
+}
+{% endschema %}
