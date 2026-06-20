@@ -16,15 +16,23 @@
     {%- endunless -%}
 
     <title>
-      {{ page_title }}
-      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+      {%- if request.page_type == 'index' -%}
+        {{ shop.name }} | Clinical Skincare Formulated for Indian Skin
+      {%- else -%}
+        {{ page_title }}
+        {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+        {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+        {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+      {%- endif -%}
     </title>
 
     {% if page_description %}
       <meta name="description" content="{{ page_description | escape }}">
+    {% elsif request.page_type == 'index' %}
+      <meta name="description" content="Discover SERAVOLVE clinical skincare. Expertly formulated serums targeting Indian skin concerns like hyperpigmentation, acne, and anti-aging. Science-backed results.">
     {% endif %}
+
+    {% render 'seo-structured-data' %}
 
     {% render 'meta-tags' %}
 

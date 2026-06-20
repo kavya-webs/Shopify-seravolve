@@ -206,7 +206,7 @@
     
     <!-- STEP 1: Skin Type -->
     <div x-show="step === 1" x-transition.opacity.duration.500ms class="max-w-4xl w-full text-center">
-      <h1 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">How would you describe your <span class="italic font-light">Natural Texture</span>?</h1>
+      <h2 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">How would you describe your <span class="italic font-light">Natural Texture</span>?</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <template x-for="type in skinTypes" :key="type.id">
           <button
@@ -223,7 +223,7 @@
 
     <!-- STEP 2: Concern -->
     <div x-show="step === 2" x-transition.opacity.duration.500ms style="display: none;" class="max-w-5xl w-full text-center">
-      <h1 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">What is your primary <span class="italic font-light text-brand-aqua">Focus Area</span>?</h1>
+      <h2 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">What is your primary <span class="italic font-light text-brand-aqua">Focus Area</span>?</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <template x-for="concern in concerns" :key="concern.id">
           <button
@@ -240,7 +240,7 @@
 
     <!-- STEP 3: Sensitivity -->
     <div x-show="step === 3" x-transition.opacity.duration.500ms style="display: none;" class="max-w-3xl w-full text-center">
-      <h1 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">Assess your skin's <span class="italic font-light">Sensitivity</span></h1>
+      <h2 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">Assess your skin's <span class="italic font-light">Sensitivity</span></h2>
       <div class="space-y-16">
         <input 
           type="range" min="1" max="5" 
@@ -262,7 +262,7 @@
 
     <!-- STEP 4: Environment -->
     <div x-show="step === 4" x-transition.opacity.duration.500ms style="display: none;" class="max-w-4xl w-full text-center">
-      <h1 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">Your primary <span class="italic font-light">Daily Environment</span>?</h1>
+      <h2 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">Your primary <span class="italic font-light">Daily Environment</span>?</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <template x-for="env in environments" :key="env.id">
           <button
