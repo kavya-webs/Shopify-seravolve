@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "main": {
+      "type": "legal-refunds"
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
