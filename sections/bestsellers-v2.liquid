@@ -35,7 +35,7 @@
             <!-- Image -->
             <div class="relative aspect-[3/4] rounded-3xl overflow-hidden mb-4">
               {%- if product.featured_image -%}
-                <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title | escape }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" width="600" height="800">
+                <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title | escape }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" {% if forloop.index <= 2 %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %} width="600" height="800">
               {%- else -%}
                 <div class="w-full h-full bg-brand-aqua-mist flex items-center justify-center">
                   <span class="text-brand-aqua/30 font-serif text-xl">SERAVOLVE</span>
