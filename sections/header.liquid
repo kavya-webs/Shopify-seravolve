@@ -116,9 +116,9 @@
     <!-- Left Links (Desktop) -->
     {%- assign menu_id = section.settings.menu | default: 'main-menu' -%}
     {%- assign nav_links = linklists[menu_id].links -%}
-    {%- assign half = nav_links.size | divided_by: 2 -%}
     <div class="flex max-lg:hidden items-center space-x-10 absolute left-8 top-1/2 -translate-y-1/2">
-      {%- for link in nav_links limit: half -%}
+      {%- for link in nav_links -%}
+        {%- if link.url contains 'routine-builder' or link.title contains 'Routine' -%}{%- continue -%}{%- endif -%}
         <a href="{{ link.url }}" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate whitespace-nowrap">
           {{ link.title }}
         </a>
@@ -134,13 +134,11 @@
 
     <!-- Right Links + Icons (Desktop) -->
     <div class="flex max-lg:hidden items-center space-x-8 absolute right-8 top-1/2 -translate-y-1/2">
-      {%- for link in nav_links offset: half -%}
-        <a href="{{ link.url }}" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate whitespace-nowrap">
-          {{ link.title }}
+      <div class="relative h-10 flex items-center justify-center space-x-6 min-w-[20px]">
+        <!-- Routine Builder Icon -->
+        <a href="/pages/routine-builder" aria-label="Routine Builder" class="header-icon-stroke hover:text-brand-aqua transition-all duration-200 text-brand-slate">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
         </a>
-      {%- endfor -%}
-
-      <div class="relative h-10 flex items-center justify-center min-w-[20px]">
         {%- if customer -%}
           <div class="relative items-center flex">
             <button id="account-dropdown-btn" class="header-icon-stroke flex items-center space-x-2 transition-colors text-brand-slate hover:text-brand-aqua">
@@ -218,6 +216,7 @@
       {%- assign menu_id = section.settings.menu | default: 'main-menu' -%}
       {%- assign nav_links = linklists[menu_id].links -%}
       {%- for link in nav_links -%}
+        {%- if link.url contains 'routine-builder' or link.title contains 'Routine' -%}{%- continue -%}{%- endif -%}
         <a href="{{ link.url }}" class="text-lg font-serif italic text-brand-slate border-b border-brand-marble/50 pb-2">{{ link.title }}</a>
       {%- endfor -%}
     </div>
