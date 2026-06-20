@@ -3200,11 +3200,25 @@ body {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
-@media (min-width: 640px) {
-  .sm\:block {
-    display: block;
+@media not all and (min-width: 1024px) {
+  .max-lg\:hidden {
+    display: none;
   }
+}
 
+@media not all and (min-width: 768px) {
+  .max-md\:hidden {
+    display: none;
+  }
+}
+
+@media not all and (min-width: 640px) {
+  .max-sm\:hidden {
+    display: none;
+  }
+}
+
+@media (min-width: 640px) {
   .sm\:w-\[240px\] {
     width: 240px;
   }
@@ -3229,10 +3243,6 @@ body {
 
   .md\:col-span-2 {
     grid-column: span 2 / span 2;
-  }
-
-  .md\:block {
-    display: block;
   }
 
   .md\:w-32 {
@@ -3336,14 +3346,6 @@ body {
 
   .lg\:mt-6 {
     margin-top: 1.5rem;
-  }
-
-  .lg\:block {
-    display: block;
-  }
-
-  .lg\:flex {
-    display: flex;
   }
 
   .lg\:hidden {
