@@ -117,7 +117,7 @@
     {%- assign menu_id = section.settings.menu | default: 'main-menu' -%}
     {%- assign nav_links = linklists[menu_id].links -%}
     {%- assign half = nav_links.size | divided_by: 2 -%}
-    <div class="hidden lg:flex items-center space-x-10 absolute left-8 top-1/2 -translate-y-1/2">
+    <div class="hidden lg:flex items-center space-x-10" style="position:absolute; left:2rem; top:50%; transform:translateY(-50%);">
       {%- for link in nav_links limit: half -%}
         <a href="{{ link.url }}" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate whitespace-nowrap">
           {{ link.title }}
@@ -133,7 +133,7 @@
     </a>
 
     <!-- Right Links + Icons (Desktop) -->
-    <div class="hidden lg:flex items-center space-x-8 absolute right-8 top-1/2 -translate-y-1/2">
+    <div class="hidden lg:flex items-center space-x-8" style="position:absolute; right:2rem; top:50%; transform:translateY(-50%);">
       {%- for link in nav_links offset: half -%}
         <a href="{{ link.url }}" class="desktop-nav-link text-[10px] uppercase tracking-[0.3em] font-accent font-bold hover:text-brand-aqua transition-colors duration-200 text-brand-slate whitespace-nowrap">
           {{ link.title }}
