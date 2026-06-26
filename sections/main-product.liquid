@@ -10,26 +10,75 @@
   <style>
     .hide-scrollbar::-webkit-scrollbar { display: none; }
     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Mobile Pinch-to-Zoom */
+    @media (max-width: 1023px) {
+      .zoom-container {
+        touch-action: none;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      .zoom-container img {
+        transform-origin: 0 0;
+        will-change: transform;
+      }
+      .zoom-hint {
+        position: absolute;
+        bottom: 16px;
+        right: 16px;
+        background: rgba(0,0,0,0.5);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 700;
+        pointer-events: none;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: opacity 0.5s;
+      }
+    }
+    @media (min-width: 1024px) {
+      .zoom-hint { display: none; }
+      .zoom-container { width: 100%; height: 100%; }
+    }
   </style>
 
   <!-- 1. HERO SPLIT SECTION -->
   <section id="product-hero-{{ section.id }}" class="relative w-full flex flex-col lg:flex-row min-h-screen bg-white">
     <!-- Slider Column (Sticky) -->
     <div class="w-full lg:w-1/2 lg:sticky lg:top-32 lg:h-[calc(100vh-128px)] bg-brand-aqua-mist/30 flex flex-col items-center justify-center p-8 lg:p-20 overflow-hidden">
-      <div class="relative w-full aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl bg-white mb-10 group mt-24 lg:mt-0">
+      <div class="relative w-full aspect-[3/4] rounded-[40px] overflow-hidden shadow-2xl bg-white mb-10 group mt-24 lg:mt-0">
         
         <!-- Sliding Track (Scroll Snap) -->
         <div id="product-gallery-track" class="absolute inset-0 flex overflow-x-auto snap-x snap-mandatory scroll-smooth hide-scrollbar">
           {% for media in product.media %}
             <div class="w-full h-full flex-shrink-0 snap-center snap-always">
-              <img
-                src="{{ media | image_url: width: 800 }}"
-                alt="{{ media.alt | escape }}"
-                class="w-full h-full object-cover"
-                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                width="800"
-                height="1000"
-              >
+              <div class="zoom-container" data-zoom-slide>
+                <img
+                  src="{{ media | image_url: width: 800 }}"
+                  alt="{{ media.alt | escape }}"
+                  class="w-full h-full object-cover"
+                  loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                  width="800"
+                  height="1067"
+                  draggable="false"
+                >
+                {% if forloop.first %}
+                  <div class="zoom-hint" id="zoom-hint">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+                    Pinch to Zoom
+                  </div>
+                {% endif %}
+              </div>
             </div>
           {% endfor %}
         </div>
@@ -362,6 +411,172 @@
         scrollToCurrent();
       });
     });
+
+    // ── Mobile Pinch-to-Zoom ──────────────────────────────────
+    if (window.innerWidth < 1024) {
+      const zoomSlides = document.querySelectorAll('[data-zoom-slide]');
+      const hint = document.getElementById('zoom-hint');
+
+      // Auto-hide hint after 3 seconds
+      if (hint) {
+        setTimeout(() => { hint.style.opacity = '0'; }, 3000);
+        setTimeout(() => { hint.remove(); }, 3500);
+      }
+
+      zoomSlides.forEach(container => {
+        const img = container.querySelector('img');
+        if (!img) return;
+
+        let scale = 1, lastScale = 1;
+        let posX = 0, posY = 0;
+        let lastPosX = 0, lastPosY = 0;
+        let startDist = 0;
+        let startMidX = 0, startMidY = 0;
+        let lastTapTime = 0;
+        let isPinching = false;
+        let isDragging = false;
+        let dragStartX = 0, dragStartY = 0;
+
+        const MAX_SCALE = 3;
+        const MIN_SCALE = 1;
+        const DBL_TAP_SCALE = 2.5;
+
+        function applyTransform() {
+          img.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+        }
+
+        function clampPosition() {
+          const rect = container.getBoundingClientRect();
+          const imgW = rect.width * scale;
+          const imgH = rect.height * scale;
+          const maxX = 0;
+          const minX = rect.width - imgW;
+          const maxY = 0;
+          const minY = rect.height - imgH;
+          posX = Math.min(maxX, Math.max(minX, posX));
+          posY = Math.min(maxY, Math.max(minY, posY));
+        }
+
+        function resetZoom() {
+          scale = 1; posX = 0; posY = 0;
+          img.style.transition = 'transform 0.3s ease';
+          applyTransform();
+          setTimeout(() => { img.style.transition = ''; }, 300);
+          // Re-enable gallery swipe
+          if (track) track.style.overflowX = 'auto';
+        }
+
+        function getDist(t) {
+          const dx = t[0].clientX - t[1].clientX;
+          const dy = t[0].clientY - t[1].clientY;
+          return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        function getMid(t) {
+          return {
+            x: (t[0].clientX + t[1].clientX) / 2,
+            y: (t[0].clientY + t[1].clientY) / 2
+          };
+        }
+
+        container.addEventListener('touchstart', (e) => {
+          if (e.touches.length === 2) {
+            isPinching = true;
+            isDragging = false;
+            startDist = getDist(e.touches);
+            lastScale = scale;
+            const mid = getMid(e.touches);
+            startMidX = mid.x;
+            startMidY = mid.y;
+            lastPosX = posX;
+            lastPosY = posY;
+            img.style.transition = '';
+            e.preventDefault();
+          } else if (e.touches.length === 1) {
+            // Double-tap detection
+            const now = Date.now();
+            if (now - lastTapTime < 300) {
+              // Double tap
+              e.preventDefault();
+              if (scale > 1.1) {
+                resetZoom();
+              } else {
+                const rect = container.getBoundingClientRect();
+                const tapX = e.touches[0].clientX - rect.left;
+                const tapY = e.touches[0].clientY - rect.top;
+                scale = DBL_TAP_SCALE;
+                posX = tapX - tapX * scale;
+                posY = tapY - tapY * scale;
+                clampPosition();
+                img.style.transition = 'transform 0.3s ease';
+                applyTransform();
+                setTimeout(() => { img.style.transition = ''; }, 300);
+                if (track) track.style.overflowX = 'hidden';
+              }
+              lastTapTime = 0;
+              return;
+            }
+            lastTapTime = now;
+
+            // Pan start (if zoomed)
+            if (scale > 1.05) {
+              isDragging = true;
+              dragStartX = e.touches[0].clientX - posX;
+              dragStartY = e.touches[0].clientY - posY;
+              img.style.transition = '';
+              e.preventDefault();
+            }
+          }
+        }, { passive: false });
+
+        container.addEventListener('touchmove', (e) => {
+          if (isPinching && e.touches.length === 2) {
+            e.preventDefault();
+            const dist = getDist(e.touches);
+            const mid = getMid(e.touches);
+            const rect = container.getBoundingClientRect();
+
+            const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, lastScale * (dist / startDist)));
+
+            // Zoom towards pinch center
+            const pinchX = startMidX - rect.left;
+            const pinchY = startMidY - rect.top;
+            posX = lastPosX + (pinchX - lastPosX) * (1 - newScale / lastScale);
+            posY = lastPosY + (pinchY - lastPosY) * (1 - newScale / lastScale);
+
+            // Also track pan during pinch
+            posX += (mid.x - startMidX);
+            posY += (mid.y - startMidY);
+
+            scale = newScale;
+            clampPosition();
+            applyTransform();
+
+            // Disable gallery swipe while zoomed
+            if (scale > 1.05 && track) track.style.overflowX = 'hidden';
+          } else if (isDragging && e.touches.length === 1 && scale > 1.05) {
+            e.preventDefault();
+            posX = e.touches[0].clientX - dragStartX;
+            posY = e.touches[0].clientY - dragStartY;
+            clampPosition();
+            applyTransform();
+          }
+        }, { passive: false });
+
+        container.addEventListener('touchend', (e) => {
+          if (isPinching) {
+            isPinching = false;
+            if (scale < 1.05) {
+              resetZoom();
+            }
+          }
+          if (isDragging) {
+            isDragging = false;
+          }
+        });
+      });
+    }
+    // ── End Mobile Zoom ───────────────────────────────────────
 
   });
 </script>
