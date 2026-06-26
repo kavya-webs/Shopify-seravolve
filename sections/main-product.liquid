@@ -14,7 +14,7 @@
     /* Mobile Pinch-to-Zoom */
     @media (max-width: 1023px) {
       .zoom-container {
-        touch-action: none;
+        touch-action: pan-x;
         overflow: hidden;
         position: relative;
         width: 100%;
@@ -464,6 +464,7 @@
           setTimeout(() => { img.style.transition = ''; }, 300);
           // Re-enable gallery swipe
           if (track) track.style.overflowX = 'auto';
+          container.style.touchAction = 'pan-x';
         }
 
         function getDist(t) {
@@ -491,6 +492,7 @@
             lastPosX = posX;
             lastPosY = posY;
             img.style.transition = '';
+            container.style.touchAction = 'none';
             e.preventDefault();
           } else if (e.touches.length === 1) {
             // Double-tap detection
@@ -512,13 +514,14 @@
                 applyTransform();
                 setTimeout(() => { img.style.transition = ''; }, 300);
                 if (track) track.style.overflowX = 'hidden';
+                container.style.touchAction = 'none';
               }
               lastTapTime = 0;
               return;
             }
             lastTapTime = now;
 
-            // Pan start (if zoomed)
+            // Pan start (if zoomed) — only intercept when actually zoomed
             if (scale > 1.05) {
               isDragging = true;
               dragStartX = e.touches[0].clientX - posX;
@@ -526,6 +529,7 @@
               img.style.transition = '';
               e.preventDefault();
             }
+            // When NOT zoomed, do NOT preventDefault — let the swipe pass through to gallery
           }
         }, { passive: false });
 
