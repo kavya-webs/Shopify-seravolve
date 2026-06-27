@@ -83,15 +83,23 @@
   }
 </style>
 
+{%- comment -%}Pre-fetch product images to use as intelligent fallbacks{%- endcomment -%}
+{%- assign fallback_products = collections.all.products -%}
+{%- assign fb_count = fallback_products.size -%}
+
 <article class="w-full bg-white overflow-hidden" x-data="{ }">
   
   <!-- 1. Opening: Light Cinematic Hero -->
   <section aria-labelledby="chapter-1" class="relative w-full min-h-[90svh] flex flex-col items-center justify-center bg-gradient-to-b from-white to-brand-glacial">
-    {% if section.settings.hero_image != blank %}
+    {%- if section.settings.hero_image != blank -%}
       <div class="absolute inset-0 z-0 opacity-15">
         {{ section.settings.hero_image | image_url: width: 2000 | image_tag: class: 'w-full h-full object-cover', alt: section.settings.hero_image.alt | default: 'Seravolve Brand Background', fetchpriority: 'high' }}
       </div>
-    {% endif %}
+    {%- elsif fb_count > 0 -%}
+      <div class="absolute inset-0 z-0 opacity-10">
+        {{ fallback_products[0].featured_image | image_url: width: 2000 | image_tag: class: 'w-full h-full object-cover', alt: 'SERAVOLVE Products', fetchpriority: 'high' }}
+      </div>
+    {%- endif -%}
     
     <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
       <h1 id="chapter-1" class="font-serif text-[2.5rem] leading-[1.1] lg:text-6xl text-brand-slate tracking-tight mb-6 blur-in opacity-0" style="animation-delay: 0.1s; animation-duration: 0.9s;">
@@ -127,9 +135,9 @@
       <figure class="relative aspect-[4/5] w-full rounded-2xl overflow-hidden shadow-xl shadow-brand-slate/5 story-reveal stagger-2">
         {% if section.settings.vision_image != blank %}
           {{ section.settings.vision_image | image_url: width: 1000 | image_tag: class: 'w-full h-full object-cover', alt: section.settings.vision_heading }}
-        {% else %}
-          {{ 'lifestyle-1' | placeholder_svg_tag: 'w-full h-full object-cover bg-brand-marble/20' }}
-        {% endif %}
+        {%- elsif fb_count > 1 -%}
+          {{ fallback_products[1].featured_image | image_url: width: 1000 | image_tag: class: 'w-full h-full object-cover', alt: 'SERAVOLVE Vision' }}
+        {%- endif -%}
       </figure>
     </div>
   </section>
@@ -168,9 +176,9 @@
           <figure class="relative aspect-video lg:aspect-[4/3] w-full rounded-2xl overflow-hidden shadow-lg shadow-brand-slate/5 story-reveal">
             {% if section.settings[img_key] != blank %}
               {{ section.settings[img_key] | image_url: width: 1200 | image_tag: class: 'w-full h-full object-cover', alt: 'Science Process' }}
-            {% else %}
-              {{ 'collection-2' | placeholder_svg_tag: 'w-full h-full object-cover bg-white' }}
-            {% endif %}
+            {%- elsif fb_count > i -%}
+              {{ fallback_products[i].featured_image | image_url: width: 1200 | image_tag: class: 'w-full h-full object-cover', alt: fallback_products[i].title }}
+            {%- endif -%}
           </figure>
         {% endfor %}
       </div>
@@ -234,9 +242,9 @@
           <template x-if="!playing">
              {% if section.settings.event_video_poster != blank %}
                 {{ section.settings.event_video_poster | image_url: width: 1400 | image_tag: class: 'w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity', alt: 'Launch Event Video' }}
-             {% else %}
-                <div class="w-full h-full bg-brand-slate/80 flex items-center justify-center"><span class="text-white/50 text-sm">Add Poster Image in Theme Editor</span></div>
-             {% endif %}
+             {%- elsif fb_count > 0 -%}
+                {{ fallback_products[0].featured_image | image_url: width: 1400 | image_tag: class: 'w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity', alt: 'Launch Event Video' }}
+             {%- endif -%}
           </template>
           <template x-if="playing">
             {%- if section.settings.event_video.type == 'youtube' -%}
@@ -254,9 +262,9 @@
             <figure class="relative rounded-2xl overflow-hidden story-reveal stagger-{{ forloop.index | modulo: 4 }} {% if forloop.index == 1 or forloop.index == 4 %}aspect-[4/5]{% else %}aspect-square{% endif %}" {{ block.shopify_attributes }}>
               {% if block.settings.image != blank %}
                 {{ block.settings.image | image_url: width: 800 | image_tag: class: 'w-full h-full object-cover hover:scale-105 transition-transform duration-700', alt: 'Launch Event Moment' }}
-              {% else %}
-                {{ 'image' | placeholder_svg_tag: 'w-full h-full object-cover bg-brand-marble/20' }}
-              {% endif %}
+              {%- elsif fb_count > forloop.index0 -%}
+                {{ fallback_products[forloop.index0].featured_image | image_url: width: 800 | image_tag: class: 'w-full h-full object-cover hover:scale-105 transition-transform duration-700', alt: fallback_products[forloop.index0].title }}
+              {%- endif -%}
             </figure>
           {% endif %}
         {% endfor %}
@@ -285,9 +293,9 @@
             <a href="{{ block.settings.reel_url }}" target="_blank" rel="noopener noreferrer" class="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-brand-charcoal group shadow-lg shadow-brand-slate/10">
               {% if block.settings.thumbnail != blank %}
                 {{ block.settings.thumbnail | image_url: width: 600 | image_tag: class: 'w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500', alt: block.settings.name }}
-              {% else %}
-                {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover opacity-80' }}
-              {% endif %}
+              {%- elsif fb_count > forloop.index0 -%}
+                {{ fallback_products[forloop.index0].featured_image | image_url: width: 600 | image_tag: class: 'w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500', alt: fallback_products[forloop.index0].title }}
+              {%- endif -%}
               <!-- Play icon -->
               <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-brand-aqua/90 transition-colors">
