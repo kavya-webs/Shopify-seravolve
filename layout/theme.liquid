@@ -2,7 +2,7 @@
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
     <meta charset="utf-8">
-    {% if request.path == '/pages/products' %}
+    {% if request.path == '/pages/products' or request.path == '/collections' or request.path == '/collections/' %}
       <meta http-equiv="refresh" content="0; url=/collections/all">
       <script>window.location.href = '/collections/all';</script>
     {% endif %}
