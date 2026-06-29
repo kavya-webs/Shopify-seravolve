@@ -1,131 +1,193 @@
 {% schema %}
 {
-  "name": "Routine Builder",
+  "name": "Find My Routine App",
   "settings": [
     {
-      "type": "image_picker",
-      "id": "background_image",
-      "label": "Background Image"
+      "type": "collection",
+      "id": "routine_collection",
+      "label": "Routine Products Collection"
     }
   ],
   "presets": [
     {
-      "name": "Routine Builder"
+      "name": "Find My Routine App"
     }
   ]
 }
 {% endschema %}
 
-<!-- Load Alpine.js for state management -->
-
-
 <!-- Inject Products into JS Window -->
 <script>
   window.routineProducts = [
-    {% if all_products['2-salicylic-acid-deep-cleansing-face-wash-for-acne-control'] != empty %}
-      {{ all_products['2-salicylic-acid-deep-cleansing-face-wash-for-acne-control'] | json }},
-    {% endif %}
-    {% if all_products['rice-water-3-niacinamide-brightening-toner-for-pore-refining'] != empty %}
-      {{ all_products['rice-water-3-niacinamide-brightening-toner-for-pore-refining'] | json }},
-    {% endif %}
-    {% if all_products['luminosity-10-vitamin-c-serum'] != empty %}
-      {{ all_products['luminosity-10-vitamin-c-serum'] | json }},
-    {% endif %}
-    {% if all_products['oil-free-hydrating-face-moisturizer-for-all-skin-types'] != empty %}
-      {{ all_products['oil-free-hydrating-face-moisturizer-for-all-skin-types'] | json }},
-    {% endif %}
-    {% if all_products['ultra-light-spf-50-pa-sunscreen-for-broad-spectrum-protection-description'] != empty %}
-      {{ all_products['ultra-light-spf-50-pa-sunscreen-for-broad-spectrum-protection-description'] | json }}
-    {% endif %}
-  ].filter(p => p != null);
+    {%- assign routine_col = collections[section.settings.routine_collection] -%}
+    {%- if routine_col != blank -%}
+      {%- for product in routine_col.products -%}
+        Object.assign({{ product | json }}, { 
+          custom_image: {{ product.featured_image | image_url: width: 400 | json }},
+          product_url: {{ product.url | json }}
+        }){% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for product in collections['all'].products limit: 20 -%}
+        Object.assign({{ product | json }}, { 
+          custom_image: {{ product.featured_image | image_url: width: 400 | json }},
+          product_url: {{ product.url | json }}
+        }){% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    {%- endif -%}
+  ];
+
+  window.scoringConfig = {
+    "2-salicylic-acid-deep-cleansing-face-wash-for-acne-control": {
+      role: "cleanser", tags: ["Acne & Breakouts", "Oily", "Combination"], baseScore: 10
+    },
+    "rice-water-3-niacinamide-brightening-toner-for-pore-refining": {
+      role: "toner", tags: ["Dullness & Tan", "Acne & Breakouts", "Oily", "Combination"], baseScore: 10
+    },
+    "luminosity-10-vitamin-c-serum": {
+      role: "treatment", tags: ["Dullness & Tan", "Daily Protection", "Morning"], baseScore: 10
+    },
+    "oil-free-hydrating-face-moisturizer-for-all-skin-types": {
+      role: "moisturizer", tags: ["Dry", "Combination", "Weak Skin Barrier"], baseScore: 10
+    },
+    "ultra-light-spf-50-pa-sunscreen-for-broad-spectrum-protection-description": {
+      role: "spf", tags: ["Daily Protection", "Morning", "Both"], baseScore: 10
+    }
+  };
 
   document.addEventListener('alpine:init', () => {
-    Alpine.data('routineBuilder', () => ({
+    Alpine.data('routineApp', () => ({
+      view: 'landing', // 'landing', 'quiz', 'results'
       step: 1,
+      totalSteps: 4,
       answers: {
+        concern: null,
         skinType: null,
-        mainConcern: null,
-        sensitivity: 3,
-        exposure: null
+        experience: null,
+        usage: null
       },
       amRoutine: [],
       pmRoutine: [],
       routineItems: [],
       totalPrice: 0,
       isAddingToCart: false,
-
+      
+      // Question 1
+      concerns: [
+        { id: "Acne & Breakouts", title: "Acne & Breakouts", desc: "Recurring breakouts and congestion." },
+        { id: "Dullness & Tan", title: "Dullness & Tan", desc: "Lack of glow, uneven tone, or sun damage." },
+        { id: "Weak Skin Barrier", title: "Weak Skin Barrier", desc: "Redness, sensitivity, or dryness." },
+        { id: "Daily Protection", title: "Daily Protection", desc: "Anti-aging and environmental defense." }
+      ],
+      // Question 2
       skinTypes: [
         { id: "Dry", title: "Dry", desc: "Tightness, flaking, visible fine lines." },
         { id: "Oily", title: "Oily", desc: "Persistent shine, enlarged pores, congestion." },
         { id: "Combination", title: "Combination", desc: "Oily T-zone, dry or normal cheeks." },
         { id: "Normal", title: "Normal", desc: "Balanced moisture, no major concerns." }
       ],
-
-      concerns: [
-        { id: "Acne", title: "Acne & Blemishes", desc: "Recurring breakouts and congestion." },
-        { id: "Aging", title: "Fine Lines & Aging", desc: "Loss of elasticity and expression lines." },
-        { id: "Hydration", title: "Dehydration", desc: "Dullness and lack of cellular volume." },
-        { id: "Pigmentation", title: "Dark Spots", desc: "Post-acne marking or sun damage." },
-        { id: "Sensitivity", title: "Sensitivity", desc: "Redness and reactive skin barrier." }
+      // Question 3
+      experiences: [
+        { id: "Beginner", title: "Beginner", desc: "New to active ingredients." },
+        { id: "Some Experience", title: "Some Experience", desc: "Used a few serums or acids before." },
+        { id: "Regular Routine", title: "Regular Routine", desc: "Comfortable with multi-step routines." }
+      ],
+      // Question 4
+      usages: [
+        { id: "Morning", title: "Morning Only", desc: "Quick AM routine." },
+        { id: "Night", title: "Night Only", desc: "Focus on PM recovery." },
+        { id: "Both", title: "Morning & Night", desc: "Comprehensive 24/7 care." }
       ],
 
-      environments: [
-        { id: "Indoor", icon: "droplets", title: "Urban Indoor", desc: "Climate controlled, computer blue light exposure." },
-        { id: "Outdoor", icon: "sun", title: "High Sun", desc: "Significant UV exposure and environmental heat." },
-        { id: "Aggressive", icon: "wind", title: "Aggressive", desc: "Extreme Cold, Wind, or Urban Pollution." }
-      ],
-
-      setSkinType(type) { this.answers.skinType = type; this.nextStep(); },
-      setConcern(concern) { this.answers.mainConcern = concern; this.nextStep(); },
-      setExposure(env) { this.answers.exposure = env; this.nextStep(); },
-      
-      nextStep() {
-        if (this.step < 5) this.step++;
-        if (this.step === 5) this.generateRoutine();
+      startQuiz() {
+        this.view = 'quiz';
+        this.step = 1;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       },
+
+      setAnswer(key, value) {
+        this.answers[key] = value;
+        setTimeout(() => this.nextStep(), 300);
+      },
+
+      nextStep() {
+        if (this.step < this.totalSteps) {
+          this.step++;
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          this.generateRoutine();
+          this.view = 'results';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      },
+
       prevStep() {
-        if (this.step > 1) this.step--;
+        if (this.step > 1) {
+          this.step--;
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          this.view = 'landing';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      },
+
+      retake() {
+        this.answers = { concern: null, skinType: null, experience: null, usage: null };
+        this.view = 'landing';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       },
 
       generateRoutine() {
-        const cleanser = window.routineProducts.find(p => p.handle.includes("cleansing"));
-        const toner = window.routineProducts.find(p => p.handle.includes("toner"));
-        const serum = window.routineProducts.find(p => p.handle.includes("serum"));
-        const moisturizer = window.routineProducts.find(p => p.handle.includes("moisturizer"));
-        const spf = window.routineProducts.find(p => p.handle.includes("sunscreen"));
+        // Scoring Algorithm
+        let scoredProducts = window.routineProducts.map(p => {
+          let score = 0;
+          let config = window.scoringConfig[p.handle] || { role: "treatment", tags: [], baseScore: 5 };
+          
+          // Weighted scoring based on tags
+          if (config.tags.includes(this.answers.concern)) score += 50;
+          if (config.tags.includes(this.answers.skinType)) score += 25;
+          if (config.tags.includes(this.answers.experience)) score += 15;
+          if (config.tags.includes(this.answers.usage)) score += 10;
+          
+          return { product: p, score: score + config.baseScore, role: config.role };
+        });
+
+        // Filter and pick top for each role
+        const getTop = (role) => {
+          let candidates = scoredProducts.filter(p => p.role === role);
+          candidates.sort((a, b) => b.score - a.score);
+          return candidates.length > 0 ? candidates[0].product : null;
+        };
+
+        const cleanser = getTop("cleanser");
+        const toner = getTop("toner");
+        const treatment = getTop("treatment");
+        const moisturizer = getTop("moisturizer");
+        const spf = getTop("spf");
 
         let am = [];
         let pm = [];
 
-        // 1. Cleanser
-        const excludeSalicylic = this.answers.skinType === "Dry" && this.answers.sensitivity >= 4;
-        if (!excludeSalicylic && cleanser) { am.push(cleanser); pm.push(cleanser); }
-
-        // 2. Toner
-        const includeToner = ["Oily", "Combination"].includes(this.answers.skinType) || 
-                             ["Acne", "Pigmentation"].includes(this.answers.mainConcern);
-        if (includeToner && toner) pm.push(toner);
-
-        // 3. Serum
-        const excludeVitC = parseInt(this.answers.sensitivity) === 5;
-        const includeVitC = !excludeVitC && 
-                           (["Pigmentation", "Aging"].includes(this.answers.mainConcern) || 
-                            ["Outdoor", "Aggressive"].includes(this.answers.exposure));
-        if (includeVitC && serum) am.push(serum);
-
-        // 4. Moisturizer
-        if (moisturizer) {
-          if (["Dry", "Combination"].includes(this.answers.skinType)) am.push(moisturizer);
-          pm.push(moisturizer);
+        // Build AM
+        if (this.answers.usage !== "Night") {
+          if (cleanser && this.answers.skinType !== 'Dry') am.push(cleanser);
+          if (toner && ['Oily', 'Combination'].includes(this.answers.skinType)) am.push(toner);
+          if (treatment) am.push(treatment);
+          if (moisturizer && this.answers.skinType === 'Dry') am.push(moisturizer);
+          if (spf) am.push(spf);
         }
 
-        // 5. SPF
-        if (spf) am.push(spf);
+        // Build PM
+        if (this.answers.usage !== "Morning") {
+          if (cleanser) pm.push(cleanser);
+          if (toner) pm.push(toner);
+          if (moisturizer) pm.push(moisturizer);
+        }
 
         this.amRoutine = am;
         this.pmRoutine = pm;
 
-        // Unique items
+        // Unique items for cart calculation
         const allItems = [...am, ...pm];
         const uniqueIds = new Set();
         this.routineItems = allItems.filter(item => {
@@ -137,18 +199,26 @@
         this.totalPrice = this.routineItems.reduce((sum, item) => sum + (item.price / 100), 0);
       },
 
-      getRoleForProduct(handle) {
-        if (handle.includes("cleansing")) return "Purify";
-        if (handle.includes("toner")) return "Refresh & Refine";
-        if (handle.includes("serum")) return "Core Treatment";
-        if (handle.includes("moisturizer")) return "Seal & Repair";
-        if (handle.includes("sunscreen")) return "Shield";
-        return "Treatment";
+      getWhyRoutineText() {
+        const concernText = this.answers.concern ? this.answers.concern.toLowerCase() : 'your skin';
+        return `This routine is designed for ${concernText} and focuses on cleansing, targeted treatment, hydration, and protection based on your specific profile.`;
+      },
+
+      getRoleName(handle) {
+        let config = window.scoringConfig[handle];
+        if(!config) return "Treatment";
+        const roles = {
+          "cleanser": "Purify",
+          "toner": "Refine",
+          "treatment": "Target",
+          "moisturizer": "Hydrate",
+          "spf": "Protect"
+        };
+        return roles[config.role] || "Treatment";
       },
 
       async addAllToCart() {
         this.isAddingToCart = true;
-        
         const items = this.routineItems.map(p => ({
           id: p.variants[0].id,
           quantity: 1
@@ -160,10 +230,7 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ items })
           });
-          
-          if (res.ok) {
-            window.location.href = '/cart';
-          }
+          if (res.ok) window.location.href = '/cart';
         } catch (error) {
           console.error("Error adding to cart:", error);
         } finally {
@@ -174,198 +241,297 @@
   });
 </script>
 
-<div x-data="routineBuilder" class="w-full min-h-screen bg-brand-charcoal text-white flex flex-col relative overflow-hidden">
+<div x-data="routineApp" class="w-full min-h-screen pt-24 lg:pt-32 bg-[#f8faf9] text-brand-charcoal flex flex-col relative overflow-hidden font-sans">
   
-  <!-- Background Image -->
-  <div class="absolute inset-0 z-0 transition-opacity duration-1000 opacity-40">
-    <img
-      src="{% if section.settings.background_image != blank %}{{ section.settings.background_image | image_url: width: 2000 }}{% else %}https://cdn.shopify.com/s/files/1/0885/8763/2932/files/contacthero.webp?v=1718873000{% endif %}"
-      alt=""
-      aria-hidden="true"
-      class="w-full h-full object-cover"
-    />
-    <div class="absolute inset-0 bg-gradient-to-b from-brand-charcoal/80 via-transparent to-brand-charcoal"></div>
-  </div>
-
-  <!-- Progress Bar -->
-  <div class="relative z-10 w-full px-6 lg:px-20 pt-32 transition-all duration-500">
-    <div class="max-w-4xl mx-auto flex items-center justify-between mb-2">
-      <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-brand-aqua" x-text="'Step 0' + step"></span>
-      <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/40">05 Total</span>
-    </div>
-    <div class="max-w-4xl mx-auto h-px bg-white/10 relative overflow-hidden">
-      <div 
-        class="absolute top-0 left-0 h-full bg-brand-aqua shadow-[0_0_10px_rgba(212,175,55,0.5)] transition-all duration-700 ease-out"
-        :style="'width: ' + ((step / 5) * 100) + '%'"
-      ></div>
-    </div>
-  </div>
-
-  <!-- Steps Content -->
-  <main class="relative z-10 flex-grow flex items-center justify-center p-6 pb-32">
+  <!-- VIEW: LANDING -->
+  <div x-show="view === 'landing'" x-transition.opacity class="w-full flex flex-col items-center">
     
-    <!-- STEP 1: Skin Type -->
-    <div x-show="step === 1" x-transition.opacity.duration.500ms class="max-w-4xl w-full text-center">
-      <h2 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">How would you describe your <span class="italic font-light">Natural Texture</span>?</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <template x-for="type in skinTypes" :key="type.id">
-          <button
-            @click="setSkinType(type.id)"
-            :class="answers.skinType === type.id ? 'border-brand-aqua bg-brand-gold/10' : 'border-white/10 glass-dark'"
-            class="p-8 rounded-[32px] border text-left hover:border-brand-aqua transition-all duration-300 transform hover:scale-[1.02]"
-          >
-            <h3 class="text-xl font-serif mb-2 !text-white" x-text="type.title"></h3>
-            <p class="text-xs leading-relaxed font-light !text-white/50" x-text="type.desc"></p>
-          </button>
-        </template>
-      </div>
-    </div>
+    <!-- Hero -->
+    <section class="w-full px-6 py-24 lg:py-32 flex flex-col items-center text-center max-w-4xl mx-auto">
+      <h1 class="font-serif text-5xl lg:text-7xl leading-tight text-brand-slate mb-6">Find your skincare routine in under 60 seconds.</h1>
+      <p class="text-brand-slate/70 text-lg lg:text-xl max-w-2xl mb-12">Answer a few simple questions and we'll recommend the right routine for your skin—no ingredient knowledge required.</p>
+      <button @click="startQuiz" class="bg-brand-aqua text-white px-10 py-5 rounded-full text-xs uppercase tracking-widest font-bold shadow-lg shadow-brand-aqua/20 hover:bg-brand-aqua-deep transition-all duration-300 transform active:scale-95">
+        Start Routine Finder
+      </button>
+    </section>
 
-    <!-- STEP 2: Concern -->
-    <div x-show="step === 2" x-transition.opacity.duration.500ms style="display: none;" class="max-w-5xl w-full text-center">
-      <h2 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">What is your primary <span class="italic font-light text-brand-aqua">Focus Area</span>?</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <template x-for="concern in concerns" :key="concern.id">
-          <button
-            @click="setConcern(concern.id)"
-            :class="answers.mainConcern === concern.id ? 'border-brand-aqua bg-brand-gold/10' : 'border-white/10 glass-dark'"
-            class="p-8 rounded-[32px] border text-left hover:border-brand-aqua transition-all duration-300 transform hover:scale-[1.02]"
-          >
-            <h3 class="text-xl font-serif mb-2 !text-white" x-text="concern.title"></h3>
-            <p class="text-xs leading-relaxed font-light !text-white/50" x-text="concern.desc"></p>
-          </button>
-        </template>
-      </div>
-    </div>
-
-    <!-- STEP 3: Sensitivity -->
-    <div x-show="step === 3" x-transition.opacity.duration.500ms style="display: none;" class="max-w-3xl w-full text-center">
-      <h2 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">Assess your skin's <span class="italic font-light">Sensitivity</span></h2>
-      <div class="space-y-16">
-        <input 
-          type="range" min="1" max="5" 
-          x-model="answers.sensitivity"
-          class="w-full accent-brand-gold bg-white/10 h-1 rounded-full cursor-pointer"
-        />
-        <div class="flex justify-between text-[10px] uppercase tracking-widest font-bold opacity-60 !text-white">
-          <span>Resilient</span>
-          <span>Reactive</span>
+    <!-- How it Works -->
+    <section class="w-full bg-white py-24 px-6 border-t border-brand-charcoal/5">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-center font-serif text-3xl mb-16 text-brand-slate">How It Works</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 rounded-full bg-[#f8faf9] flex items-center justify-center text-brand-aqua mb-6">
+              <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+            </div>
+            <h3 class="font-bold text-lg mb-2 text-brand-slate">Tell us your concern</h3>
+            <p class="text-brand-slate/60 text-sm">Select what's bothering your skin right now.</p>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 rounded-full bg-[#f8faf9] flex items-center justify-center text-brand-aqua mb-6">
+              <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <h3 class="font-bold text-lg mb-2 text-brand-slate">Answer a few questions</h3>
+            <p class="text-brand-slate/60 text-sm">Help us understand your skin type and lifestyle.</p>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="w-16 h-16 rounded-full bg-[#f8faf9] flex items-center justify-center text-brand-aqua mb-6">
+              <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"/></svg>
+            </div>
+            <h3 class="font-bold text-lg mb-2 text-brand-slate">Get your personalized routine</h3>
+            <p class="text-brand-slate/60 text-sm">Receive a custom morning and night regimen.</p>
+          </div>
         </div>
-        <button 
-          @click="nextStep()"
-          class="mt-12 bg-brand-aqua hover:bg-white text-brand-charcoal px-12 py-5 rounded-full text-xs uppercase tracking-[0.2em] font-bold transition-colors duration-300"
-        >
-          Continue Routine
-        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- VIEW: QUIZ -->
+  <div x-show="view === 'quiz'" style="display: none;" class="w-full flex flex-col min-h-screen">
+    <!-- Progress Bar -->
+    <div class="w-full px-6 lg:px-20 pt-12">
+      <div class="max-w-4xl mx-auto flex items-center justify-between mb-2">
+        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-brand-aqua" x-text="'Step 0' + step"></span>
+        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-brand-charcoal/40" x-text="'0' + totalSteps + ' Total'"></span>
+      </div>
+      <div class="max-w-4xl mx-auto h-px bg-brand-charcoal/10 relative overflow-hidden">
+        <div class="absolute top-0 left-0 h-full bg-brand-aqua transition-all duration-700 ease-out" :style="'width: ' + ((step / totalSteps) * 100) + '%'"></div>
       </div>
     </div>
 
-    <!-- STEP 4: Environment -->
-    <div x-show="step === 4" x-transition.opacity.duration.500ms style="display: none;" class="max-w-4xl w-full text-center">
-      <h2 class="font-serif text-4xl lg:text-7xl mb-12 !text-white">Your primary <span class="italic font-light">Daily Environment</span>?</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <template x-for="env in environments" :key="env.id">
-          <button
-            @click="setExposure(env.id)"
-            :class="answers.exposure === env.id ? 'border-brand-aqua bg-brand-gold/10' : 'border-white/10 glass-dark'"
-            class="p-10 rounded-[40px] border flex flex-col items-center hover:border-brand-aqua transition-all duration-300 group"
-          >
-            <!-- Drop Icon -->
-            <svg x-show="env.icon === 'droplets'" class="w-10 h-10 text-brand-aqua mb-6 group-hover:scale-110 transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></svg>
-            <!-- Sun Icon -->
-            <svg x-show="env.icon === 'sun'" class="w-10 h-10 text-brand-aqua mb-6 group-hover:scale-110 transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-            <!-- Wind Icon -->
-            <svg x-show="env.icon === 'wind'" class="w-10 h-10 text-brand-aqua mb-6 group-hover:scale-110 transition-transform" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
-            
-            <h3 class="text-xl font-serif mb-2 !text-white" x-text="env.title"></h3>
-            <p class="text-xs leading-relaxed font-light !text-white/50" x-text="env.desc"></p>
-          </button>
-        </template>
-      </div>
-    </div>
-
-    <!-- STEP 5: Results -->
-    <div x-show="step === 5" x-transition.opacity.duration.800ms style="display: none;" class="max-w-6xl w-full bg-white text-brand-charcoal rounded-[60px] p-12 lg:p-24 shadow-2xl flex flex-col items-center">
-      <p class="text-brand-aqua text-[10px] uppercase font-bold tracking-[0.4em] mb-8">Your Custom Routine</p>
-      <h2 class="font-serif text-4xl lg:text-7xl text-center mb-16">Your <span class="italic font-light">Custom Routine</span></h2>
+    <!-- Questions -->
+    <main class="flex-grow flex items-center justify-center p-6 pb-24">
       
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 w-full mb-20">
+      <!-- Step 1 -->
+      <div x-show="step === 1" x-transition.opacity.duration.300ms class="max-w-4xl w-full text-center">
+        <h2 class="font-serif text-3xl lg:text-5xl mb-10 text-brand-slate">What's your biggest concern?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <template x-for="item in concerns" :key="item.id">
+            <button @click="setAnswer('concern', item.id)" :class="answers.concern === item.id ? 'border-brand-aqua bg-brand-aqua/5' : 'border-brand-charcoal/10 bg-white shadow-sm'" class="p-8 rounded-3xl border text-left hover:border-brand-aqua transition-all duration-300">
+              <h3 class="text-xl font-serif mb-2 text-brand-slate" x-text="item.title"></h3>
+              <p class="text-xs font-light text-brand-slate/60" x-text="item.desc"></p>
+            </button>
+          </template>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div x-show="step === 2" x-transition.opacity.duration.300ms style="display: none;" class="max-w-4xl w-full text-center">
+        <h2 class="font-serif text-3xl lg:text-5xl mb-10 text-brand-slate">How would you describe your skin?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <template x-for="item in skinTypes" :key="item.id">
+            <button @click="setAnswer('skinType', item.id)" :class="answers.skinType === item.id ? 'border-brand-aqua bg-brand-aqua/5' : 'border-brand-charcoal/10 bg-white shadow-sm'" class="p-8 rounded-3xl border text-left hover:border-brand-aqua transition-all duration-300">
+              <h3 class="text-xl font-serif mb-2 text-brand-slate" x-text="item.title"></h3>
+              <p class="text-xs font-light text-brand-slate/60" x-text="item.desc"></p>
+            </button>
+          </template>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div x-show="step === 3" x-transition.opacity.duration.300ms style="display: none;" class="max-w-4xl w-full text-center">
+        <h2 class="font-serif text-3xl lg:text-5xl mb-10 text-brand-slate">How experienced are you with skincare?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <template x-for="item in experiences" :key="item.id">
+            <button @click="setAnswer('experience', item.id)" :class="answers.experience === item.id ? 'border-brand-aqua bg-brand-aqua/5' : 'border-brand-charcoal/10 bg-white shadow-sm'" class="p-8 rounded-3xl border flex flex-col items-center text-center hover:border-brand-aqua transition-all duration-300">
+              <h3 class="text-lg font-serif mb-2 text-brand-slate" x-text="item.title"></h3>
+              <p class="text-xs font-light text-brand-slate/60" x-text="item.desc"></p>
+            </button>
+          </template>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div x-show="step === 4" x-transition.opacity.duration.300ms style="display: none;" class="max-w-4xl w-full text-center">
+        <h2 class="font-serif text-3xl lg:text-5xl mb-10 text-brand-slate">When will you use skincare?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <template x-for="item in usages" :key="item.id">
+            <button @click="setAnswer('usage', item.id)" :class="answers.usage === item.id ? 'border-brand-aqua bg-brand-aqua/5' : 'border-brand-charcoal/10 bg-white shadow-sm'" class="p-8 rounded-3xl border flex flex-col items-center text-center hover:border-brand-aqua transition-all duration-300">
+              <h3 class="text-lg font-serif mb-2 text-brand-slate" x-text="item.title"></h3>
+              <p class="text-xs font-light text-brand-slate/60" x-text="item.desc"></p>
+            </button>
+          </template>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Quiz Back Button -->
+    <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-20">
+      <button @click="prevStep" class="text-[10px] uppercase tracking-widest font-bold text-brand-slate/40 hover:text-brand-slate transition-colors flex items-center space-x-2">
+        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        <span>Go Back</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- VIEW: RESULTS -->
+  <div x-show="view === 'results'" style="display: none;" class="w-full flex flex-col items-center py-12 lg:py-20 px-6">
+    <div class="max-w-4xl w-full">
+      
+      <p class="text-brand-aqua text-[10px] uppercase font-bold tracking-[0.4em] mb-4 text-center">Custom Regimen</p>
+      <h2 class="font-serif text-4xl lg:text-6xl text-center mb-12 text-brand-slate">Your Recommended Routine</h2>
+      
+      <!-- Routine Breakdown -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
         
-        <!-- AM Routine -->
-        <div>
-          <h3 class="text-brand-aqua text-[10px] uppercase font-bold tracking-[0.2em] mb-10 border-b border-brand-charcoal/5 pb-4 flex items-center">
-            <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-            AM: The Protection Phase
+        <!-- AM -->
+        <div class="bg-white rounded-[32px] p-8 shadow-sm border border-brand-charcoal/5">
+          <h3 class="text-brand-aqua text-[10px] uppercase font-bold tracking-[0.2em] mb-6 flex items-center border-b border-brand-charcoal/5 pb-4">
+            <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+            Morning
           </h3>
-          <ul class="space-y-8">
+          <ul class="space-y-4">
             <template x-if="amRoutine.length > 0">
               <template x-for="(product, idx) in amRoutine" :key="product.id">
-                <li class="flex items-center space-x-6">
-                  <span class="font-serif text-3xl opacity-10" x-text="'0' + (idx + 1)"></span>
-                  <div class="flex flex-col">
-                    <span class="text-xs font-bold uppercase tracking-widest text-brand-aqua mb-1" x-text="getRoleForProduct(product.handle)"></span>
-                    <span class="font-serif text-xl" x-text="product.title"></span>
+                <li class="flex items-center space-x-4">
+                  <div class="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-[#f8faf9]">
+                    <img :src="product.custom_image" :alt="product.title" class="w-full h-full object-cover">
                   </div>
+                  <div class="flex flex-col flex-grow">
+                    <span class="text-[9px] font-bold uppercase tracking-widest text-brand-aqua mb-1" x-text="getRoleName(product.handle)"></span>
+                    <span class="font-serif text-[15px] leading-tight text-brand-slate" x-text="product.title"></span>
+                  </div>
+                  <span class="text-sm font-light whitespace-nowrap" x-text="'₹' + (product.price / 100)"></span>
                 </li>
               </template>
             </template>
             <template x-if="amRoutine.length === 0">
-              <li class="text-sm font-light text-brand-charcoal/50 italic py-4">No morning steps required.</li>
+              <li class="text-sm font-light text-brand-slate/50 italic py-2">No morning steps required.</li>
             </template>
           </ul>
         </div>
-        
-        <!-- PM Routine -->
-        <div>
-          <h3 class="text-brand-aqua text-[10px] uppercase font-bold tracking-[0.2em] mb-10 border-b border-brand-charcoal/5 pb-4 flex items-center">
-            <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></svg>
-            PM: The Recovery Phase
+
+        <!-- PM -->
+        <div class="bg-white rounded-[32px] p-8 shadow-sm border border-brand-charcoal/5">
+          <h3 class="text-brand-aqua text-[10px] uppercase font-bold tracking-[0.2em] mb-6 flex items-center border-b border-brand-charcoal/5 pb-4">
+            <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            Night
           </h3>
-          <ul class="space-y-8">
+          <ul class="space-y-4">
             <template x-if="pmRoutine.length > 0">
               <template x-for="(product, idx) in pmRoutine" :key="product.id">
-                <li class="flex items-center space-x-6">
-                  <span class="font-serif text-3xl opacity-10" x-text="'0' + (idx + 1)"></span>
-                  <div class="flex flex-col">
-                    <span class="text-xs font-bold uppercase tracking-widest text-brand-aqua mb-1" x-text="getRoleForProduct(product.handle)"></span>
-                    <span class="font-serif text-xl" x-text="product.title"></span>
+                <li class="flex items-center space-x-4">
+                  <div class="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-[#f8faf9]">
+                    <img :src="product.custom_image" :alt="product.title" class="w-full h-full object-cover">
                   </div>
+                  <div class="flex flex-col flex-grow">
+                    <span class="text-[9px] font-bold uppercase tracking-widest text-brand-aqua mb-1" x-text="getRoleName(product.handle)"></span>
+                    <span class="font-serif text-[15px] leading-tight text-brand-slate" x-text="product.title"></span>
+                  </div>
+                  <span class="text-sm font-light whitespace-nowrap" x-text="'₹' + (product.price / 100)"></span>
                 </li>
               </template>
             </template>
             <template x-if="pmRoutine.length === 0">
-              <li class="text-sm font-light text-brand-charcoal/50 italic py-4">No evening steps required.</li>
+              <li class="text-sm font-light text-brand-slate/50 italic py-2">No evening steps required.</li>
             </template>
           </ul>
         </div>
-
       </div>
 
-      <button 
-        @click="addAllToCart"
-        :disabled="isAddingToCart || routineItems.length === 0"
-        :class="(isAddingToCart || routineItems.length === 0) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-brand-aqua active:scale-95'"
-        class="bg-brand-slate text-white px-16 py-6 rounded-full text-xs uppercase tracking-widest font-bold transition-all duration-300 flex items-center space-x-4 shadow-xl"
-      >
-        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-        <span x-text="isAddingToCart ? 'Adding...' : 'Add Full Routine to Cart (₹' + totalPrice + ')'"></span>
-      </button>
+      <!-- Final CTA -->
+      <div class="w-full flex flex-col items-center mb-24 border-b border-brand-charcoal/10 pb-16">
+        <div class="bg-brand-aqua/10 text-brand-aqua px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6">
+          Unlock 10% Off Routine Bundle
+        </div>
+        
+        <button 
+          @click="addAllToCart"
+          :disabled="isAddingToCart || routineItems.length === 0"
+          :class="(isAddingToCart || routineItems.length === 0) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-brand-aqua hover:text-white active:scale-95'"
+          class="w-full max-w-sm bg-brand-slate text-white px-10 py-5 rounded-full text-xs uppercase tracking-widest font-bold transition-all duration-300 flex items-center justify-center shadow-xl mb-6"
+        >
+          <span x-text="isAddingToCart ? 'Adding...' : 'Shop This Routine (₹' + (totalPrice * 0.9).toFixed(0) + ')'"></span>
+        </button>
+
+        <button 
+          @click="retake"
+          class="text-[10px] font-bold uppercase tracking-widest text-brand-charcoal/40 hover:text-brand-charcoal transition-colors underline"
+        >
+          Retake Consultation
+        </button>
+      </div>
+
+      <!-- Why This Routine -->
+      <div class="text-center mb-16 max-w-2xl mx-auto">
+        <h3 class="font-serif text-3xl mb-4 text-brand-slate">Why This Routine?</h3>
+        <p class="text-brand-slate/70 font-light leading-relaxed" x-text="getWhyRoutineText()"></p>
+      </div>
+
+      <!-- Products Included -->
+      <div class="mb-20">
+        <h3 class="font-serif text-3xl mb-8 text-center text-brand-slate">Products Included</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <template x-for="product in routineItems" :key="product.id">
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-brand-charcoal/5 flex flex-col h-full">
+              <div class="flex items-start space-x-4 mb-4 border-b border-brand-charcoal/5 pb-4">
+                <img :src="product.custom_image" class="w-16 h-16 rounded-xl object-cover bg-[#f8faf9] flex-shrink-0">
+                <div>
+                  <h4 class="font-serif text-lg mb-1 text-brand-slate leading-tight" x-text="product.title"></h4>
+                  <p class="text-[10px] text-brand-aqua font-bold uppercase tracking-widest" x-text="getRoleName(product.handle)"></p>
+                </div>
+              </div>
+              <div class="flex-grow">
+                <p class="text-xs font-bold text-brand-slate mb-1">Why it's included</p>
+                <p class="text-xs text-brand-slate/70 font-light mb-3" x-text="window.scoringConfig[product.handle]?.tags?.includes(answers.concern) ? 'Directly targets your primary concern with active ingredients.' : 'Supports barrier function and overall skin health to complement your treatment.'"></p>
+                
+                <p class="text-xs font-bold text-brand-slate mb-1">When to use</p>
+                <p class="text-xs text-brand-slate/70 font-light" x-text="(amRoutine.find(p => p.id === product.id) && pmRoutine.find(p => p.id === product.id)) ? 'Morning & Night' : (amRoutine.find(p => p.id === product.id) ? 'Morning' : 'Night')"></p>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- Routine Timeline -->
+      <div class="mb-20 bg-white p-10 lg:p-16 rounded-[40px] shadow-sm border border-brand-charcoal/5">
+        <h3 class="font-serif text-3xl mb-12 text-center text-brand-slate">Routine Timeline</h3>
+        <div class="flex flex-col md:flex-row justify-between items-center text-center gap-8 md:gap-0">
+          <div class="max-w-[200px]">
+            <div class="w-12 h-12 rounded-full bg-brand-aqua/10 text-brand-aqua flex items-center justify-center mx-auto mb-4 font-bold">1</div>
+            <div class="font-bold text-brand-slate mb-2">Week 1</div>
+            <p class="text-sm text-brand-slate/70 font-light">Build consistency.</p>
+          </div>
+          <div class="hidden md:block flex-grow h-px bg-brand-charcoal/10 mx-6"></div>
+          <div class="max-w-[200px]">
+            <div class="w-12 h-12 rounded-full bg-brand-aqua/10 text-brand-aqua flex items-center justify-center mx-auto mb-4 font-bold">2</div>
+            <div class="font-bold text-brand-slate mb-2">Weeks 2-4</div>
+            <p class="text-sm text-brand-slate/70 font-light">Skin begins adjusting.</p>
+          </div>
+          <div class="hidden md:block flex-grow h-px bg-brand-charcoal/10 mx-6"></div>
+          <div class="max-w-[200px]">
+            <div class="w-12 h-12 rounded-full bg-brand-aqua/10 text-brand-aqua flex items-center justify-center mx-auto mb-4 font-bold">3</div>
+            <div class="font-bold text-brand-slate mb-2">Weeks 4-8</div>
+            <p class="text-sm text-brand-slate/70 font-light">Visible improvement.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="max-w-2xl mx-auto text-left pb-16">
+        <h3 class="font-serif text-3xl mb-8 text-center text-brand-slate">FAQs</h3>
+        <div class="space-y-6">
+          <div class="border-b border-brand-charcoal/10 pb-6">
+            <h4 class="font-bold text-brand-slate mb-2 text-lg">Can I skip products?</h4>
+            <p class="text-sm text-brand-slate/70 font-light">For the best results, we recommend using the full routine. However, cleansing and moisturizing are the non-negotiable foundations.</p>
+          </div>
+          <div class="border-b border-brand-charcoal/10 pb-6">
+            <h4 class="font-bold text-brand-slate mb-2 text-lg">Can beginners use this?</h4>
+            <p class="text-sm text-brand-slate/70 font-light">Absolutely. This routine was generated based on your experience level to ensure it is effective yet gentle.</p>
+          </div>
+          <div class="border-b border-brand-charcoal/10 pb-6">
+            <h4 class="font-bold text-brand-slate mb-2 text-lg">How long does one routine last?</h4>
+            <p class="text-sm text-brand-slate/70 font-light">With daily use, full-sized products typically last 60 to 90 days depending on the frequency of application.</p>
+          </div>
+          <div class="border-b border-brand-charcoal/10 pb-6">
+            <h4 class="font-bold text-brand-slate mb-2 text-lg">Can I mix with other brands?</h4>
+            <p class="text-sm text-brand-slate/70 font-light">Yes, though our formulas are designed to work synergistically for maximum efficacy. If introducing new actives, do so gradually.</p>
+          </div>
+        </div>
+      </div>
 
     </div>
-
-  </main>
-
-  <!-- Footer Navigation (Back Button) -->
-  <div x-show="step < 5" class="fixed bottom-12 left-1/2 -translate-x-1/2 z-20">
-    <button 
-      @click="prevStep"
-      :disabled="step === 1"
-      :class="step === 1 ? 'opacity-0 pointer-events-none' : 'opacity-40 hover:opacity-100'"
-      class="flex items-center space-x-3 text-[10px] uppercase tracking-widest font-bold transition-opacity"
-    >
-      <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-      <span>Go Back</span>
-    </button>
   </div>
 
 </div>
