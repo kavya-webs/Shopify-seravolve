@@ -134,11 +134,24 @@
            <h1 class="font-serif text-4xl lg:text-6xl font-light text-brand-slate mb-6 leading-[1.05]">
              {{ product.title }}
            </h1>
-           <p class="text-[10px] lg:text-xs font-sans uppercase tracking-[0.4em] text-brand-slate-light font-bold mb-16 enrichment-tagline">
+           {% if product.metafields.custom.parent_routine != blank %}
+             {% assign parent = product.metafields.custom.parent_routine.value %}
+             <div class="mb-10 inline-flex flex-col space-y-2">
+               <a href="{{ parent.url }}" class="group flex items-center space-x-2 bg-brand-aqua/10 text-brand-aqua px-4 py-2 rounded-full hover:bg-brand-aqua hover:text-white transition-colors duration-300 w-fit">
+                 <span class="text-[10px] uppercase tracking-widest font-bold">Part of the {{ parent.title }}</span>
+                 <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+               </a>
+               {% if product.metafields.custom.routine_step != blank %}
+                 <span class="text-[11px] text-brand-slate/60 font-bold ml-2">✓ {{ product.metafields.custom.routine_step }}</span>
+               {% endif %}
+             </div>
+           {% endif %}
+
+           <p class="text-[10px] lg:text-xs font-sans uppercase tracking-[0.4em] text-brand-slate-light font-bold mb-12 enrichment-tagline">
              {{ product.type | default: 'Treatment' }}
           </p>
 
-           <div class="h-px w-full bg-brand-marble/50 mb-16"></div>
+           <div class="h-px w-full bg-brand-marble/50 mb-12"></div>
 
           <div class="flex items-center justify-between mb-16">
              <div class="space-y-2">
@@ -173,13 +186,27 @@
              </a>
           </div>
 
-          <div class="mt-12 flex flex-col space-y-3 items-center lg:items-start">
-            <p class="text-[10px] lg:text-[11px] uppercase tracking-[0.2em] font-black text-brand-slate-light">
-              FREE DELIVERY ON ORDERS ₹999+
-            </p>
-            <p class="text-[10px] uppercase tracking-[0.3em] font-black text-brand-aqua/40 italic">
-              CLINICAL CLEARANCE: FINAL SALE 
-            </p>
+          <div class="mt-12 grid grid-cols-2 sm:grid-cols-3 gap-y-5 gap-x-4 text-[11px] font-bold text-brand-slate/70">
+            <div class="flex items-center space-x-2">
+              <svg class="w-4 h-4 text-brand-aqua flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Free Shipping</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <svg class="w-4 h-4 text-brand-aqua flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Made in India</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <svg class="w-4 h-4 text-brand-aqua flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Cruelty Free</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <svg class="w-4 h-4 text-brand-aqua flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Sulphate Free</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <svg class="w-4 h-4 text-brand-aqua flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Paraben Free</span>
+            </div>
           </div>
 
           <div class="mt-24 grid grid-cols-2 gap-12 pt-12 border-t border-brand-marble/30">

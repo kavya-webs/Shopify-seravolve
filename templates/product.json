@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
@@ -17,12 +8,28 @@
       "type": "product-trust-badges",
       "settings": {}
     },
-    "molecular_science": {
-      "type": "product-molecular-science",
+    "why_exists": {
+      "type": "product-why-exists",
       "settings": {}
     },
-    "routine": {
-      "type": "product-routine",
+    "key_benefits": {
+      "type": "product-key-benefits",
+      "settings": {}
+    },
+    "how_to_use": {
+      "type": "product-how-to-use",
+      "settings": {}
+    },
+    "ingredients": {
+      "type": "product-ingredients",
+      "settings": {}
+    },
+    "complete_routine": {
+      "type": "product-complete-routine",
+      "settings": {}
+    },
+    "related_routines": {
+      "type": "product-related-routines",
       "settings": {}
     },
     "faq": {
@@ -61,10 +68,14 @@
   "order": [
     "main",
     "trust_badges",
-    "molecular_science",
-    "routine",
+    "why_exists",
+    "key_benefits",
+    "how_to_use",
+    "ingredients",
+    "complete_routine",
     "1781951112656a555b",
     "faq",
+    "related_routines",
     "shipping",
     "sticky_bar"
   ]

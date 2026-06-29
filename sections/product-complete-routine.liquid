@@ -1,0 +1,68 @@
+<section class="py-20 lg:py-32 px-6 lg:px-20 bg-brand-aqua-mist/20">
+  <div class="max-w-6xl mx-auto text-center">
+    
+    {%- assign parent = product.metafields.custom.parent_routine.value -%}
+    {%- if parent != blank and parent.metafields.custom.routine_products.value != blank -%}
+      
+      <p class="text-[9px] uppercase tracking-[0.5em] font-bold mb-6 text-brand-aqua">Ecosystem</p>
+      <h2 class="font-serif text-4xl lg:text-5xl font-light text-brand-slate mb-16">Complete Your Routine</h2>
+      
+      {%- assign all_products = parent.metafields.custom.routine_products.value -%}
+      {%- assign total_steps = all_products | size -%}
+      
+      <div class="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-4 lg:gap-8 mb-20 relative">
+        <!-- Connecting Line for Desktop -->
+        <div class="hidden md:block absolute top-1/2 left-[10%] right-[10%] h-px bg-brand-charcoal/10 -translate-y-1/2 z-0"></div>
+
+        {%- for p in all_products -%}
+          {%- assign is_current = false -%}
+          {%- if p.id == product.id -%}
+            {%- assign is_current = true -%}
+          {%- endif -%}
+
+          <div class="relative z-10 flex flex-col items-center group w-full max-w-[200px]">
+            <a href="{{ p.url }}" class="block w-32 h-40 rounded-2xl overflow-hidden bg-white mb-6 shadow-sm border {% if is_current %}border-brand-aqua ring-4 ring-brand-aqua/10 scale-110{% else %}border-brand-charcoal/5 hover:border-brand-aqua/30 hover:-translate-y-2{% endif %} transition-all duration-300 relative">
+              <img src="{{ p.featured_image | image_url: width: 300 }}" alt="{{ p.title }}" class="w-full h-full object-cover mix-blend-multiply p-2">
+              {%- if is_current -%}
+                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-brand-aqua text-white text-[9px] uppercase tracking-widest font-bold px-3 py-1 rounded-full whitespace-nowrap">Current</div>
+              {%- endif -%}
+            </a>
+            
+            <p class="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-aqua mb-2">Step {{ forloop.index }}</p>
+            <h3 class="font-serif text-sm lg:text-base text-brand-slate mb-1 leading-tight {% if is_current %}font-medium{% endif %}">{{ p.title | split: 'for' | first | strip }}</h3>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="flex flex-col items-center">
+        <p class="text-sm text-brand-slate/70 mb-8 max-w-md mx-auto">This product works best when used as part of the complete {{ parent.title }}.</p>
+        <product-form>
+          {%- form 'product', parent, id: 'CompleteRoutineForm' -%}
+            <input type="hidden" name="id" value="{{ parent.selected_or_first_available_variant.id }}">
+            <button type="submit" class="bg-brand-slate text-white px-10 py-5 rounded-full text-xs uppercase tracking-[0.2em] font-bold hover:bg-brand-aqua transition-colors shadow-xl flex items-center space-x-3">
+              <span>Add Complete Routine</span>
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          {%- endform -%}
+        </product-form>
+      </div>
+
+    {%- else -%}
+      <div class="py-12 px-6 border border-dashed border-brand-charcoal/20 rounded-2xl max-w-2xl mx-auto">
+        <p class="italic text-brand-slate/50">Please assign a Routine product to the `custom.parent_routine` metafield, and ensure that Routine product has its `custom.routine_products` filled out!</p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Complete Routine",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Complete Routine"
+    }
+  ]
+}
+{% endschema %}

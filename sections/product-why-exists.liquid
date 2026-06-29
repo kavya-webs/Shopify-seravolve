@@ -1,0 +1,30 @@
+<section class="py-20 lg:py-32 px-6 lg:px-20 bg-brand-aqua-mist/10">
+  <div class="max-w-4xl mx-auto text-center">
+    {%- assign why_exists = product.metafields.custom.why_we_made_this.value -%}
+    
+    <p class="text-[9px] uppercase tracking-[0.5em] font-bold mb-6 text-brand-aqua">The Purpose</p>
+    <h2 class="font-serif text-3xl lg:text-5xl font-light text-brand-slate mb-10">Why we made this</h2>
+    
+    {%- if why_exists != blank -%}
+      <div class="text-lg lg:text-xl text-brand-slate-light leading-relaxed font-light">
+        {{ why_exists | newline_to_br }}
+      </div>
+    {%- else -%}
+      <div class="text-lg lg:text-xl text-brand-slate-light/50 italic leading-relaxed font-light border border-dashed border-brand-charcoal/20 p-8 rounded-2xl">
+        Please fill out the 'Why we made this' metafield (custom.why_we_made_this).
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Why Exists",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product Why Exists"
+    }
+  ]
+}
+{% endschema %}

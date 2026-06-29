@@ -1,0 +1,62 @@
+<section class="py-20 lg:py-32 px-6 lg:px-20 bg-white" x-data="{ tab: 'active' }">
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-16 text-center">
+      <p class="text-[9px] uppercase tracking-[0.5em] font-bold mb-6 text-brand-aqua">Transparency</p>
+      <h2 class="font-serif text-3xl lg:text-5xl font-light text-brand-slate mb-10">Formulation</h2>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex items-center justify-center space-x-6 border-b border-brand-charcoal/10 mb-12">
+      <button @click="tab = 'active'" :class="tab === 'active' ? 'text-brand-aqua border-brand-aqua' : 'text-brand-slate/50 border-transparent hover:text-brand-slate'" class="pb-4 px-2 text-xs uppercase tracking-[0.2em] font-bold border-b-2 transition-colors">Active Ingredients</button>
+      <button @click="tab = 'full'" :class="tab === 'full' ? 'text-brand-aqua border-brand-aqua' : 'text-brand-slate/50 border-transparent hover:text-brand-slate'" class="pb-4 px-2 text-xs uppercase tracking-[0.2em] font-bold border-b-2 transition-colors">Full List</button>
+      <button @click="tab = 'why'" :class="tab === 'why' ? 'text-brand-aqua border-brand-aqua' : 'text-brand-slate/50 border-transparent hover:text-brand-slate'" class="pb-4 px-2 text-xs uppercase tracking-[0.2em] font-bold border-b-2 transition-colors">Why We Chose Them</button>
+    </div>
+
+    <!-- Content -->
+    <div class="bg-[#f8faf9] rounded-3xl p-10 lg:p-16 min-h-[250px] border border-brand-charcoal/5 shadow-sm">
+      
+      <!-- Active -->
+      <div x-show="tab === 'active'" x-transition.opacity>
+        {%- assign active = product.metafields.custom.ingredients_active.value -%}
+        {%- if active != blank -%}
+          <div class="text-sm lg:text-base text-brand-slate-light leading-relaxed whitespace-pre-wrap">{{ active }}</div>
+        {%- else -%}
+          <p class="italic text-brand-slate/50">Please fill out `custom.ingredients_active` metafield.</p>
+        {%- endif -%}
+      </div>
+
+      <!-- Full -->
+      <div x-show="tab === 'full'" x-transition.opacity style="display: none;">
+        {%- assign full = product.metafields.custom.ingredients_full.value -%}
+        {%- if full != blank -%}
+          <p class="text-xs lg:text-sm text-brand-slate-light/70 leading-relaxed font-mono whitespace-pre-wrap">{{ full }}</p>
+        {%- else -%}
+          <p class="italic text-brand-slate/50">Please fill out `custom.ingredients_full` metafield.</p>
+        {%- endif -%}
+      </div>
+
+      <!-- Why -->
+      <div x-show="tab === 'why'" x-transition.opacity style="display: none;">
+        {%- assign why = product.metafields.custom.ingredients_why.value -%}
+        {%- if why != blank -%}
+          <div class="text-sm lg:text-base text-brand-slate-light leading-relaxed whitespace-pre-wrap">{{ why }}</div>
+        {%- else -%}
+          <p class="italic text-brand-slate/50">Please fill out `custom.ingredients_why` metafield.</p>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Ingredients",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product Ingredients"
+    }
+  ]
+}
+{% endschema %}

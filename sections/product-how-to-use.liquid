@@ -1,0 +1,52 @@
+<section class="py-20 lg:py-32 px-6 lg:px-20 bg-brand-charcoal text-white relative overflow-hidden">
+  <div class="max-w-4xl mx-auto relative z-10">
+    <div class="mb-20 text-center">
+      <p class="text-[9px] uppercase tracking-[0.5em] font-bold mb-6 text-brand-aqua">The Application</p>
+      <h2 class="font-serif text-3xl lg:text-5xl font-light mb-10">How To Use</h2>
+      
+      <div class="inline-flex space-x-4">
+        {%- if product.handle contains 'night' -%}
+          <span class="bg-brand-slate text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full text-white">Night Routine</span>
+        {%- elsif product.handle contains 'spf' or product.handle contains 'sunscreen' -%}
+          <span class="bg-white/10 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full text-white">Morning Routine</span>
+        {%- else -%}
+          <span class="bg-white/10 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full text-white">Morning & Night</span>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- assign how_to_use = product.metafields.custom.how_to_use_steps.value -%}
+    
+    <div class="max-w-2xl mx-auto pl-8 md:pl-0">
+      {%- if how_to_use != blank -%}
+        <div class="space-y-12 relative before:absolute before:inset-0 before:ml-[11px] md:before:mx-auto md:before:translate-x-0 before:w-px before:bg-white/10">
+          {%- for step in how_to_use -%}
+            <div class="relative flex items-center md:justify-between w-full">
+              <!-- Dot -->
+              <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-brand-aqua text-white font-bold text-xs flex items-center justify-center -translate-x-[50%] z-10">{{ forloop.index }}</div>
+              
+              <!-- Content -->
+              <div class="w-full md:w-[45%] {% cycle 'pl-10 md:pl-0 md:text-right', 'pl-10 md:pr-0 md:text-left md:ml-auto' %}">
+                <p class="font-serif text-lg text-white/90 leading-relaxed">{{ step }}</p>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="text-center italic text-white/50 border border-dashed border-white/20 p-8 rounded-2xl">Please fill out `custom.how_to_use_steps` metafield.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product How To Use",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product How To Use"
+    }
+  ]
+}
+{% endschema %}
