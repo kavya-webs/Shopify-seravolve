@@ -12,6 +12,10 @@
       "type": "product-why-exists",
       "settings": {}
     },
+    "who_its_for": {
+      "type": "product-who-its-for",
+      "settings": {}
+    },
     "key_benefits": {
       "type": "product-key-benefits",
       "settings": {}
@@ -69,6 +73,7 @@
     "main",
     "trust_badges",
     "why_exists",
+    "who_its_for",
     "key_benefits",
     "how_to_use",
     "ingredients",

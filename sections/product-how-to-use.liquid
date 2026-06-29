@@ -35,6 +35,38 @@
       {%- else -%}
         <p class="text-center italic text-white/50 border border-dashed border-white/20 p-8 rounded-2xl">Please fill out `custom.how_to_use_steps` metafield.</p>
       {%- endif -%}
+
+      {%- assign routines = product.metafields.custom.parent_routines.value -%}
+      {%- if routines != blank -%}
+        {%- assign primary_routine = routines.first -%}
+        {%- assign all_products = primary_routine.metafields.custom.routine_products.value -%}
+        {%- assign next_product = nil -%}
+        {%- assign found_current = false -%}
+        
+        {%- for p in all_products -%}
+          {%- if found_current -%}
+            {%- assign next_product = p -%}
+            {%- break -%}
+          {%- endif -%}
+          {%- if p.id == product.id -%}
+            {%- assign found_current = true -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if next_product != blank -%}
+          <div class="mt-16 flex justify-center md:justify-end">
+            <a href="{{ next_product.url }}" class="group bg-brand-aqua/20 border border-brand-aqua/30 rounded-2xl p-6 flex items-center space-x-6 hover:bg-brand-aqua/30 transition-all max-w-sm w-full">
+              <div class="w-16 h-16 rounded-xl overflow-hidden bg-white flex-shrink-0">
+                <img src="{{ next_product.featured_image | image_url: width: 200 }}" alt="{{ next_product.title }}" class="w-full h-full object-cover">
+              </div>
+              <div>
+                <p class="text-[9px] uppercase tracking-widest font-bold text-brand-aqua mb-1">Next Step</p>
+                <p class="text-sm font-medium text-white group-hover:text-brand-aqua transition-colors">Pairs best with {{ next_product.title | split: 'for' | first | strip }}</p>
+              </div>
+            </a>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
     </div>
   </div>
 </section>
