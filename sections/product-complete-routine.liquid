@@ -1,7 +1,7 @@
 <section class="py-20 lg:py-32 px-6 lg:px-20 bg-brand-aqua-mist/20">
   <div class="max-w-6xl mx-auto text-center">
     
-    {%- assign parent = product.metafields.custom.parent_routine.value -%}
+    {%- assign parent = product.metafields.custom.parent_routines.value.first -%}
     {%- if parent != blank and parent.metafields.custom.routine_products.value != blank -%}
       
       <p class="text-[9px] uppercase tracking-[0.5em] font-bold mb-6 text-brand-aqua">Ecosystem</p>
