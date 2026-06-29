@@ -56,8 +56,12 @@
         {%- if next_product != blank -%}
           <div class="mt-16 flex justify-center md:justify-end">
             <a href="{{ next_product.url }}" class="group bg-brand-aqua/20 border border-brand-aqua/30 rounded-2xl p-6 flex items-center space-x-6 hover:bg-brand-aqua/30 transition-all max-w-sm w-full">
-              <div class="w-16 h-16 rounded-xl overflow-hidden bg-white flex-shrink-0">
-                <img src="{{ next_product.featured_image | image_url: width: 200 }}" alt="{{ next_product.title }}" class="w-full h-full object-cover">
+              <div class="w-16 h-16 rounded-xl overflow-hidden bg-brand-charcoal/10 flex-shrink-0">
+                {%- if next_product.featured_image != blank -%}
+                  <img src="{{ next_product.featured_image | image_url: width: 200 }}" alt="{{ next_product.title | escape }}" class="w-full h-full object-cover">
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover opacity-50' }}
+                {%- endif -%}
               </div>
               <div>
                 <p class="text-[9px] uppercase tracking-widest font-bold text-brand-aqua mb-1">Next Step</p>

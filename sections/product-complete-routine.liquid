@@ -22,7 +22,11 @@
 
           <div class="relative z-10 flex flex-col items-center group w-full max-w-[200px]">
             <a href="{{ p.url }}" class="block w-32 h-40 rounded-2xl overflow-hidden bg-white mb-6 shadow-sm border {% if is_current %}border-brand-aqua ring-4 ring-brand-aqua/10 scale-110{% else %}border-brand-charcoal/5 hover:border-brand-aqua/30 hover:-translate-y-2{% endif %} transition-all duration-300 relative">
-              <img src="{{ p.featured_image | image_url: width: 300 }}" alt="{{ p.title }}" class="w-full h-full object-cover mix-blend-multiply p-2">
+              {%- if p.featured_image != blank -%}
+                <img src="{{ p.featured_image | image_url: width: 300 }}" alt="{{ p.title | escape }}" class="w-full h-full object-cover mix-blend-multiply p-2">
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover opacity-30 p-2' }}
+              {%- endif -%}
               {%- if is_current -%}
                 <div class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-brand-aqua text-white text-[9px] uppercase tracking-widest font-bold px-3 py-1 rounded-full whitespace-nowrap">Current</div>
               {%- endif -%}

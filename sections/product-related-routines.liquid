@@ -13,8 +13,12 @@
         {%- for parent in routines -%}
           <!-- Render the parent routine product card -->
           <a href="{{ parent.url }}" class="group block bg-[#f8faf9] rounded-[32px] p-6 lg:p-8 border border-brand-charcoal/5 hover:border-brand-aqua/20 transition-all shadow-sm hover:shadow-lg">
-            <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-white mb-8 relative">
-              <img src="{{ parent.featured_image | image_url: width: 600 }}" alt="{{ parent.title }}" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-700">
+            <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-brand-charcoal/5 mb-8 relative">
+              {%- if parent.featured_image != blank -%}
+                <img src="{{ parent.featured_image | image_url: width: 600 }}" alt="{{ parent.title | escape }}" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-700">
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-50' }}
+              {%- endif -%}
               <div class="absolute top-4 left-4 bg-brand-aqua text-white text-[9px] uppercase tracking-widest font-bold px-3 py-1 rounded-full">Complete Routine</div>
             </div>
             
