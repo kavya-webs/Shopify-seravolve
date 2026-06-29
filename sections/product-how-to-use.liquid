@@ -32,8 +32,6 @@
             </div>
           {%- endfor -%}
         </div>
-      {%- else -%}
-        <p class="text-center italic text-white/50 border border-dashed border-white/20 p-8 rounded-2xl">Please fill out `custom.how_to_use_steps` metafield.</p>
       {%- endif -%}
 
       {%- assign routines = product.metafields.custom.parent_routines.value -%}
