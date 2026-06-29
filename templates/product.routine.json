@@ -1,77 +1,57 @@
 {
   "sections": {
     "main": {
-      "type": "routine-pdp",
+      "type": "main-product",
+      "settings": {}
+    },
+    "trust_badges": {
+      "type": "product-trust-badges",
+      "settings": {}
+    },
+    "routine_combo": {
+      "type": "product-routine-combo",
+      "settings": {}
+    },
+    "faq": {
+      "type": "product-faq",
+      "settings": {}
+    },
+    "shipping": {
+      "type": "product-shipping",
+      "settings": {}
+    },
+    "sticky_bar": {
+      "type": "product-sticky-bar",
+      "settings": {}
+    },
+    "1781951112656a555b": {
+      "type": "apps",
       "blocks": {
-        "checklist_1": {
-          "type": "checklist",
+        "judge_me_reviews_review_widget_HJdiYK": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {
-            "text": "You frequently get breakouts"
-          }
-        },
-        "checklist_2": {
-          "type": "checklist",
-          "settings": {
-            "text": "Your skin feels oily"
-          }
-        },
-        "checklist_3": {
-          "type": "checklist",
-          "settings": {
-            "text": "You want a beginner-friendly routine"
-          }
-        },
-        "checklist_4": {
-          "type": "checklist",
-          "settings": {
-            "text": "You don't know which products to combine"
-          }
-        },
-        "faq_1": {
-          "type": "faq",
-          "settings": {
-            "question": "Can beginners use this routine?",
-            "answer": "Absolutely. This routine is designed to be simple and effective without overwhelming your skin barrier."
-          }
-        },
-        "faq_2": {
-          "type": "faq",
-          "settings": {
-            "question": "Can I use it every day?",
-            "answer": "Yes, this sequence is formulated for daily use, morning and night."
-          }
-        },
-        "faq_3": {
-          "type": "faq",
-          "settings": {
-            "question": "Can I skip a step?",
-            "answer": "For best results, we recommend the full sequence. However, cleansing, moisturizing, and SPF are non-negotiable."
-          }
-        },
-        "faq_4": {
-          "type": "faq",
-          "settings": {
-            "question": "How long does it last?",
-            "answer": "With standard daily use, this complete routine typically lasts 60 to 90 days."
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
           }
         }
       },
       "block_order": [
-        "checklist_1",
-        "checklist_2",
-        "checklist_3",
-        "checklist_4",
-        "faq_1",
-        "faq_2",
-        "faq_3",
-        "faq_4"
+        "judge_me_reviews_review_widget_HJdiYK"
       ],
       "settings": {
-        "subheading": "A simple daily skincare routine designed for your skin that focuses on cleansing, balancing and protecting."
+        "include_margins": true
       }
     }
   },
   "order": [
-    "main"
+    "main",
+    "trust_badges",
+    "routine_combo",
+    "1781951112656a555b",
+    "faq",
+    "shipping",
+    "sticky_bar"
   ]
 }
