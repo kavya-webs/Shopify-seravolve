@@ -1,0 +1,326 @@
+{%- assign routine_products = product.metafields.custom.routine_products.value -%}
+{%- assign individual_total = 0 -%}
+{%- assign routine_price = product.price -%}
+
+{%- if routine_products != blank -%}
+  {%- for p in routine_products -%}
+    {%- assign individual_total = individual_total | plus: p.price -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- assign savings = individual_total | minus: routine_price -%}
+
+<div class="w-full min-h-screen bg-[#f8faf9] text-brand-charcoal font-sans pb-32">
+  
+  <!-- HERO -->
+  <section class="w-full bg-brand-charcoal text-white pt-32 pb-24 px-6 lg:px-20 relative overflow-hidden">
+    <!-- Background element -->
+    <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none"></div>
+    
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <p class="text-[10px] text-brand-aqua uppercase tracking-[0.4em] font-bold mb-6">Complete Skin Ritual</p>
+      <h1 class="font-serif text-5xl lg:text-7xl mb-6">{{ product.title }}</h1>
+      <p class="text-white/70 text-lg max-w-2xl mx-auto mb-12">{{ section.settings.subheading }}</p>
+      
+      <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-12">
+        <div class="flex items-center space-x-2 text-sm bg-white/10 px-4 py-2 rounded-full border border-white/5">
+          <svg class="w-4 h-4 text-brand-aqua" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.91 8.84 8.56 2.23a1.93 1.93 0 0 0-1.81 0L2.1 4.9a1.93 1.93 0 0 0-1.81 0l-5.69 3.19a1.93 1.93 0 0 0 0 3.38l12.35 6.61a1.93 1.93 0 0 0 1.81 0l4.65-2.67a1.93 1.93 0 0 0 1.81 0l5.69-3.19a1.93 1.93 0 0 0 0-3.38Z"/><path d="M12 22V12"/><path d="m22.73 17.51-10.73-5.5-10.73 5.5"/></svg>
+          <span>{{ routine_products | size | default: 4 }} Products Included</span>
+        </div>
+        <div class="flex items-center space-x-2 text-sm bg-white/10 px-4 py-2 rounded-full border border-white/5">
+          <svg class="w-4 h-4 text-brand-aqua" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          {% if savings > 0 %}
+            <span>Save {{ savings | money_without_trailing_zeros }}</span>
+          {% else %}
+            <span>Bundle Value</span>
+          {% endif %}
+        </div>
+        <div class="flex items-center space-x-2 text-sm bg-white/10 px-4 py-2 rounded-full border border-white/5">
+          <svg class="w-4 h-4 text-brand-aqua" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+          <span>Free Shipping</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center">
+        <p class="text-3xl font-serif mb-6">{{ routine_price | money_without_trailing_zeros }} <s class="text-white/40 text-xl font-sans ml-2">{% if savings > 0 %}{{ individual_total | money_without_trailing_zeros }}{% endif %}</s></p>
+        <product-form>
+          {%- form 'product', product, id: 'RoutineForm', class: 'w-full' -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button type="submit" class="bg-brand-aqua text-white px-12 py-5 rounded-full text-sm uppercase tracking-widest font-bold hover:bg-brand-aqua-deep transition-all duration-300 w-full md:w-auto shadow-xl shadow-brand-aqua/20">
+              Add Routine To Cart
+            </button>
+          {%- endform -%}
+        </product-form>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section class="py-20 px-6 max-w-4xl mx-auto">
+    <div class="bg-white rounded-[40px] p-10 lg:p-16 shadow-sm border border-brand-charcoal/5">
+      <h2 class="font-serif text-3xl lg:text-4xl text-brand-slate mb-10 text-center">Who It's For</h2>
+      <div class="space-y-4">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'checklist' -%}
+            <div class="flex items-start space-x-4">
+              <div class="w-6 h-6 rounded-full bg-brand-aqua/10 text-brand-aqua flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </div>
+              <p class="text-brand-slate font-medium">{{ block.settings.text }}</p>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <!-- ROUTINE TIMELINE (MORNING / NIGHT) -->
+  <section class="py-12 px-6 max-w-5xl mx-auto">
+    <h2 class="font-serif text-4xl lg:text-5xl text-brand-slate mb-16 text-center">The Sequence</h2>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <!-- Morning -->
+      <div class="relative">
+        <h3 class="text-brand-aqua text-[10px] uppercase font-bold tracking-[0.2em] mb-10 flex items-center border-b border-brand-charcoal/10 pb-4">
+          <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          Morning Routine
+        </h3>
+        <div class="space-y-8 pl-4 border-l border-brand-charcoal/10 relative">
+          {%- if routine_products != blank -%}
+            {%- assign step = 1 -%}
+            {%- for p in routine_products -%}
+              {%- comment -%}Simple logic: if not a heavy night cream, show in AM. You can refine this with metafields per product{%- endcomment -%}
+              {%- unless p.handle contains 'night' or p.handle contains 'retinol' -%}
+              <div class="relative">
+                <div class="absolute -left-[25px] w-6 h-6 rounded-full bg-brand-aqua text-white text-xs flex items-center justify-center font-bold">{{ step }}</div>
+                <h4 class="font-serif text-xl text-brand-slate mb-1">{{ p.title | split: 'for' | first | strip }}</h4>
+                <p class="text-sm text-brand-slate/60 font-light">{{ p.type | default: 'Treatment' }} • Allow 30 seconds to absorb</p>
+              </div>
+              {%- assign step = step | plus: 1 -%}
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- else -%}
+             <p class="text-sm italic text-brand-slate/50">Configure routine_products metafield</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Night -->
+      <div class="relative">
+        <h3 class="text-brand-slate text-[10px] uppercase font-bold tracking-[0.2em] mb-10 flex items-center border-b border-brand-charcoal/10 pb-4">
+          <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          Night Routine
+        </h3>
+        <div class="space-y-8 pl-4 border-l border-brand-charcoal/10 relative">
+          {%- if routine_products != blank -%}
+            {%- assign step = 1 -%}
+            {%- for p in routine_products -%}
+              {%- unless p.handle contains 'spf' or p.handle contains 'sunscreen' -%}
+              <div class="relative">
+                <div class="absolute -left-[25px] w-6 h-6 rounded-full bg-brand-slate text-white text-xs flex items-center justify-center font-bold">{{ step }}</div>
+                <h4 class="font-serif text-xl text-brand-slate mb-1">{{ p.title | split: 'for' | first | strip }}</h4>
+                <p class="text-sm text-brand-slate/60 font-light">{{ p.type | default: 'Treatment' }} • Focus on recovery</p>
+              </div>
+              {%- assign step = step | plus: 1 -%}
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS INCLUDED CARDS -->
+  <section class="py-20 px-6 max-w-6xl mx-auto">
+    <h2 class="font-serif text-4xl lg:text-5xl text-brand-slate mb-12 text-center">Products Included</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {%- if routine_products != blank -%}
+        {%- for p in routine_products -%}
+        <div class="bg-white rounded-[32px] p-6 lg:p-8 flex flex-col md:flex-row gap-6 border border-brand-charcoal/5 shadow-sm">
+          <div class="w-full md:w-32 h-32 md:h-full aspect-square rounded-2xl bg-[#f8faf9] flex-shrink-0 overflow-hidden relative">
+            <img src="{{ p.featured_image | image_url: width: 400 }}" alt="{{ p.title }}" class="w-full h-full object-cover">
+          </div>
+          <div class="flex flex-col justify-center">
+            <h3 class="font-serif text-xl text-brand-slate leading-tight mb-2">{{ p.title }}</h3>
+            <p class="text-[10px] text-brand-aqua uppercase font-bold tracking-widest mb-4">Full Size • {{ p.price | money_without_trailing_zeros }} Value</p>
+            
+            <p class="text-xs font-bold text-brand-slate mb-1">Why it's included</p>
+            <p class="text-sm text-brand-slate/70 font-light mb-3 leading-relaxed">{{ p.description | strip_html | truncatewords: 15 }}</p>
+          </div>
+        </div>
+        {%- endfor -%}
+      {%- else -%}
+        <p class="text-center w-full italic">No products linked via metafield yet.</p>
+      {%- endif -%}
+    </div>
+  </section>
+
+  <!-- WHY THIS ROUTINE WORKS (Sequence Philosophy) -->
+  <section class="py-20 px-6">
+    <div class="max-w-4xl mx-auto bg-brand-aqua/5 rounded-[40px] p-10 lg:p-16 text-center border border-brand-aqua/10">
+      <h2 class="font-serif text-3xl lg:text-4xl text-brand-slate mb-6">Why Sequence Matters</h2>
+      <p class="text-brand-slate/70 text-lg leading-relaxed max-w-2xl mx-auto mb-10">Skincare isn't just about ingredients; it's about sequence. This routine is precisely formulated so each step prepares your skin for the next.</p>
+      
+      <div class="flex flex-col md:flex-row items-center justify-center gap-4 text-sm font-medium text-brand-slate">
+        <span>Cleanse</span>
+        <svg class="w-4 h-4 text-brand-aqua hidden md:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg class="w-4 h-4 text-brand-aqua md:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        <span>Prep</span>
+        <svg class="w-4 h-4 text-brand-aqua hidden md:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg class="w-4 h-4 text-brand-aqua md:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        <span>Treat</span>
+        <svg class="w-4 h-4 text-brand-aqua hidden md:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg class="w-4 h-4 text-brand-aqua md:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        <span>Protect</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPECTED TIMELINE -->
+  <section class="py-12 px-6 max-w-5xl mx-auto mb-20">
+    <h2 class="font-serif text-4xl lg:text-5xl text-brand-slate mb-16 text-center">Expected Timeline</h2>
+    <div class="flex flex-col md:flex-row justify-between items-center text-center gap-10 md:gap-0 bg-white p-12 lg:p-20 rounded-[40px] shadow-sm border border-brand-charcoal/5">
+      <div class="max-w-[220px]">
+        <div class="w-14 h-14 rounded-full bg-brand-aqua/10 text-brand-aqua flex items-center justify-center mx-auto mb-6 font-bold text-lg">1</div>
+        <div class="font-bold text-brand-slate mb-2">Week 1</div>
+        <p class="text-sm text-brand-slate/70 font-light">Build the habit and prepare the skin barrier.</p>
+      </div>
+      <div class="hidden md:block flex-grow h-px bg-brand-charcoal/10 mx-6"></div>
+      <div class="max-w-[220px]">
+        <div class="w-14 h-14 rounded-full bg-brand-aqua/10 text-brand-aqua flex items-center justify-center mx-auto mb-6 font-bold text-lg">2</div>
+        <div class="font-bold text-brand-slate mb-2">Weeks 2-4</div>
+        <p class="text-sm text-brand-slate/70 font-light">Skin begins adapting to active ingredients.</p>
+      </div>
+      <div class="hidden md:block flex-grow h-px bg-brand-charcoal/10 mx-6"></div>
+      <div class="max-w-[220px]">
+        <div class="w-14 h-14 rounded-full bg-brand-aqua/10 text-brand-aqua flex items-center justify-center mx-auto mb-6 font-bold text-lg">3</div>
+        <div class="font-bold text-brand-slate mb-2">Weeks 4-8</div>
+        <p class="text-sm text-brand-slate/70 font-light">Visible improvement with consistent use.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <section class="py-12 px-6 max-w-3xl mx-auto mb-24" x-data="{ activeFaq: null }">
+    <h2 class="font-serif text-4xl text-brand-slate mb-12 text-center">Questions?</h2>
+    <div class="space-y-4">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'faq' -%}
+          <div class="border border-brand-charcoal/10 rounded-2xl bg-white overflow-hidden">
+            <button @click="activeFaq === {{ forloop.index }} ? activeFaq = null : activeFaq = {{ forloop.index }}" class="w-full px-6 py-5 text-left font-bold text-brand-slate flex justify-between items-center">
+              {{ block.settings.question }}
+              <svg class="w-5 h-5 text-brand-aqua transform transition-transform duration-300" :class="activeFaq === {{ forloop.index }} ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div x-show="activeFaq === {{ forloop.index }}" x-collapse>
+              <div class="px-6 pb-5 text-sm text-brand-slate/70 font-light leading-relaxed">
+                {{ block.settings.answer }}
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </section>
+
+  <!-- COMPLETE ROUTINE CTA (BOTTOM) -->
+  <section class="px-6 max-w-4xl mx-auto">
+    <div class="bg-brand-slate text-white rounded-[40px] p-10 lg:p-16 text-center relative overflow-hidden shadow-2xl">
+      <!-- Decor -->
+      <div class="absolute top-0 right-0 w-64 h-64 bg-brand-aqua/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+      <div class="absolute bottom-0 left-0 w-64 h-64 bg-brand-aqua/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+      
+      <div class="relative z-10">
+        <h2 class="font-serif text-4xl lg:text-5xl mb-6">Everything you need.<br>Nothing you don't.</h2>
+        
+        <div class="flex items-center justify-center gap-6 mb-10 mt-10">
+          <div class="text-right">
+            <p class="text-xs uppercase tracking-widest text-white/50 mb-1">Individual Total</p>
+            <p class="text-xl line-through text-white/40">{% if savings > 0 %}{{ individual_total | money_without_trailing_zeros }}{% else %}{{ routine_price | money_without_trailing_zeros }}{% endif %}</p>
+          </div>
+          <div class="w-px h-12 bg-white/20"></div>
+          <div class="text-left">
+            <p class="text-xs uppercase tracking-widest text-brand-aqua font-bold mb-1">Routine Price</p>
+            <p class="text-3xl font-serif">{{ routine_price | money_without_trailing_zeros }}</p>
+          </div>
+        </div>
+
+        <product-form>
+          {%- form 'product', product, id: 'RoutineFormBottom', class: 'w-full flex justify-center' -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button type="submit" class="bg-brand-aqua text-white px-12 py-5 rounded-full text-sm uppercase tracking-widest font-bold hover:bg-white hover:text-brand-slate transition-all duration-300 shadow-xl shadow-brand-aqua/20 flex items-center gap-3">
+              Start This Routine
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          {%- endform -%}
+        </product-form>
+      </div>
+    </div>
+  </section>
+
+  <!-- STICKY MOBILE CTA -->
+  <div class="fixed bottom-0 left-0 w-full bg-white border-t border-brand-charcoal/10 p-4 z-50 md:hidden flex justify-between items-center" x-data="{ show: false }" @scroll.window="show = (window.pageYOffset > 500)">
+    <div x-show="show" x-transition.opacity class="flex justify-between items-center w-full max-w-md mx-auto">
+      <div>
+        <p class="text-[10px] uppercase font-bold text-brand-aqua tracking-widest">{{ product.title | truncate: 15 }}</p>
+        <p class="font-serif text-lg text-brand-slate">{{ routine_price | money_without_trailing_zeros }}</p>
+      </div>
+      <product-form>
+        {%- form 'product', product, id: 'RoutineFormSticky' -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <button type="submit" class="bg-brand-aqua text-white px-6 py-3 rounded-full text-[10px] uppercase tracking-widest font-bold active:scale-95 transition-transform">
+            Add to Cart
+          </button>
+        {%- endform -%}
+      </product-form>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Routine PDP",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "A simple daily skincare routine designed for your skin."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "checklist",
+      "name": "Who It's For Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Checklist Text"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Routine PDP"
+    }
+  ]
+}
+{% endschema %}
