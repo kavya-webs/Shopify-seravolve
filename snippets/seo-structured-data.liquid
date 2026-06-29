@@ -102,3 +102,52 @@
 }
 </script>
 {%- endif -%}
+
+{%- if request.page_type == 'collection' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": {{ collection.title | json }},
+  "description": {{ collection.description | strip_html | json }},
+  "url": {{ shop.url | append: collection.url | json }}
+}
+</script>
+{%- endif -%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ shop.url }}"
+    }
+    {%- if request.page_type == 'product' -%}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ product.title | escape }}",
+      "item": "{{ shop.url }}{{ product.url }}"
+    }
+    {%- elsif request.page_type == 'collection' and collection.handle -%}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ collection.title | escape }}",
+      "item": "{{ shop.url }}{{ collection.url }}"
+    }
+    {%- elsif request.page_type == 'page' -%}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ page.title | escape }}",
+      "item": "{{ shop.url }}{{ page.url }}"
+    }
+    {%- endif -%}
+  ]
+}
+</script>

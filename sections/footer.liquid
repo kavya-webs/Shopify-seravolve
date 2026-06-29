@@ -24,47 +24,57 @@
         </p>
       </div>
 
-      <!-- SHOP -->
+      <!-- QUICK LINKS -->
       <div class="flex flex-col">
-        <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold !text-brand-aqua mb-6">Shop</h3>
+        <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold !text-brand-aqua mb-6">Quick Links</h3>
         <nav class="flex flex-col space-y-4">
-          <a href="{{ routes.collections_url }}/all" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">All Products</a>
-          <a href="{{ routes.search_url }}?q=serum" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Serums</a>
-          <a href="{{ routes.search_url }}?q=moisturizer" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Moisturizers</a>
-          <a href="{{ routes.search_url }}?q=cleanser" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Cleansers</a>
-          <a href="{{ routes.search_url }}?q=sun+protection" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Sun Protection</a>
+          <a href="/pages/routine-builder" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Find My Routine</a>
+          <a href="{{ routes.collections_url }}/all" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Shop All Formulations</a>
+          <a href="/pages/about" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">About Seravolve</a>
         </nav>
       </div>
 
-      <!-- CONCERN -->
+      <!-- CUSTOMER CARE -->
       <div class="flex flex-col">
-        <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold !text-brand-aqua mb-6">Concern</h3>
+        <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold !text-brand-aqua mb-6">Customer Care</h3>
         <nav class="flex flex-col space-y-4">
-          <a href="/pages/concern?selected=acne" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Acne & Breakouts</a>
-          <a href="/pages/concern?selected=dryness" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Dryness & Dehydration</a>
-          <a href="/pages/concern?selected=pigment" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Dullness & Pigmentation</a>
-          <a href="/pages/concern?selected=sun" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">UV & Sun Protection</a>
-          <a href="/pages/concern?selected=pores" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Pores & Texture</a>
-        </nav>
-      </div>
-
-      <!-- SANCTUARY -->
-      <div class="flex flex-col">
-        <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold !text-brand-aqua mb-6">Sanctuary</h3>
-        <nav class="flex flex-col space-y-4">
-          <a href="/pages/routine-builder" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Routine Builder</a>
+          <a href="/pages/shipping-policy" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Shipping & Delivery</a>
+          <a href="/pages/refunds-policy" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Returns & Refunds</a>
           <a href="/pages/contact" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Contact Us</a>
         </nav>
       </div>
 
-      <!-- CONTACT -->
+      <!-- LEARN -->
       <div class="flex flex-col">
-        <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold !text-brand-aqua mb-6">Contact</h3>
+        <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold !text-brand-aqua mb-6">Learn</h3>
         <nav class="flex flex-col space-y-4">
-          <a href="https://wa.me/919978099097" target="_blank" rel="noopener noreferrer" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">+91 9978099097</a>
-          <a href="mailto:info@seravolve.com" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">info@seravolve.com</a>
-          <a href="https://maps.app.goo.gl/iThRaBp2j6i7kGgEA" target="_blank" rel="noopener noreferrer" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">333 Shayona Plaza, Puna-Saroli Junction, BRTS Road, Surat, Gujarat 395010, India</a>
+          <a href="/pages/learn" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Routine Guide</a>
+          <a href="/pages/learn" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Skin Concerns</a>
+          <a href="/blogs/journal" class="text-sm !text-white/70 hover:!text-brand-aqua-light transition-colors duration-200">Journal</a>
         </nav>
+      </div>
+
+      <!-- NEWSLETTER -->
+      <div class="flex flex-col">
+        <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold !text-brand-aqua mb-6">Join The Sanctuary</h3>
+        <p class="text-xs !text-white/50 leading-relaxed font-light mb-4">Subscribe for clinical insights, early access to new formulations, and exclusive rituals.</p>
+        {% form 'customer', class: 'flex flex-col space-y-3' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="relative w-full">
+            <input type="email" 
+                   name="contact[email]" 
+                   id="NewsletterEmail" 
+                   class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-brand-aqua transition-colors"
+                   placeholder="Enter your email" 
+                   required>
+            <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-brand-aqua hover:text-white transition-colors" aria-label="Subscribe">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+          {%- if form.posted_successfully? -%}
+            <p class="text-xs text-brand-aqua mt-2">Welcome to the sanctuary.</p>
+          {%- endif -%}
+        {% endform %}
       </div>
     </div>
 

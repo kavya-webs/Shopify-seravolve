@@ -5,6 +5,9 @@
     {% if request.path == '/pages/products' or request.path == '/collections' or request.path == '/collections/' %}
       <meta http-equiv="refresh" content="0; url=/collections/all">
       <script>window.location.href = '/collections/all';</script>
+    {% elsif request.path == '/learn' %}
+      <meta http-equiv="refresh" content="0; url=/pages/learn">
+      <script>window.location.href = '/pages/learn';</script>
     {% endif %}
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
