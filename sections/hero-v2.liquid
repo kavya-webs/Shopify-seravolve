@@ -18,16 +18,11 @@
       {{ section.settings.description | escape }}
     </p>
 
-    <!-- Dual CTAs -->
-    <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto opacity-0 translate-y-5 animate-fade-up" style="animation-delay: 0.7s; animation-fill-mode: forwards;">
-      <a href="{% if section.settings.primary_link != blank %}{{ section.settings.primary_link }}{% else %}/collections/all{% endif %}" class="group flex items-center justify-center space-x-3 bg-brand-slate text-white w-full sm:w-auto px-8 py-4 rounded-full text-[11px] uppercase tracking-[0.2em] font-accent font-bold hover:bg-brand-slate/90 transition-all duration-300 shadow-lg shadow-brand-slate/15 active:scale-[0.97]">
+    <!-- Single CTA -->
+    <div class="flex flex-col sm:flex-row items-center justify-center w-full sm:w-auto opacity-0 translate-y-5 animate-fade-up" style="animation-delay: 0.7s; animation-fill-mode: forwards;">
+      <a href="{% if section.settings.primary_link != blank %}{{ section.settings.primary_link }}{% else %}/pages/routine-builder{% endif %}" class="group flex items-center justify-center space-x-3 bg-brand-slate text-white w-full sm:w-auto px-8 py-4 rounded-full text-[11px] uppercase tracking-[0.2em] font-accent font-bold hover:bg-brand-slate/90 transition-all duration-300 shadow-lg shadow-brand-slate/15 active:scale-[0.97]">
         <span>{{ section.settings.primary_label | escape }}</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
-
-      <a href="{% if section.settings.secondary_link != blank %}{{ section.settings.secondary_link }}{% else %}/pages/routine-builder{% endif %}" class="group flex items-center justify-center space-x-3 border border-brand-slate/20 bg-white/20 backdrop-blur-sm text-brand-slate w-full sm:w-auto px-8 py-4 rounded-full text-[11px] uppercase tracking-[0.2em] font-accent font-bold hover:bg-white/40 transition-all duration-300 active:scale-[0.97]">
-        <span>{{ section.settings.secondary_label | escape }}</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
       </a>
     </div>
   </div>
@@ -261,17 +256,6 @@
       "type": "url",
       "id": "primary_link",
       "label": "Primary Button Link"
-    },
-    {
-      "type": "text",
-      "id": "secondary_label",
-      "label": "Secondary Button Label",
-      "default": "Shop All"
-    },
-    {
-      "type": "url",
-      "id": "secondary_link",
-      "label": "Secondary Button Link"
     }
   ],
   "presets": [
