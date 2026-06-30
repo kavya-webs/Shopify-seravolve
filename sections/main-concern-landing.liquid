@@ -1,0 +1,130 @@
+{% schema %}
+{
+  "name": "Concern Landing",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Concern Landing"
+    }
+  ]
+}
+{% endschema %}
+
+{%- assign routines = '' -%}
+{%- assign singles = '' -%}
+
+{%- for product in collection.products -%}
+  {%- assign title_down = product.title | downcase -%}
+  {%- if title_down contains 'routine' or title_down contains 'ritual' -%}
+    {%- capture routine_markup -%}
+      <div class="mb-8">
+        {% render 'card-routine', product: product %}
+      </div>
+    {%- endcapture -%}
+    {%- assign routines = routines | append: routine_markup -%}
+  {%- else -%}
+    {%- capture single_markup -%}
+      <li class="grid__item">
+        {% render 'card-product',
+          card_product: product,
+          media_aspect_ratio: 'square',
+          image_shape: 'default',
+          show_secondary_image: true,
+          show_vendor: false,
+          show_rating: true,
+          lazy_load: true
+        %}
+      </li>
+    {%- endcapture -%}
+    {%- assign singles = singles | append: single_markup -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<div class="w-full min-h-screen bg-white">
+  
+  <!-- HERO -->
+  <section class="pt-32 lg:pt-48 pb-20 px-6 lg:px-20 border-b border-brand-marble/10 bg-brand-glacial/5">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end gap-10">
+      <div class="max-w-3xl">
+        <p class="text-[10px] uppercase tracking-[0.4em] font-bold text-brand-aqua mb-6">Targeted Concern</p>
+        <h1 class="font-serif text-5xl lg:text-7xl text-brand-slate leading-tight mb-8">
+          {{ collection.title }}
+        </h1>
+        <p class="text-lg text-brand-slate-light font-medium leading-relaxed max-w-2xl">
+          {{ collection.description | default: "A precision-engineered protocol to target and resolve this specific skin condition at the cellular level." }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE ROUTINE -->
+  <section class="py-24 px-6 lg:px-20">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-16">
+        <h2 class="font-serif text-4xl text-brand-slate mb-4">The Complete Solution</h2>
+        <p class="text-brand-slate-light">Our clinically-synchronized protocol designed specifically for {{ collection.title | downcase }}.</p>
+      </div>
+      
+      {% if routines != blank %}
+        {{ routines }}
+      {% else %}
+        <p class="text-brand-slate-light italic">The protocol for this concern is currently being formulated.</p>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="py-24 px-6 lg:px-20 bg-brand-charcoal text-white">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
+      <div class="lg:w-1/2">
+        <p class="text-[10px] uppercase tracking-[0.4em] font-bold text-brand-aqua mb-6">The Science</p>
+        <h2 class="font-serif text-4xl lg:text-5xl mb-8 leading-tight">Why a single product <br><span class="italic font-light">isn't enough.</span></h2>
+        <p class="text-white/70 font-medium leading-relaxed mb-6">
+          Skin concerns like {{ collection.title | downcase }} are rarely caused by a single factor. They are complex biological responses that require a multi-faceted approach.
+        </p>
+        <p class="text-white/70 font-medium leading-relaxed">
+          Our routines are formulated to synchronize together—clearing the pathway, treating the root cause, and repairing the barrier simultaneously. Using one product in isolation often only treats the symptom, not the system.
+        </p>
+      </div>
+      <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+        <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+          <svg class="w-8 h-8 text-brand-aqua mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <h4 class="font-serif text-xl mb-2">Barrier Safe</h4>
+          <p class="text-xs text-white/50">Formulated to protect your skin's natural defenses.</p>
+        </div>
+        <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+          <svg class="w-8 h-8 text-brand-aqua mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <h4 class="font-serif text-xl mb-2">Clinically Dosed</h4>
+          <p class="text-xs text-white/50">Active ingredients at their optimal functional percentages.</p>
+        </div>
+        <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+          <svg class="w-8 h-8 text-brand-aqua mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <h4 class="font-serif text-xl mb-2">Synchronized</h4>
+          <p class="text-xs text-white/50">pH-balanced to layer perfectly without piling.</p>
+        </div>
+        <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+          <svg class="w-8 h-8 text-brand-aqua mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <h4 class="font-serif text-xl mb-2">High Value</h4>
+          <p class="text-xs text-white/50">Routines offer better value than buying singles.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SINGLE PRODUCTS -->
+  {% if singles != blank %}
+  <section class="py-24 px-6 lg:px-20 bg-white border-t border-brand-marble/10">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-16">
+        <h2 class="font-serif text-3xl text-brand-slate mb-4">Targeted Formulations</h2>
+        <p class="text-brand-slate-light">Individual formulations for {{ collection.title | downcase }} to supplement your existing regimen.</p>
+      </div>
+      
+      <ul class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {{ singles }}
+      </ul>
+    </div>
+  </section>
+  {% endif %}
+
+</div>

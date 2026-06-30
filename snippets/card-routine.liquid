@@ -1,0 +1,58 @@
+{% comment %}
+  Routine Card Snippet
+  Accepts:
+  - product: {Object} Product Liquid object
+{% endcomment %}
+
+<div class="flex flex-col md:flex-row gap-8 bg-brand-glacial/10 rounded-[24px] overflow-hidden border border-brand-marble/20 group cursor-pointer" onclick="window.location.href='{{ product.url }}'">
+  
+  <!-- Image Half -->
+  <div class="w-full md:w-1/2 relative aspect-square md:aspect-auto">
+    <img 
+      src="{{ product.featured_image | image_url: width: 800 }}" 
+      alt="{{ product.title }}" 
+      class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+      loading="lazy"
+    >
+    <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-all"></div>
+  </div>
+
+  <!-- Content Half -->
+  <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+    <p class="text-[10px] uppercase tracking-widest font-black text-brand-aqua mb-4">Complete Protocol</p>
+    <h3 class="font-serif text-3xl md:text-5xl text-brand-slate leading-tight mb-4 group-hover:text-brand-aqua transition-colors">
+      {{ product.title }}
+    </h3>
+    
+    <p class="text-brand-slate-light font-medium mb-8 leading-relaxed">
+      {{ product.metafields.custom.purpose | default: "A comprehensive, multi-step regimen designed to synchronize with your skin's natural biology." }}
+    </p>
+
+    <div class="mb-10 space-y-3 border-l-2 border-brand-aqua/30 pl-6">
+      <p class="text-xs uppercase tracking-widest font-bold text-brand-slate opacity-50 mb-2">Protocol Includes</p>
+      {% assign included_products = product.metafields.custom.included_products | split: "," %}
+      {% if included_products.size > 0 %}
+        {% for item in included_products limit: 4 %}
+          <div class="flex items-center text-sm font-medium text-brand-slate">
+            <svg class="w-4 h-4 text-brand-aqua mr-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+            {{ item | strip }}
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="flex items-center text-sm font-medium text-brand-slate">
+           <svg class="w-4 h-4 text-brand-aqua mr-3 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+           Full Core Set
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="flex items-center justify-between mt-auto">
+      <div class="text-2xl font-mono text-brand-slate tracking-tighter">
+        {{ product.price | money }}
+      </div>
+      <button class="px-8 py-4 bg-brand-charcoal text-white rounded-full text-xs uppercase tracking-widest font-black hover:bg-brand-aqua transition-all hover:-translate-y-1 shadow-lg">
+        View Protocol
+      </button>
+    </div>
+  </div>
+</div>
