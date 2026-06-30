@@ -3,15 +3,15 @@
   <!-- ==========================================
        SECTION 1: HERO (Cinematic & Edge-to-Edge)
        ========================================== -->
-  <section class="relative w-full h-[85vh] md:h-screen flex flex-col items-center justify-center overflow-hidden bg-white text-gray-900">
+  <section class="relative w-full h-[85vh] md:h-screen flex flex-col items-center justify-center overflow-hidden bg-[#F6FBFD]">
     <!-- Background Texture -->
-    <img src="{{ 'texture-gel-blue.png' | asset_url }}" class="absolute inset-0 w-full h-full object-cover opacity-30 scale-105" loading="eager" alt="Gel Texture">
+    <img src="{{ 'texture-gel-blue.png' | asset_url }}" class="absolute inset-0 w-full h-full object-cover scale-105" loading="eager" alt="Gel Texture">
     
-    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center mt-12">
-      <span class="text-xs uppercase tracking-[0.25em] font-bold text-gray-500 mb-8">{{ section.settings.hero_label }}</span>
-      <h1 class="font-serif text-5xl md:text-7xl lg:text-[6rem] leading-[1.05] text-gray-900 mb-8 tracking-tight">{{ section.settings.hero_heading | newline_to_br }}</h1>
-      <p class="text-lg md:text-xl text-gray-600 max-w-2xl font-light leading-relaxed mb-12">{{ section.settings.hero_body }}</p>
-      <a href="#routine" class="px-10 py-4 bg-gray-900 text-white rounded-full font-bold text-sm tracking-widest uppercase hover:scale-105 transition-transform duration-300">{{ section.settings.hero_btn_1 }}</a>
+    <div class="relative z-10 text-center px-8 py-16 md:px-16 md:py-20 max-w-4xl mx-auto flex flex-col items-center mt-12 bg-white/40 backdrop-blur-xl border border-white/50 shadow-2xl rounded-[40px]">
+      <span class="text-xs uppercase tracking-[0.25em] font-bold text-gray-800 mb-6">{{ section.settings.hero_label }}</span>
+      <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-gray-900 mb-8 tracking-tight">{{ section.settings.hero_heading | newline_to_br }}</h1>
+      <p class="text-lg md:text-xl text-gray-800 max-w-2xl font-medium leading-relaxed mb-10">{{ section.settings.hero_body }}</p>
+      <a href="#routine" class="px-10 py-4 bg-gray-900 text-white rounded-full font-bold text-sm tracking-widest uppercase hover:bg-black hover:scale-105 transition-all duration-300 shadow-xl">{{ section.settings.hero_btn_1 }}</a>
     </div>
   </section>
 
