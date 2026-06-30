@@ -120,23 +120,23 @@
       <!-- Items List -->
       <div class="w-full lg:w-2/3 space-y-6">
         <template x-for="(item, index) in cart.items" :key="item.key">
-          <div class="glass p-6 md:p-8 rounded-[32px] border border-brand-marble/30 flex flex-col md:flex-row items-center gap-8 shadow-sm transition-opacity duration-300" :class="{ 'opacity-50 pointer-events-none': loading }">
+          <div class="glass p-4 md:p-6 rounded-[24px] md:rounded-[32px] border border-brand-marble/30 flex flex-row items-stretch md:items-center gap-4 md:gap-6 shadow-sm transition-opacity duration-300 relative" :class="{ 'opacity-50 pointer-events-none': loading }">
             
             <!-- Image -->
-            <a :href="item.url" class="block w-full md:w-32 h-32 flex-shrink-0 bg-white rounded-2xl overflow-hidden border border-brand-marble/10">
+            <a :href="item.url" class="block w-24 md:w-32 flex-shrink-0 bg-white rounded-xl md:rounded-2xl overflow-hidden border border-brand-marble/10 aspect-[3/4]">
               <img :src="item.image" :alt="item.product_title" class="w-full h-full object-cover mix-blend-multiply" />
             </a>
 
             <!-- Details -->
-            <div class="flex-1 w-full flex flex-col justify-between">
-              <div class="flex justify-between items-start mb-4">
-                <div>
-                  <a :href="item.url" class="font-serif text-2xl lg:text-3xl font-light text-brand-slate hover:text-brand-aqua transition-colors" x-text="item.product_title"></a>
+            <div class="flex-1 flex flex-col justify-between py-1 min-w-0">
+              <div class="flex justify-between items-start mb-3 md:mb-4 pr-8 md:pr-0">
+                <div class="min-w-0">
+                  <a :href="item.url" class="font-serif text-[17px] md:text-2xl lg:text-3xl font-light text-brand-slate hover:text-brand-aqua transition-colors line-clamp-2 leading-tight" x-text="item.product_title"></a>
                   <template x-if="item.variant_title && item.variant_title !== 'Default Title'">
                     <p class="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-slate-light/60 mt-1" x-text="item.variant_title"></p>
                   </template>
                   <template x-if="productMeta[item.key] && productMeta[item.key].stepNumber">
-                    <p class="text-[12px] uppercase tracking-[1px] text-brand-slate-light font-bold mt-2">
+                    <p class="text-[10px] md:text-[12px] uppercase tracking-[1px] text-brand-slate-light font-bold mt-1.5 md:mt-2">
                       STEP <span x-text="productMeta[item.key].stepNumber"></span> OF 5 <span class="mx-1">&bull;</span>
                       <template x-if="productMeta[item.key].stepNumber == 1"><span>Cleanse</span></template>
                       <template x-if="productMeta[item.key].stepNumber == 2"><span>Prep</span></template>
@@ -146,8 +146,8 @@
                     </p>
                   </template>
                 </div>
-                <button @click="removeItem(index + 1)" class="w-10 h-10 rounded-full bg-brand-marble/10 flex items-center justify-center text-brand-slate-light hover:text-red-500 hover:bg-red-50 transition-colors flex-shrink-0 ml-4">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                <button @click="removeItem(index + 1)" class="absolute top-4 right-4 md:static w-8 h-8 md:w-10 md:h-10 rounded-full bg-brand-marble/10 flex items-center justify-center text-brand-slate-light hover:text-red-500 hover:bg-red-50 transition-colors flex-shrink-0 md:ml-4">
+                  <svg class="w-3.5 h-3.5 md:w-4 md:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
                 </button>
               </div>
 
@@ -165,9 +165,9 @@
                 
                 <!-- Price -->
                 <div class="text-right flex flex-col">
-                  <span class="text-2xl font-mono font-light text-brand-slate tracking-tighter" x-text="formatMoney(item.final_line_price)"></span>
+                  <span class="text-[17px] md:text-2xl font-mono font-medium md:font-light text-brand-slate tracking-tighter" x-text="formatMoney(item.final_line_price)"></span>
                   <template x-if="item.original_line_price > item.final_line_price">
-                     <span class="text-xs font-mono text-brand-slate-light/60 line-through" x-text="formatMoney(item.original_line_price)"></span>
+                     <span class="text-[10px] md:text-xs font-mono text-brand-slate-light/60 line-through" x-text="formatMoney(item.original_line_price)"></span>
                   </template>
                 </div>
               </div>
