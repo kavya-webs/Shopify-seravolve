@@ -8,16 +8,24 @@
       "type": "product-trust-badges",
       "settings": {}
     },
-    "routine_combo": {
-      "type": "product-routine-combo",
+    "who_its_for": {
+      "type": "product-who-its-for",
+      "settings": {}
+    },
+    "routine_included": {
+      "type": "product-routine-included",
+      "settings": {}
+    },
+    "routine_schedule": {
+      "type": "product-routine-schedule",
+      "settings": {}
+    },
+    "routine_timeline": {
+      "type": "product-routine-timeline",
       "settings": {}
     },
     "faq": {
       "type": "product-faq",
-      "settings": {}
-    },
-    "shipping": {
-      "type": "product-shipping",
       "settings": {}
     },
     "sticky_bar": {
@@ -48,10 +56,12 @@
   "order": [
     "main",
     "trust_badges",
-    "routine_combo",
+    "who_its_for",
+    "routine_included",
+    "routine_schedule",
+    "routine_timeline",
     "1781951112656a555b",
     "faq",
-    "shipping",
     "sticky_bar"
   ]
 }

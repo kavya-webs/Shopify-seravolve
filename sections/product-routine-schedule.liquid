@@ -1,0 +1,74 @@
+<section class="py-20 lg:py-32 px-6 lg:px-20 bg-white">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-16 text-center lg:text-left">
+      <p class="text-[9px] uppercase tracking-[0.5em] font-bold mb-4 text-brand-aqua">Application</p>
+      <h2 class="font-serif text-3xl lg:text-5xl font-light text-brand-slate">Your Daily Ritual</h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+      
+      <!-- Morning Routine -->
+      <div class="bg-[#f8faf9] rounded-3xl p-8 lg:p-12 border border-brand-charcoal/5 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#FFD700]/10 to-transparent rounded-bl-full pointer-events-none"></div>
+        <div class="flex items-center space-x-4 mb-10">
+          <span class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm text-[#FFD700]">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          </span>
+          <h3 class="font-serif text-2xl lg:text-3xl text-brand-slate">Morning Routine</h3>
+        </div>
+        
+        {%- assign morning = product.metafields.custom.routine_schedule_morning.value -%}
+        {%- if morning != blank -%}
+          <div class="space-y-6">
+            {%- for step in morning -%}
+              <div class="flex items-start space-x-4 group">
+                <span class="w-6 h-6 rounded-full bg-brand-aqua/10 text-brand-aqua text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-brand-aqua group-hover:text-white transition-colors">{{ forloop.index }}</span>
+                <p class="text-sm lg:text-base text-brand-slate-light font-medium">{{ step }}</p>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <p class="italic text-brand-slate/50">Please fill out `custom.routine_schedule_morning`</p>
+        {%- endif -%}
+      </div>
+
+      <!-- Night Routine -->
+      <div class="bg-brand-slate rounded-3xl p-8 lg:p-12 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-brand-aqua/20 to-transparent rounded-bl-full pointer-events-none"></div>
+        <div class="flex items-center space-x-4 mb-10">
+          <span class="w-12 h-12 rounded-full bg-brand-slate-light/20 flex items-center justify-center text-brand-aqua-mist border border-white/5">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          </span>
+          <h3 class="font-serif text-2xl lg:text-3xl text-white">Night Routine</h3>
+        </div>
+        
+        {%- assign night = product.metafields.custom.routine_schedule_night.value -%}
+        {%- if night != blank -%}
+          <div class="space-y-6">
+            {%- for step in night -%}
+              <div class="flex items-start space-x-4 group">
+                <span class="w-6 h-6 rounded-full bg-white/10 text-brand-aqua-mist text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-brand-aqua group-hover:text-white transition-colors">{{ forloop.index }}</span>
+                <p class="text-sm lg:text-base text-white/80 font-medium">{{ step }}</p>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <p class="italic text-white/50">Please fill out `custom.routine_schedule_night`</p>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Routine Schedule",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Routine Schedule"
+    }
+  ]
+}
+{% endschema %}

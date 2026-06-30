@@ -170,13 +170,25 @@
 
            <div class="h-px w-full bg-brand-marble/50 mb-12"></div>
 
-          <div class="flex items-center justify-between mb-16">
-             <div class="space-y-2">
-                <p class="text-[9px] uppercase tracking-[0.4em] font-bold text-brand-aqua opacity-80">Biological Mission</p>
-                <p class="text-sm lg:text-base font-medium text-brand-slate-light max-w-sm enrichment-mission">{{ product.description | strip_html | truncate: 60 }}</p>
+           <div class="flex items-start justify-between mb-16 gap-4">
+              <div class="space-y-2 flex-1">
+                 <p class="text-[9px] uppercase tracking-[0.4em] font-bold text-brand-aqua opacity-80">Biological Mission</p>
+                 <p class="text-sm lg:text-base font-medium text-brand-slate-light max-w-sm enrichment-mission">{{ product.description | strip_html | truncate: 60 }}</p>
               </div>
-              <p class="font-serif text-2xl lg:text-3xl font-medium text-brand-slate">{{ product.price | money_without_trailing_zeros }}</p>
-          </div>
+              <div class="flex-shrink-0 text-right">
+                {% if product.compare_at_price > product.price %}
+                  {% assign save_amount = product.compare_at_price | minus: product.price %}
+                  <p class="text-[9px] uppercase tracking-widest font-bold text-brand-aqua mb-1">Better Together</p>
+                  <div class="flex items-end justify-end space-x-2">
+                    <p class="text-brand-slate/40 line-through text-base font-medium">{{ product.compare_at_price | money_without_trailing_zeros }}</p>
+                    <p class="font-serif text-2xl lg:text-3xl font-medium text-brand-slate">{{ product.price | money_without_trailing_zeros }}</p>
+                  </div>
+                  <p class="text-[10px] text-brand-slate/60 font-medium mt-1">Save {{ save_amount | money_without_trailing_zeros }} when purchased as a routine.</p>
+                {% else %}
+                  <p class="font-serif text-2xl lg:text-3xl font-medium text-brand-slate mt-4">{{ product.price | money_without_trailing_zeros }}</p>
+                {% endif %}
+              </div>
+           </div>
 
            <div class="text-sm lg:text-base leading-relaxed text-brand-slate-light/80 mb-20 font-medium">
              {{ product.description }}

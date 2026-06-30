@@ -1,0 +1,60 @@
+<section class="py-20 lg:py-32 px-6 lg:px-20 bg-brand-aqua-mist/10">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-16 text-center lg:text-left">
+      <p class="text-[9px] uppercase tracking-[0.5em] font-bold mb-4 text-brand-aqua">The Ecosystem</p>
+      <h2 class="font-serif text-3xl lg:text-5xl font-light text-brand-slate">Products Included</h2>
+    </div>
+
+    {%- assign routine_products = product.metafields.custom.routine_products.value -%}
+    {%- if routine_products != blank -%}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {%- for p in routine_products -%}
+          {%- assign step_num = p.metafields.custom.step_number.value | plus: 0 -%}
+          {%- assign step_name = 'Step ' | append: forloop.index -%}
+          {%- if step_num == 1 -%}{%- assign step_name = 'Cleanse' -%}{%- endif -%}
+          {%- if step_num == 2 -%}{%- assign step_name = 'Prep' -%}{%- endif -%}
+          {%- if step_num == 3 -%}{%- assign step_name = 'Treat' -%}{%- endif -%}
+          {%- if step_num == 4 -%}{%- assign step_name = 'Hydrate' -%}{%- endif -%}
+          {%- if step_num == 5 -%}{%- assign step_name = 'Protect' -%}{%- endif -%}
+
+          <a href="{{ p.url }}" class="group block bg-white rounded-[32px] p-6 lg:p-8 border border-brand-charcoal/5 hover:border-brand-aqua/20 transition-all shadow-sm hover:shadow-lg">
+            <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-brand-charcoal/5 mb-8 relative">
+              {%- if p.featured_image != blank -%}
+                <img src="{{ p.featured_image | image_url: width: 600 }}" alt="{{ p.title | escape }}" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-700">
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-50' }}
+              {%- endif -%}
+              <div class="absolute top-4 left-4 bg-brand-slate text-white text-[9px] uppercase tracking-widest font-bold px-3 py-1 rounded-full">{{ step_name }}</div>
+            </div>
+            
+            <h3 class="font-serif text-xl lg:text-2xl text-brand-slate mb-2 group-hover:text-brand-aqua transition-colors">{{ p.title }}</h3>
+            <p class="text-sm text-brand-slate/60 font-light mb-6">{{ p.metafields.custom.why_we_made_this | default: p.description | strip_html | truncatewords: 10 }}</p>
+            
+            <div class="flex items-center justify-between mt-auto">
+              <span class="text-xs font-bold uppercase tracking-widest text-brand-aqua border-b border-brand-aqua/30 pb-1 group-hover:border-brand-aqua transition-colors">View Product</span>
+              <span class="w-10 h-10 rounded-full bg-brand-aqua-mist/20 flex items-center justify-center text-brand-aqua group-hover:bg-brand-aqua group-hover:text-white transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="py-12 px-6 border border-dashed border-brand-charcoal/20 rounded-2xl text-center italic text-brand-slate/50">
+        Please select the included products in the `custom.routine_products` metafield.
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Routine Products Included",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Routine Products Included"
+    }
+  ]
+}
+{% endschema %}

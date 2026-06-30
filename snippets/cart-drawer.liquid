@@ -509,6 +509,75 @@
         {%- endif -%}
 
         <!-- Start blocks -->
+        <!-- Cross Sell Logic -->
+        {%- if cart.items.size > 0 -%}
+          {%- assign highest_step = 0 -%}
+          {%- assign target_product = nil -%}
+          {%- assign next_product = nil -%}
+
+          {%- for item in cart.items -%}
+            {%- assign step = item.product.metafields.custom.step_number.value | plus: 0 -%}
+            {%- if step > highest_step -%}
+              {%- assign highest_step = step -%}
+              {%- assign target_product = item.product -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if highest_step > 0 and highest_step < 5 -%}
+            {%- assign routine = target_product.metafields.custom.parent_routines.value.first -%}
+            {%- assign routine_products = routine.metafields.custom.routine_products.value -%}
+            {%- assign found_current = false -%}
+            {%- for p in routine_products -%}
+              {%- if found_current -%}
+                {%- assign next_product = p -%}
+                {%- break -%}
+              {%- endif -%}
+              {%- if p.id == target_product.id -%}
+                {%- assign found_current = true -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- elsif highest_step == 5 -%}
+            {%- assign next_product = target_product.metafields.custom.parent_routines.value.first -%}
+          {%- endif -%}
+
+          {%- if next_product != blank -%}
+            {%- assign in_cart = false -%}
+            {%- for item in cart.items -%}
+              {%- if item.product.id == next_product.id -%}
+                {%- assign in_cart = true -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if in_cart == false -%}
+              <div class="mb-6 mx-4 p-4 bg-brand-aqua-mist/20 rounded-xl border border-brand-aqua/20 shadow-sm">
+                <p class="text-[9px] uppercase tracking-widest font-bold text-brand-aqua mb-3">{% if highest_step == 5 %}Upgrade your routine{% else %}Complete your routine?{% endif %}</p>
+                <div class="flex items-center gap-4">
+                  <div class="w-16 h-16 rounded-lg bg-white overflow-hidden shrink-0 border border-brand-charcoal/5">
+                    {%- if next_product.featured_image != blank -%}
+                      <img src="{{ next_product.featured_image | image_url: width: 150 }}" alt="{{ next_product.title }}" class="w-full h-full object-cover mix-blend-multiply">
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover opacity-30' }}
+                    {%- endif -%}
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-serif text-brand-slate font-medium leading-tight mb-1 truncate">{{ next_product.title | split: 'for' | first | strip }}</p>
+                    <p class="text-[10px] text-brand-slate/60 font-bold mb-2">{{ next_product.price | money_without_trailing_zeros }}</p>
+                  </div>
+                  <product-form>
+                    {%- form 'product', next_product, id: 'CartCrossSellForm' -%}
+                      <input type="hidden" name="id" value="{{ next_product.selected_or_first_available_variant.id }}">
+                      <button type="submit" class="bg-brand-aqua text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-brand-aqua-deep transition-colors shadow-md shrink-0">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14m-7-7h14"/></svg>
+                      </button>
+                    {%- endform -%}
+                  </product-form>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endif -%}
+        <!-- End Cross Sell Logic -->
         <!-- Subtotals -->
 
         <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
