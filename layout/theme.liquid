@@ -40,6 +40,9 @@
     {% elsif request.page_type == 'index' %}
       <meta name="description" content="Discover SERAVOLVE clinical skincare. Expertly formulated serums targeting Indian skin concerns like hyperpigmentation, acne, and anti-aging. Science-backed results.">
     {% endif %}
+    {% if request.page_type == 'cart' %}
+      <meta name="robots" content="noindex,nofollow">
+    {% endif %}
 
     {% render 'seo-structured-data' %}
 

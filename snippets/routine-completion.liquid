@@ -1,0 +1,37 @@
+<template x-if="missingSteps.length > 0">
+  <div class="mt-12 lg:mt-16 border-t border-brand-marble/30 pt-12">
+    <div class="mb-8">
+      <h3 class="font-serif text-3xl font-light text-brand-slate mb-2">Complete Your Routine</h3>
+      <p class="text-[14px] text-brand-slate-light">You're only a few steps away from a complete skincare routine.</p>
+    </div>
+    
+    <div class="flex overflow-x-auto snap-x-mandatory scrollbar-hide -mx-6 px-6 lg:mx-0 lg:px-0 gap-6 pb-4">
+      <template x-for="product in missingSteps" :key="product.handle">
+        <div class="snap-start shrink-0 w-[240px] glass p-4 rounded-3xl border border-brand-marble/30 flex flex-col justify-between hover:shadow-lg transition-shadow">
+          <div>
+            <div class="aspect-square rounded-2xl bg-white mb-4 overflow-hidden">
+              <img :src="product.image" :alt="product.title" class="w-full h-full object-cover mix-blend-multiply" loading="lazy">
+            </div>
+            
+            <p class="text-[10px] uppercase tracking-widest font-bold text-brand-aqua mb-1">
+              STEP <span x-text="product.stepNumber"></span>
+              <template x-if="product.stepNumber == 1"><span class="ml-1">Cleanse</span></template>
+              <template x-if="product.stepNumber == 2"><span class="ml-1">Prep</span></template>
+              <template x-if="product.stepNumber == 3"><span class="ml-1">Treat</span></template>
+              <template x-if="product.stepNumber == 4"><span class="ml-1">Hydrate</span></template>
+              <template x-if="product.stepNumber == 5"><span class="ml-1">Protect</span></template>
+            </p>
+            <h4 class="font-serif text-lg font-light text-brand-slate mb-4 leading-tight line-clamp-2" x-text="product.title"></h4>
+          </div>
+          
+          <div class="flex items-center justify-between mt-4">
+            <span class="font-mono text-brand-slate tracking-tighter" x-text="formatMoney(product.price)"></span>
+            <button @click="addVariantToCart(product.variantId)" class="w-8 h-8 rounded-full bg-brand-aqua-mist flex items-center justify-center text-brand-aqua hover:bg-brand-aqua hover:text-white transition-colors" :class="{ 'opacity-50 pointer-events-none': loading }">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+</template>
