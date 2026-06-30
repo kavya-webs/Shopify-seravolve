@@ -46,15 +46,12 @@
         "why_1_1", "why_1_2", "why_1_3"
       ],
       "settings": {
-        "hero_headline": "THE ACNE PROTOCOL",
-        "hero_title": "Engineered for clarity.",
-        "hero_text": "You don't need a degree in skincare. You need a system that works. We eliminated the guesswork to deliver a synchronized, non-comedogenic routine designed specifically for acne-prone skin.",
-        "hero_btn": "View The Protocol",
-        "hero_sub_btn": "Discover the Science",
-        "talk_headline": "Designed for skin dealing with:",
-        "talk_subheadline": "A unified system engineered to restore clarity without compromising the skin barrier.",
-        "why_headline": "The mechanics of a breakout.",
-        "why_subheadline": "Acne is not a single symptom; it is a cascade. Excess sebum traps cellular debris, creating an environment that leads to visible inflammation. Addressing it requires a complete system, not isolated ingredients.",
+        "hero_label": "THE ACNE PROTOCOL",
+        "hero_heading": "Engineered for clarity.",
+        "hero_body": "You don't need a degree in skincare. You need a system that works. We eliminated the guesswork to deliver a synchronized, non-comedogenic routine designed specifically for acne-prone skin.",
+        "hero_btn_1": "View The Protocol",
+        "hero_btn_2": "Discover the Science",
+        "understand_heading": "Designed for skin dealing with:\nA unified system engineered to restore clarity without compromising the skin barrier.",
         "why_bottom": "The solution is a synchronized daily routine.",
         "comp_headline": "Most brands sell products. We engineer solutions.",
         "diff_other_1": "Research individual actives",
@@ -65,14 +62,15 @@
         "diff_us_2": "Trust a synchronized system",
         "diff_us_3": "Protect the skin barrier",
         "diff_us_4": "Maintain simple consistency",
-        "timeline_headline": "Clinical Timeline",
+        "routine_headline": "Designed around your concern.\nNot around ingredients.",
+        "routine_subheading": "Everything below has one purpose:\nsupporting acne-prone skin with a simple daily routine.",
         "expect_disclaimer": "*Individual results may vary based on skin biology and adherence to the protocol.",
-        "habits_headline": "Protocol Enhancements",
-        "final_headline": "Stop mixing ingredients.",
-        "final_subheadline": "Start a synchronized protocol.",
-        "final_btn": "Start The Protocol",
-        "final_sub_btn": "Learn More"
+        "final_heading": "Stop mixing ingredients.\nStart a synchronized protocol.",
+        "final_body": "A unified system engineered to restore clarity to acne-prone skin.",
+        "final_btn_1": "Start The Protocol",
+        "final_btn_2": "Learn More"
       }
     }
-  }
+  },
+  "order": ["main"]
 }
