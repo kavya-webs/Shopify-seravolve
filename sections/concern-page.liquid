@@ -1,333 +1,344 @@
-<div class="w-full bg-white font-sans text-brand-charcoal overflow-hidden">
+<div x-data="{ showSticky: false }" @scroll.window="showSticky = (window.pageYOffset > 800)" class="w-full bg-white font-sans text-[#5E6A78] overflow-x-hidden relative">
+
+  <!-- STICKY MOBILE CTA -->
+  <div 
+    class="fixed bottom-4 left-4 right-4 z-50 md:hidden transition-all duration-300 ease-in-out"
+    :class="showSticky ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'"
+    x-cloak
+  >
+    <a href="#routine" class="block w-full py-4 bg-[#2F3948] text-white rounded-full text-center text-[12px] uppercase tracking-[0.15em] font-black shadow-2xl shadow-brand-charcoal/30">
+      {{ section.settings.hero_btn_1 | default: "Start My Routine" }}
+    </a>
+  </div>
 
   <!-- ==========================================
-       SECTION 1: HERO
+       SECTION 1: PREMIUM HERO
        ========================================== -->
-  <section class="relative min-h-[90vh] flex flex-col md:flex-row border-b border-brand-marble/20">
-    <div class="w-full md:w-1/2 flex flex-col justify-center px-6 lg:px-20 py-32 lg:py-48">
-      <div class="max-w-xl">
-        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-brand-aqua mb-6 block">
-          {{ section.settings.hero_label | default: "CONCERN" }}
+  <section class="relative min-h-[90vh] md:min-h-[85vh] rounded-b-[40px] overflow-hidden bg-[#F6FBFD] flex items-end">
+    <!-- Background Image -->
+    {% if section.settings.hero_image != blank %}
+      {{ section.settings.hero_image | image_url: width: 2000 | image_tag: class: 'absolute inset-0 w-full h-full object-cover', loading: 'eager' }}
+    {% else %}
+      <div class="absolute inset-0 w-full h-full bg-gray-200 flex items-center justify-center">Image</div>
+    {% endif %}
+    
+    <!-- Gradient Overlay (Bottom only) -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[#2F3948]/90 via-[#2F3948]/20 to-transparent"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 w-full px-6 lg:px-20 pb-16 pt-32">
+      <div class="max-w-2xl">
+        <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-white/80 mb-4 block">
+          {{ section.settings.hero_label }}
         </span>
-        <h1 class="font-serif text-5xl lg:text-7xl text-brand-slate leading-[1.1] mb-8">
-          {{ section.settings.hero_heading | default: "Simple skincare for clearer-looking skin." }}
+        <h1 class="font-serif text-5xl lg:text-7xl text-white leading-[1.05] mb-6">
+          {{ section.settings.hero_heading | newline_to_br }}
         </h1>
-        <p class="text-lg text-brand-slate-light font-medium leading-relaxed mb-10">
-          {{ section.settings.hero_paragraph | default: "You don't need to understand every skincare ingredient. You need a routine you can follow consistently." }}
+        <p class="text-lg lg:text-xl text-white/90 font-medium leading-relaxed mb-10 max-w-xl">
+          {{ section.settings.hero_body | newline_to_br }}
         </p>
         
-        <!-- Trust Row -->
-        <div class="flex flex-wrap gap-x-6 gap-y-3 text-xs uppercase tracking-widest font-black text-brand-slate opacity-60 mb-12">
-          <span class="flex items-center"><svg class="w-3 h-3 mr-2 text-brand-aqua" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Free Shipping</span>
-          <span class="flex items-center"><svg class="w-3 h-3 mr-2 text-brand-aqua" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Made in India</span>
-          <span class="flex items-center"><svg class="w-3 h-3 mr-2 text-brand-aqua" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Cruelty Free</span>
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a href="#routine" class="px-10 py-5 bg-white text-[#2F3948] rounded-full text-[11px] uppercase tracking-widest font-black hover:bg-[#F6FBFD] transition-colors text-center shadow-lg">
+            {{ section.settings.hero_btn_1 }}
+          </a>
+          <a href="#difference" class="px-10 py-5 bg-transparent border-2 border-white/30 text-white rounded-full text-[11px] uppercase tracking-widest font-black hover:bg-white/10 transition-colors text-center backdrop-blur-sm">
+            {{ section.settings.hero_btn_2 }}
+          </a>
         </div>
 
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a href="{{ section.settings.hero_button_1_link | default: '#routine' }}" class="px-8 py-5 bg-brand-charcoal text-white rounded-full text-[11px] uppercase tracking-widest font-black hover:bg-brand-aqua transition-colors text-center">
-            {{ section.settings.hero_button_1_text | default: "Start Routine" }}
-          </a>
-          <a href="{{ section.settings.hero_button_2_link | default: '/pages/routine-builder' }}" class="px-8 py-5 bg-transparent border-2 border-brand-charcoal text-brand-charcoal rounded-full text-[11px] uppercase tracking-widest font-black hover:bg-brand-charcoal hover:text-white transition-colors text-center">
-            {{ section.settings.hero_button_2_text | default: "Build My Routine" }}
-          </a>
+        <!-- Trust Chips -->
+        <div class="flex flex-wrap gap-x-6 gap-y-3 text-[10px] uppercase tracking-widest font-bold text-white/70">
+          <span class="flex items-center"><svg class="w-3 h-3 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Concern First</span>
+          <span class="flex items-center"><svg class="w-3 h-3 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Cruelty Free</span>
+          <span class="flex items-center"><svg class="w-3 h-3 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Made in India</span>
+          <span class="flex items-center"><svg class="w-3 h-3 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Free Shipping</span>
         </div>
       </div>
-    </div>
-    
-    <div class="w-full md:w-1/2 relative min-h-[50vh] md:min-h-full">
-      {% if section.settings.hero_image != blank %}
-        {{ section.settings.hero_image | image_url: width: 1500 | image_tag: class: 'absolute inset-0 w-full h-full object-cover', loading: 'lazy' }}
-      {% else %}
-        <div class="absolute inset-0 w-full h-full bg-brand-glacial/20 flex items-center justify-center">
-          <span class="text-brand-slate/30 font-serif italic text-2xl">Lifestyle Image</span>
-        </div>
-      {% endif %}
-    </div>
-
-    <!-- Scroll Indicator -->
-    <div class="absolute bottom-8 left-6 lg:left-20 animate-bounce">
-      <svg class="w-6 h-6 text-brand-slate opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
     </div>
   </section>
 
 
   <!-- ==========================================
-       SECTION 2: UNDERSTANDING THE CONCERN
+       SECTION 2: WE UNDERSTAND
        ========================================== -->
-  <section class="py-24 lg:py-32 px-6 lg:px-20 bg-[#F9FAFB]">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="font-serif text-4xl lg:text-5xl text-brand-slate mb-16 text-center">
-        {{ section.settings.understanding_heading | default: "Why do breakouts happen?" }}
+  <section class="py-24 lg:py-32 px-6 lg:px-20 bg-white text-center">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="font-serif text-4xl lg:text-5xl text-[#2F3948] leading-tight mb-16 max-w-3xl mx-auto">
+        {{ section.settings.understand_heading | newline_to_br }}
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
         {% for block in section.blocks %}
-          {% if block.type == 'understanding_card' %}
-            <div class="bg-white p-10 rounded-[32px] border border-brand-marble/20 shadow-sm" {{ block.shopify_attributes }}>
-              <div class="w-12 h-12 bg-brand-glacial/20 text-brand-aqua rounded-full flex items-center justify-center mb-6">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-              </div>
-              <h3 class="font-serif text-2xl text-brand-slate mb-4">{{ block.settings.title | default: "Excess Oil" }}</h3>
-              <p class="text-brand-slate-light font-medium leading-relaxed">{{ block.settings.text | default: "Overproduction of sebum clogs pores." }}</p>
+          {% if block.type == 'understand_card' %}
+            <div class="bg-[#F6FBFD] p-10 rounded-[28px] flex items-center justify-center min-h-[140px]" {{ block.shopify_attributes }}>
+              <p class="font-serif text-xl lg:text-2xl text-[#2F3948] italic">"{{ block.settings.title }}"</p>
             </div>
           {% endif %}
         {% endfor %}
       </div>
 
-      <div class="max-w-2xl mx-auto text-center">
-        <p class="font-serif text-2xl text-brand-slate italic mb-8">
-          {{ section.settings.understanding_bottom_text | default: "The goal isn't finding one miracle ingredient. Healthy skin comes from following a consistent routine every day." }}
-        </p>
-        <div class="w-px h-16 bg-brand-aqua mx-auto opacity-30"></div>
-      </div>
+      <p class="text-sm uppercase tracking-[0.2em] font-black text-[#5E6A78]">
+        That's exactly why Seravolve exists.
+      </p>
     </div>
   </section>
 
 
   <!-- ==========================================
-       SECTION 3: RECOMMENDED ROUTINE (HERO)
+       SECTION 3: WHY ACNE HAPPENS
        ========================================== -->
-  <section id="routine" class="py-24 lg:py-32 px-6 lg:px-20 bg-white">
-    <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-16">
-        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-brand-aqua mb-4 block">Recommended Routine</span>
-        <h2 class="font-serif text-5xl lg:text-6xl text-brand-slate">{{ section.settings.routine_name | default: "Acne Control Routine" }}</h2>
-        <p class="mt-6 text-lg text-brand-slate-light font-medium max-w-2xl mx-auto">{{ section.settings.routine_description | default: "A complete daily skincare routine designed to gently cleanse, support the skin barrier and protect your skin throughout the day." }}</p>
-      </div>
-
-      <div class="bg-brand-charcoal text-white rounded-[40px] p-8 lg:p-16 shadow-2xl relative overflow-hidden">
-        <!-- Abstract shape -->
-        <div class="absolute -top-40 -right-40 w-96 h-96 bg-brand-aqua rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
-        
-        <!-- Steps Visualization -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-16 relative z-10">
-          {% for block in section.blocks %}
-            {% if block.type == 'routine_step_visual' %}
-              <div class="flex-1 flex flex-col items-center text-center group">
-                <div class="w-24 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-6 relative group-hover:border-brand-aqua transition-colors">
-                  {% if block.settings.image != blank %}
-                    {{ block.settings.image | image_url: width: 200 | image_tag: class: 'w-16 h-16 object-cover rounded-full', loading: 'lazy' }}
-                  {% else %}
-                     <span class="text-white/30 text-xs font-mono">IMG</span>
-                  {% endif %}
-                  <div class="absolute -bottom-3 w-6 h-6 bg-brand-aqua text-white rounded-full flex items-center justify-center text-[10px] font-bold">
-                    {{ forloop.index }}
-                  </div>
-                </div>
-                <h4 class="font-serif text-lg mb-1">{{ block.settings.title | default: "Step Name" }}</h4>
-                <p class="text-[10px] uppercase tracking-widest text-white/50 font-black">{{ block.settings.subtitle | default: "Product Type" }}</p>
-              </div>
-              {% unless forloop.last %}
-                <div class="hidden md:block w-8 h-px bg-white/20 mt-[-40px]"></div>
-              {% endunless %}
-            {% endif %}
-          {% endfor %}
-        </div>
-
-        <!-- Pricing & CTA -->
-        <div class="flex flex-col md:flex-row justify-between items-end border-t border-white/10 pt-10 relative z-10">
-          <div>
-            <p class="text-[10px] uppercase tracking-widest font-black text-brand-aqua mb-2">Complete Routine</p>
-            <div class="flex items-baseline gap-4 mb-2">
-              <span class="text-5xl font-mono tracking-tighter">{{ section.settings.routine_price_custom | default: "₹1799" }}</span>
-              <span class="text-xl font-mono text-white/40 line-through">{{ section.settings.routine_price_compare | default: "₹1996" }}</span>
-            </div>
-            <p class="text-xs text-white/60 font-medium">Purchased individually: {{ section.settings.routine_price_compare | default: "₹1996" }}</p>
-            <p class="text-xs text-brand-aqua font-bold mt-1">✓ {{ section.settings.routine_shipping_text | default: "Free Shipping Included" }}</p>
-          </div>
-          
-          <div class="mt-8 md:mt-0 w-full md:w-auto">
-            {% if section.settings.routine_product != blank %}
-              <button 
-                class="w-full md:w-auto px-12 py-5 bg-white text-brand-charcoal rounded-full text-[11px] uppercase tracking-widest font-black hover:bg-brand-aqua hover:text-white transition-all shadow-xl"
-                onclick="window.location.href='{{ section.settings.routine_product.url }}'"
-              >
-                Start This Routine
-              </button>
-            {% else %}
-               <button class="w-full md:w-auto px-12 py-5 bg-white text-brand-charcoal rounded-full text-[11px] uppercase tracking-widest font-black hover:bg-brand-aqua hover:text-white transition-all shadow-xl">
-                Start This Routine
-              </button>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ==========================================
-       SECTION 4: HOW IT WORKS & SECTION 5: AM/PM
-       ========================================== -->
-  <section class="py-24 px-6 lg:px-20 bg-brand-glacial/5 border-y border-brand-marble/20">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20">
-      
-      <!-- How it works (Horizontal Timeline) -->
-      <div>
-        <h3 class="font-serif text-3xl text-brand-slate mb-12">How the Routine Works</h3>
-        <div class="space-y-8">
-          {% for block in section.blocks %}
-            {% if block.type == 'how_it_works' %}
-              <div class="flex items-start gap-6" {{ block.shopify_attributes }}>
-                <div class="w-10 h-10 rounded-full bg-brand-aqua/10 text-brand-aqua flex items-center justify-center font-bold text-sm shrink-0">
-                  {{ forloop.index }}
-                </div>
-                <div>
-                  <h4 class="font-serif text-2xl text-brand-slate mb-2">{{ block.settings.title | default: "Cleanse" }}</h4>
-                  <p class="text-brand-slate-light font-medium">{{ block.settings.text | default: "Daily cleansing." }}</p>
-                </div>
-              </div>
-            {% endif %}
-          {% endfor %}
-        </div>
-      </div>
-
-      <!-- Morning & Night -->
-      <div class="bg-white p-10 lg:p-12 rounded-[32px] border border-brand-marble/20 shadow-sm">
-        <h3 class="font-serif text-3xl text-brand-slate mb-10 text-center">Daily Commitment</h3>
-        
-        <div class="flex flex-col md:flex-row gap-10">
-          <!-- AM -->
-          <div class="flex-1 bg-brand-glacial/10 p-8 rounded-3xl relative">
-            <svg class="w-8 h-8 text-brand-aqua mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-            <h4 class="text-[10px] uppercase tracking-[0.3em] font-black text-brand-slate mb-6">Morning Routine</h4>
-            <div class="space-y-4">
-              {% for block in section.blocks %}
-                {% if block.type == 'am_step' %}
-                  <div class="flex flex-col">
-                    <span class="text-sm font-medium text-brand-slate-light">{{ block.settings.title | default: "Face Wash" }}</span>
-                    {% unless forloop.last %}<span class="text-brand-aqua/30 text-xs ml-2 my-1">↓</span>{% endunless %}
-                  </div>
-                {% endif %}
-              {% endfor %}
-            </div>
-            <div class="mt-8 pt-6 border-t border-brand-marble/20">
-              <span class="text-[10px] uppercase tracking-widest font-black text-brand-aqua">Approx. {{ section.settings.morning_time | default: "3 Minutes" }}</span>
-            </div>
-          </div>
-
-          <!-- PM -->
-          <div class="flex-1 bg-brand-charcoal p-8 rounded-3xl relative text-white">
-            <svg class="w-8 h-8 text-white/50 mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-            <h4 class="text-[10px] uppercase tracking-[0.3em] font-black text-white/80 mb-6">Night Routine</h4>
-            <div class="space-y-4">
-               {% for block in section.blocks %}
-                {% if block.type == 'pm_step' %}
-                  <div class="flex flex-col">
-                    <span class="text-sm font-medium text-white/70">{{ block.settings.title | default: "Face Wash" }}</span>
-                    {% unless forloop.last %}<span class="text-white/20 text-xs ml-2 my-1">↓</span>{% endunless %}
-                  </div>
-                {% endif %}
-              {% endfor %}
-            </div>
-            <div class="mt-8 pt-6 border-t border-white/10">
-              <span class="text-[10px] uppercase tracking-widest font-black text-white/80">Approx. {{ section.settings.night_time | default: "2 Minutes" }}</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ==========================================
-       SECTION 6: WHY THESE PRODUCTS
-       ========================================== -->
-  <section class="py-24 lg:py-32 px-6 lg:px-20 bg-white">
+  <section class="py-24 lg:py-32 px-6 lg:px-20 bg-[#F6FBFD] rounded-[40px]">
     <div class="max-w-7xl mx-auto">
-      <h2 class="font-serif text-4xl lg:text-5xl text-brand-slate mb-16 text-center">Why These Products</h2>
-      
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
         {% for block in section.blocks %}
-          {% if block.type == 'why_product' %}
-            <div class="flex flex-col group" {{ block.shopify_attributes }}>
-              <div class="relative aspect-[3/4] bg-brand-glacial/10 rounded-[32px] overflow-hidden mb-6">
+          {% if block.type == 'why_happens_card' %}
+            <div class="group" {{ block.shopify_attributes }}>
+              <div class="aspect-[4/3] rounded-[28px] overflow-hidden mb-6 bg-white shadow-sm border border-[#2F3948]/5">
                 {% if block.settings.image != blank %}
-                  {{ block.settings.image | image_url: width: 600 | image_tag: class: 'w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110', loading: 'lazy' }}
+                  {{ block.settings.image | image_url: width: 600 | image_tag: class: 'w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition-all duration-700', loading: 'lazy' }}
                 {% else %}
-                  <div class="w-full h-full bg-brand-marble/20"></div>
+                  <div class="w-full h-full bg-gray-100"></div>
                 {% endif %}
               </div>
-              <h4 class="font-serif text-2xl text-brand-slate mb-3">{{ block.settings.title | default: "Clarifying Face Wash" }}</h4>
-              <p class="text-sm text-brand-slate-light font-medium leading-relaxed mb-6 flex-grow">{{ block.settings.text | default: "Designed to gently cleanse daily while helping remove excess oil and impurities." }}</p>
-              
-              <a href="{{ block.settings.link | default: '#' }}" class="text-[10px] uppercase tracking-[0.2em] font-black text-brand-aqua flex items-center group-hover:text-brand-charcoal transition-colors">
-                View Product <svg class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-              </a>
+              <h3 class="font-serif text-2xl text-[#2F3948] mb-3">{{ block.settings.title }}</h3>
+              <p class="text-[#5E6A78] font-medium leading-relaxed">{{ block.settings.text }}</p>
             </div>
           {% endif %}
         {% endfor %}
       </div>
+
+      <div class="max-w-3xl mx-auto text-center">
+        <p class="font-serif text-3xl lg:text-4xl text-[#2F3948] leading-tight">
+          {{ section.settings.why_bottom | newline_to_br }}
+        </p>
+      </div>
     </div>
   </section>
 
+
   <!-- ==========================================
-       SECTION 7: WHO THIS ROUTINE IS FOR
+       SECTION 4: THE SERAVOLVE DIFFERENCE
        ========================================== -->
-  <section class="py-24 lg:py-32 px-6 lg:px-20 bg-brand-glacial/10">
-    <div class="max-w-3xl mx-auto bg-white p-10 lg:p-16 rounded-[40px] shadow-sm text-center">
-      <h2 class="font-serif text-4xl text-brand-slate mb-10">{{ section.settings.who_heading | default: "Is this routine right for you?" }}</h2>
+  <section id="difference" class="py-24 lg:py-32 px-6 lg:px-20 bg-white">
+    <div class="max-w-5xl mx-auto">
+      <div class="bg-[#F6FBFD] rounded-[40px] p-10 lg:p-20 border border-[#2F3948]/5 shadow-sm">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 relative">
+          
+          <!-- VS Badge (Desktop) -->
+          <div class="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white rounded-full items-center justify-center font-serif text-xl text-[#2F3948] shadow-sm z-10">VS</div>
+
+          <!-- Other Skincare -->
+          <div class="flex flex-col items-center md:items-start text-center md:text-left opacity-60">
+            <h3 class="text-xs uppercase tracking-[0.2em] font-black text-[#5E6A78] mb-10">Other Skincare</h3>
+            <div class="space-y-6 w-full max-w-[250px]">
+              <div class="font-serif text-2xl text-[#2F3948]">{{ section.settings.diff_other_1 }}</div>
+              <div class="text-[#5E6A78]">↓</div>
+              <div class="font-serif text-2xl text-[#2F3948]">{{ section.settings.diff_other_2 }}</div>
+              <div class="text-[#5E6A78]">↓</div>
+              <div class="font-serif text-2xl text-[#2F3948]">{{ section.settings.diff_other_3 }}</div>
+              <div class="text-[#5E6A78]">↓</div>
+              <div class="font-serif text-2xl text-[#2F3948]">{{ section.settings.diff_other_4 }}</div>
+            </div>
+          </div>
+
+          <!-- Seravolve -->
+          <div class="flex flex-col items-center md:items-start text-center md:text-left relative">
+            <h3 class="text-xs uppercase tracking-[0.2em] font-black text-[#2F3948] mb-10">Seravolve</h3>
+            <div class="space-y-6 w-full max-w-[250px]">
+              <div class="font-serif text-2xl text-[#2F3948]">{{ section.settings.diff_us_1 }}</div>
+              <div class="text-[#2F3948]/30">↓</div>
+              <div class="font-serif text-2xl text-[#2F3948]">{{ section.settings.diff_us_2 }}</div>
+              <div class="text-[#2F3948]/30">↓</div>
+              <div class="font-serif text-2xl text-[#2F3948]">{{ section.settings.diff_us_3 }}</div>
+              <div class="text-[#2F3948]/30">↓</div>
+              <div class="font-serif text-2xl text-[#2F3948] font-bold">{{ section.settings.diff_us_4 }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-20 text-center">
+          <a href="#routine" class="inline-block px-12 py-5 bg-[#2F3948] text-white rounded-full text-[11px] uppercase tracking-widest font-black hover:bg-[#5E6A78] transition-colors shadow-lg">
+            Show Me My Routine
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       SECTION 5: YOUR ROUTINE (HERO SECTION)
+       ========================================== -->
+  <section id="routine" class="py-12 px-6 lg:px-20 bg-white">
+    <div class="max-w-6xl mx-auto bg-[#F6FBFD] rounded-[40px] lg:rounded-[60px] p-10 lg:p-24 shadow-sm border border-[#2F3948]/5 text-center relative overflow-hidden">
       
-      <div class="flex flex-col gap-4 max-w-sm mx-auto text-left mb-12">
-        {% for block in section.blocks %}
-          {% if block.type == 'who_checklist' %}
-            <div class="flex items-center" {{ block.shopify_attributes }}>
-              <div class="w-6 h-6 rounded-full bg-brand-aqua/10 text-brand-aqua flex items-center justify-center mr-4 shrink-0">
-                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              </div>
-              <span class="text-brand-slate-light font-medium">{{ block.settings.text | default: "Checklist item" }}</span>
-            </div>
-          {% endif %}
-        {% endfor %}
+      <div class="relative z-10 mb-20">
+        <h2 class="font-serif text-4xl lg:text-6xl text-[#2F3948] mb-6 leading-tight">
+          {{ section.settings.routine_headline | newline_to_br }}
+        </h2>
+        <p class="text-lg text-[#5E6A78] font-medium max-w-2xl mx-auto">
+          {{ section.settings.routine_subheading | newline_to_br }}
+        </p>
       </div>
 
-      <a href="{{ section.settings.who_cta_link | default: '#routine' }}" class="inline-block px-12 py-5 bg-brand-charcoal text-white rounded-full text-[11px] uppercase tracking-widest font-black hover:bg-brand-aqua transition-colors shadow-lg">
-        {{ section.settings.who_cta_text | default: "Yes, This Is My Routine" }}
-      </a>
+      <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 mb-20">
+        
+        <!-- AM -->
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto bg-white rounded-full flex items-center justify-center text-[#2F3948] mb-8 shadow-sm">
+            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          </div>
+          <h3 class="text-[10px] uppercase tracking-[0.3em] font-black text-[#5E6A78] mb-8">Morning</h3>
+          <div class="space-y-4">
+            {% for block in section.blocks %}
+              {% if block.type == 'routine_am' %}
+                <div class="font-serif text-3xl text-[#2F3948]">{{ block.settings.text }}</div>
+                {% unless forloop.last %}<div class="text-[#2F3948]/20">↓</div>{% endunless %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- PM -->
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto bg-[#2F3948] rounded-full flex items-center justify-center text-white mb-8 shadow-sm">
+            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          </div>
+          <h3 class="text-[10px] uppercase tracking-[0.3em] font-black text-[#5E6A78] mb-8">Night</h3>
+          <div class="space-y-4">
+            {% for block in section.blocks %}
+              {% if block.type == 'routine_pm' %}
+                <div class="font-serif text-3xl text-[#2F3948]">{{ block.settings.text }}</div>
+                {% unless forloop.last %}<div class="text-[#2F3948]/20">↓</div>{% endunless %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="relative z-10">
+        <a href="#products" class="inline-block px-14 py-6 bg-[#2F3948] text-white rounded-full text-[12px] uppercase tracking-widest font-black hover:bg-[#5E6A78] transition-colors shadow-2xl">
+          Explore Complete Routine
+        </a>
+      </div>
+
     </div>
   </section>
 
   <!-- ==========================================
-       SECTION 8: TIMELINE
+       SECTION 6: EVERY STEP HAS A PURPOSE
        ========================================== -->
-  <section class="py-24 px-6 lg:px-20 bg-white">
+  <section id="products" class="py-24 lg:py-32 px-6 lg:px-20 bg-white">
+    <div class="max-w-5xl mx-auto space-y-8">
+      <h2 class="font-serif text-4xl lg:text-5xl text-[#2F3948] text-center mb-16">Every step has one clear purpose.</h2>
+      
+      {% for block in section.blocks %}
+        {% if block.type == 'step_card' %}
+          <div class="bg-[#F6FBFD] rounded-[40px] p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 border border-[#2F3948]/5" {{ block.shopify_attributes }}>
+            <!-- Image Left -->
+            <div class="w-full md:w-5/12 aspect-square rounded-[28px] overflow-hidden bg-white">
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 600 | image_tag: class: 'w-full h-full object-cover', loading: 'lazy' }}
+              {% else %}
+                <div class="w-full h-full bg-gray-100 flex items-center justify-center text-xs text-gray-400">Product Image</div>
+              {% endif %}
+            </div>
+            
+            <!-- Content Right -->
+            <div class="w-full md:w-7/12">
+              <span class="text-[10px] uppercase tracking-[0.2em] font-black text-[#5E6A78] mb-4 block">{{ block.settings.step_number }}</span>
+              <h3 class="font-serif text-3xl text-[#2F3948] mb-6">{{ block.settings.title }}</h3>
+              <p class="text-lg text-[#5E6A78] mb-8 font-medium">{{ block.settings.text }}</p>
+              
+              <div class="pt-8 border-t border-[#2F3948]/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <span class="font-bold text-[#2F3948]">{{ block.settings.product_name }}</span>
+                <a href="{{ block.settings.product_link | default: '#' }}" class="text-[10px] uppercase tracking-[0.2em] font-black text-[#5E6A78] hover:text-[#2F3948] transition-colors flex items-center">
+                  View Product <svg class="w-3 h-3 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       SECTION 7: WHAT TO EXPECT
+       ========================================== -->
+  <section class="py-24 px-6 lg:px-20 bg-white border-t border-[#2F3948]/5">
     <div class="max-w-4xl mx-auto">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
         {% for block in section.blocks %}
           {% if block.type == 'timeline_step' %}
             <div class="flex-1 flex flex-col items-center text-center group" {{ block.shopify_attributes }}>
-              <span class="text-[10px] uppercase tracking-widest font-black text-brand-aqua mb-4">{{ block.settings.time | default: "Week 1" }}</span>
-              <div class="w-4 h-4 rounded-full bg-brand-glacial border-2 border-brand-aqua mb-6"></div>
-              <p class="font-serif text-xl text-brand-slate">{{ block.settings.result | default: "Build consistency." }}</p>
+              <span class="text-[10px] uppercase tracking-widest font-black text-[#5E6A78] mb-4">{{ block.settings.time }}</span>
+              <div class="w-4 h-4 rounded-full bg-white border-2 border-[#2F3948] mb-6"></div>
+              <p class="font-serif text-xl text-[#2F3948]">{{ block.settings.text }}</p>
             </div>
             {% unless forloop.last %}
-              <div class="hidden md:block flex-1 h-px bg-brand-marble/30 mt-[-50px]"></div>
+              <div class="hidden md:block flex-1 h-px bg-[#2F3948]/10 mt-[-50px]"></div>
             {% endunless %}
           {% endif %}
         {% endfor %}
       </div>
-      <p class="text-center text-[10px] text-brand-slate-light italic mt-16">{{ section.settings.timeline_disclaimer | default: "*Individual experiences vary." }}</p>
+      <p class="text-center text-[10px] text-[#5E6A78] italic mt-16">{{ section.settings.expect_disclaimer }}</p>
     </div>
   </section>
+
+
+  <!-- ==========================================
+       SECTION 8: DAILY HABITS
+       ========================================== -->
+  <section class="py-24 lg:py-32 px-6 lg:px-20 bg-[#F6FBFD] rounded-[40px] my-10 max-w-[95%] mx-auto">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="font-serif text-4xl text-[#2F3948] text-center mb-16">Daily Habits That Support Your Routine</h2>
+      
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+        {% for block in section.blocks %}
+          {% if block.type == 'habit_card' %}
+            <div class="flex flex-col items-center" {{ block.shopify_attributes }}>
+              <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-[#2F3948] mb-6 shadow-sm border border-[#2F3948]/5">
+                {% if block.settings.icon != blank %}
+                  <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="{{ block.settings.icon }}"/>
+                  </svg>
+                {% else %}
+                  <svg class="w-8 h-8 opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                {% endif %}
+              </div>
+              <p class="text-sm font-medium text-[#5E6A78] max-w-[140px]">{{ block.settings.text }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
 
   <!-- ==========================================
        SECTION 9: FAQ
        ========================================== -->
-  <section class="py-24 lg:py-32 px-6 lg:px-20 bg-[#F9FAFB] border-y border-brand-marble/20">
+  <section class="py-24 lg:py-32 px-6 lg:px-20 bg-white">
     <div class="max-w-4xl mx-auto">
-      <h2 class="font-serif text-4xl text-brand-slate mb-12 text-center">Frequently Asked Questions</h2>
+      <h2 class="font-serif text-4xl text-[#2F3948] mb-12 text-center">Questions We Often Get</h2>
       <div class="space-y-4" x-data="{ active: null }">
         {% for block in section.blocks %}
           {% if block.type == 'faq_item' %}
-            <div class="bg-white rounded-2xl border border-brand-marble/20 overflow-hidden" {{ block.shopify_attributes }}>
+            <div class="bg-white rounded-[20px] border border-[#2F3948]/10 overflow-hidden" {{ block.shopify_attributes }}>
               <button @click="active === {{ forloop.index }} ? active = null : active = {{ forloop.index }}" class="w-full px-8 py-6 flex justify-between items-center text-left focus:outline-none">
-                <span class="font-serif text-xl text-brand-slate">{{ block.settings.question | default: "Question?" }}</span>
-                <svg class="w-5 h-5 text-brand-aqua transition-transform duration-300" :class="active === {{ forloop.index }} ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                <span class="font-serif text-xl text-[#2F3948]">{{ block.settings.question }}</span>
+                <svg class="w-5 h-5 text-[#5E6A78] transition-transform duration-300" :class="active === {{ forloop.index }} ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </button>
               <div x-show="active === {{ forloop.index }}" x-collapse>
-                <div class="px-8 pb-6 text-brand-slate-light font-medium leading-relaxed">
-                  {{ block.settings.answer | default: "Answer goes here." }}
+                <div class="px-8 pb-6 text-[#5E6A78] font-medium leading-relaxed">
+                  {{ block.settings.answer }}
                 </div>
               </div>
             </div>
@@ -337,93 +348,45 @@
     </div>
   </section>
 
-  <!-- ==========================================
-       SECTION 10: INDIVIDUAL PRODUCTS
-       ========================================== -->
-  <section class="py-24 px-6 lg:px-20 bg-white">
-    <div class="max-w-7xl mx-auto">
-      <div class="mb-16">
-        <h2 class="font-serif text-4xl text-brand-slate mb-4">{{ section.settings.individuals_heading | default: "Prefer to start with one product?" }}</h2>
-        <p class="text-brand-slate-light font-medium text-lg max-w-2xl">{{ section.settings.individuals_subheading | default: "You can start with one product today, but routines are designed to work better together." }}</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        {% assign ind_col = collections[section.settings.individual_collection] %}
-        {% if ind_col != blank %}
-          {% for product in ind_col.products limit: 4 %}
-            {% unless product.title contains 'Routine' or product.title contains 'Ritual' %}
-              <div class="scale-95 origin-top-left">
-                {% render 'card-product',
-                  card_product: product,
-                  media_aspect_ratio: 'square',
-                  image_shape: 'default',
-                  show_secondary_image: true,
-                  show_vendor: false,
-                  show_rating: true,
-                  lazy_load: true
-                %}
-              </div>
-            {% endunless %}
-          {% endfor %}
-        {% else %}
-           <!-- Fallback Demo Cards -->
-           {% for i in (1..4) %}
-             <div class="bg-brand-glacial/10 aspect-square rounded-[32px] flex items-center justify-center border border-brand-marble/20">
-               <span class="text-brand-slate/30 font-serif">Product {{ i }}</span>
-             </div>
-           {% endfor %}
-        {% endif %}
-      </div>
-    </div>
-  </section>
 
   <!-- ==========================================
-       SECTION 11: RELATED CONCERNS
+       SECTION 10: WHY CHOOSE SERAVOLVE
        ========================================== -->
-  <section class="py-24 lg:py-32 px-6 lg:px-20 bg-brand-charcoal text-white rounded-t-[60px] lg:rounded-t-[80px]">
-    <div class="max-w-7xl mx-auto">
-      <div class="mb-16">
-        <h2 class="font-serif text-4xl lg:text-5xl text-white">{{ section.settings.related_heading | default: "Explore Other Concerns" }}</h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <section class="py-24 lg:py-32 px-6 lg:px-20 bg-[#F6FBFD] border-t border-[#2F3948]/5">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="font-serif text-4xl text-[#2F3948] text-center mb-16">Why Choose Seravolve</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
         {% for block in section.blocks %}
-          {% if block.type == 'related_concern' %}
-            <a href="{{ block.settings.link | default: '#' }}" class="group relative aspect-[4/3] rounded-[40px] overflow-hidden block" {{ block.shopify_attributes }}>
-              {% if block.settings.image != blank %}
-                {{ block.settings.image | image_url: width: 600 | image_tag: class: 'w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110', loading: 'lazy' }}
-              {% else %}
-                <div class="w-full h-full bg-white/10"></div>
-              {% endif %}
-              <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors"></div>
-              <div class="absolute bottom-8 left-8 right-8 flex justify-between items-end">
-                <h3 class="font-serif text-2xl text-white max-w-[150px] leading-tight">{{ block.settings.title | default: "Related Concern" }}</h3>
-                <div class="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white backdrop-blur-md group-hover:bg-white group-hover:text-brand-charcoal transition-all">
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
-                </div>
-              </div>
-            </a>
+          {% if block.type == 'why_choose_card' %}
+            <div class="bg-white p-8 rounded-[28px] text-center shadow-sm border border-[#2F3948]/5" {{ block.shopify_attributes }}>
+              <p class="font-serif text-lg text-[#2F3948]">{{ block.settings.title }}</p>
+            </div>
           {% endif %}
         {% endfor %}
       </div>
     </div>
   </section>
 
+
   <!-- ==========================================
-       SECTION 12: FINAL CTA
+       FINAL CTA
        ========================================== -->
-  <section class="py-32 lg:py-48 px-6 lg:px-20 bg-brand-charcoal border-t border-white/10">
-    <div class="max-w-3xl mx-auto text-center">
-      <h2 class="font-serif text-5xl lg:text-7xl text-white mb-8">{{ section.settings.final_heading | default: "Still not sure where to start?" }}</h2>
-      <p class="text-white/70 font-medium text-lg leading-relaxed mb-12 max-w-xl mx-auto">
-        {{ section.settings.final_paragraph | default: "Answer a few simple questions and we'll recommend the routine that best fits your skin." }}
+  <section class="relative py-40 px-6 lg:px-20 bg-[#2F3948]">
+    {% if section.settings.final_image != blank %}
+      {{ section.settings.final_image | image_url: width: 2000 | image_tag: class: 'absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay grayscale', loading: 'lazy' }}
+    {% endif %}
+    
+    <div class="relative z-10 max-w-3xl mx-auto text-center">
+      <h2 class="font-serif text-5xl lg:text-7xl text-white mb-8 leading-tight">{{ section.settings.final_heading | newline_to_br }}</h2>
+      <p class="text-white/80 font-medium text-lg leading-relaxed mb-12 max-w-xl mx-auto">
+        {{ section.settings.final_body | newline_to_br }}
       </p>
       <div class="flex flex-col sm:flex-row justify-center gap-4">
-        <a href="{{ section.settings.final_btn_1_link | default: '/pages/routine-builder' }}" class="px-12 py-5 bg-brand-aqua text-white rounded-full text-[11px] uppercase tracking-widest font-black hover:bg-white hover:text-brand-charcoal transition-all shadow-xl">
-          {{ section.settings.final_btn_1_text | default: "Build My Routine" }}
+        <a href="#routine" class="px-12 py-5 bg-white text-[#2F3948] rounded-full text-[11px] uppercase tracking-widest font-black hover:bg-[#F6FBFD] transition-colors shadow-xl">
+          {{ section.settings.final_btn_1 }}
         </a>
-        <a href="{{ section.settings.final_btn_2_link | default: '/collections/all' }}" class="px-12 py-5 bg-transparent border-2 border-white/20 text-white rounded-full text-[11px] uppercase tracking-widest font-black hover:bg-white/10 transition-colors">
-          {{ section.settings.final_btn_2_text | default: "Shop All Routines" }}
+        <a href="/collections/all" class="px-12 py-5 bg-transparent border-2 border-white/20 text-white rounded-full text-[11px] uppercase tracking-widest font-black hover:bg-white/10 transition-colors backdrop-blur-sm">
+          {{ section.settings.final_btn_2 }}
         </a>
       </div>
     </div>
@@ -433,152 +396,107 @@
 
 {% schema %}
 {
-  "name": "Concern Landing Page",
+  "name": "Concern Landing Page V2",
   "settings": [
-    {
-      "type": "header",
-      "content": "Hero Section"
-    },
-    { "type": "text", "id": "hero_label", "label": "Label", "default": "ACNE & BREAKOUTS" },
-    { "type": "textarea", "id": "hero_heading", "label": "Heading", "default": "Simple skincare for clearer-looking skin." },
-    { "type": "textarea", "id": "hero_paragraph", "label": "Paragraph" },
+    { "type": "header", "content": "Hero Section" },
     { "type": "image_picker", "id": "hero_image", "label": "Image" },
-    { "type": "text", "id": "hero_button_1_text", "label": "Button 1 Text", "default": "Start Routine" },
-    { "type": "url", "id": "hero_button_1_link", "label": "Button 1 Link" },
-    { "type": "text", "id": "hero_button_2_text", "label": "Button 2 Text", "default": "Build My Routine" },
-    { "type": "url", "id": "hero_button_2_link", "label": "Button 2 Link" },
+    { "type": "text", "id": "hero_label", "label": "Label", "default": "FOR ACNE-PRONE SKIN" },
+    { "type": "textarea", "id": "hero_heading", "label": "Heading", "default": "A simpler routine for calmer, healthier-looking skin." },
+    { "type": "textarea", "id": "hero_body", "label": "Body Text" },
+    { "type": "text", "id": "hero_btn_1", "label": "Primary CTA", "default": "Start My Acne Routine" },
+    { "type": "text", "id": "hero_btn_2", "label": "Secondary CTA", "default": "See How It Works" },
     
-    {
-      "type": "header",
-      "content": "Understanding Concern"
-    },
-    { "type": "text", "id": "understanding_heading", "label": "Heading", "default": "Why do breakouts happen?" },
-    { "type": "textarea", "id": "understanding_bottom_text", "label": "Bottom Text" },
+    { "type": "header", "content": "Section 2: We Understand" },
+    { "type": "textarea", "id": "understand_heading", "label": "Heading", "default": "Acne isn't just about your skin.\nIt's about confidence too." },
+    
+    { "type": "header", "content": "Section 3: Why Acne Happens" },
+    { "type": "textarea", "id": "why_bottom", "label": "Bottom Copy", "default": "A consistent routine helps support skin that feels cleaner, calmer and healthier over time." },
+    
+    { "type": "header", "content": "Section 4: The Seravolve Difference" },
+    { "type": "text", "id": "diff_other_1", "label": "Other Skincare 1", "default": "Research ingredients" },
+    { "type": "text", "id": "diff_other_2", "label": "Other Skincare 2", "default": "Compare products" },
+    { "type": "text", "id": "diff_other_3", "label": "Other Skincare 3", "default": "Watch videos" },
+    { "type": "text", "id": "diff_other_4", "label": "Other Skincare 4", "default": "Hope it works" },
+    { "type": "text", "id": "diff_us_1", "label": "Seravolve 1", "default": "Choose your concern" },
+    { "type": "text", "id": "diff_us_2", "label": "Seravolve 2", "default": "Follow one routine" },
+    { "type": "text", "id": "diff_us_3", "label": "Seravolve 3", "default": "Stay consistent" },
+    { "type": "text", "id": "diff_us_4", "label": "Seravolve 4", "default": "Build confidence" },
+    
+    { "type": "header", "content": "Section 5: Your Routine" },
+    { "type": "textarea", "id": "routine_headline", "label": "Headline", "default": "Designed around your concern.\nNot around ingredients." },
+    { "type": "textarea", "id": "routine_subheading", "label": "Subheading", "default": "Everything below has one purpose:\nsupporting acne-prone skin with a simple daily routine." },
 
-    {
-      "type": "header",
-      "content": "Recommended Routine"
-    },
-    { "type": "text", "id": "routine_name", "label": "Routine Name", "default": "Acne Control Routine" },
-    { "type": "textarea", "id": "routine_description", "label": "Description" },
-    { "type": "text", "id": "routine_price_custom", "label": "Custom Price", "default": "₹1799" },
-    { "type": "text", "id": "routine_price_compare", "label": "Compare Price", "default": "₹1996" },
-    { "type": "text", "id": "routine_shipping_text", "label": "Shipping Text", "default": "Free Shipping Included" },
-    { "type": "product", "id": "routine_product", "label": "Routine Product" },
+    { "type": "header", "content": "Section 7: What to Expect" },
+    { "type": "text", "id": "expect_disclaimer", "label": "Disclaimer", "default": "*Results vary. Consistency matters." },
 
-    {
-      "type": "header",
-      "content": "Morning & Night Times"
-    },
-    { "type": "text", "id": "morning_time", "label": "Morning Time", "default": "3 Minutes" },
-    { "type": "text", "id": "night_time", "label": "Night Time", "default": "2 Minutes" },
-
-    {
-      "type": "header",
-      "content": "Who This Is For"
-    },
-    { "type": "text", "id": "who_heading", "label": "Heading", "default": "Is this routine right for you?" },
-    { "type": "text", "id": "who_cta_text", "label": "CTA Text", "default": "Yes, This Is My Routine" },
-    { "type": "url", "id": "who_cta_link", "label": "CTA Link" },
-
-    {
-      "type": "header",
-      "content": "Timeline Disclaimer"
-    },
-    { "type": "text", "id": "timeline_disclaimer", "label": "Disclaimer", "default": "*Individual experiences vary." },
-
-    {
-      "type": "header",
-      "content": "Individual Products"
-    },
-    { "type": "text", "id": "individuals_heading", "label": "Heading", "default": "Prefer to start with one product?" },
-    { "type": "textarea", "id": "individuals_subheading", "label": "Subheading" },
-    { "type": "collection", "id": "individual_collection", "label": "Products Collection" },
-
-    {
-      "type": "header",
-      "content": "Related Concerns"
-    },
-    { "type": "text", "id": "related_heading", "label": "Heading", "default": "Explore Other Concerns" },
-
-    {
-      "type": "header",
-      "content": "Final CTA"
-    },
-    { "type": "text", "id": "final_heading", "label": "Heading" },
-    { "type": "textarea", "id": "final_paragraph", "label": "Paragraph" },
-    { "type": "text", "id": "final_btn_1_text", "label": "Button 1 Text" },
-    { "type": "url", "id": "final_btn_1_link", "label": "Button 1 Link" },
-    { "type": "text", "id": "final_btn_2_text", "label": "Button 2 Text" },
-    { "type": "url", "id": "final_btn_2_link", "label": "Button 2 Link" }
+    { "type": "header", "content": "Final CTA" },
+    { "type": "image_picker", "id": "final_image", "label": "Background Image" },
+    { "type": "textarea", "id": "final_heading", "label": "Heading", "default": "Healthy-looking skin starts with one simple decision." },
+    { "type": "textarea", "id": "final_body", "label": "Body", "default": "Stop researching products.\nStart following a routine built around your skin." },
+    { "type": "text", "id": "final_btn_1", "label": "Primary CTA", "default": "Start My Acne Routine" },
+    { "type": "text", "id": "final_btn_2", "label": "Secondary CTA", "default": "Shop Individual Products" }
   ],
   "blocks": [
     {
-      "type": "understanding_card",
-      "name": "Understanding Card",
-      "limit": 3,
+      "type": "understand_card",
+      "name": "Quote Card",
+      "limit": 4,
       "settings": [
-        { "type": "text", "id": "title", "label": "Title" },
-        { "type": "textarea", "id": "text", "label": "Text" }
+        { "type": "textarea", "id": "title", "label": "Quote" }
       ]
     },
     {
-      "type": "routine_step_visual",
-      "name": "Routine Visual Step",
-      "limit": 5,
+      "type": "why_happens_card",
+      "name": "Cause Card",
+      "limit": 3,
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "title", "label": "Title" },
-        { "type": "text", "id": "subtitle", "label": "Subtitle" }
+        { "type": "textarea", "id": "text", "label": "Explanation" }
       ]
     },
     {
-      "type": "how_it_works",
-      "name": "How It Works Step",
-      "limit": 5,
-      "settings": [
-        { "type": "text", "id": "title", "label": "Title" },
-        { "type": "text", "id": "text", "label": "Text" }
-      ]
-    },
-    {
-      "type": "am_step",
+      "type": "routine_am",
       "name": "Morning Step",
       "settings": [
-        { "type": "text", "id": "title", "label": "Step Name" }
+        { "type": "text", "id": "text", "label": "Step Name" }
       ]
     },
     {
-      "type": "pm_step",
+      "type": "routine_pm",
       "name": "Night Step",
       "settings": [
-        { "type": "text", "id": "title", "label": "Step Name" }
+        { "type": "text", "id": "text", "label": "Step Name" }
       ]
     },
     {
-      "type": "why_product",
-      "name": "Why Product Card",
+      "type": "step_card",
+      "name": "Product Step",
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Product Image" },
-        { "type": "text", "id": "title", "label": "Product Name" },
-        { "type": "textarea", "id": "text", "label": "Explanation" },
-        { "type": "url", "id": "link", "label": "Product Link" }
-      ]
-    },
-    {
-      "type": "who_checklist",
-      "name": "Who Checklist Item",
-      "settings": [
-        { "type": "text", "id": "text", "label": "Item Text" }
+        { "type": "text", "id": "step_number", "label": "Step Identifier", "default": "STEP 1" },
+        { "type": "text", "id": "title", "label": "Headline" },
+        { "type": "textarea", "id": "text", "label": "Description" },
+        { "type": "text", "id": "product_name", "label": "Product Name" },
+        { "type": "url", "id": "product_link", "label": "Product Link" }
       ]
     },
     {
       "type": "timeline_step",
-      "name": "Timeline Step",
+      "name": "Expectation Timeline",
       "limit": 3,
       "settings": [
         { "type": "text", "id": "time", "label": "Time (e.g., Week 1)" },
-        { "type": "textarea", "id": "result", "label": "Result" }
+        { "type": "text", "id": "text", "label": "Result" }
+      ]
+    },
+    {
+      "type": "habit_card",
+      "name": "Habit",
+      "limit": 5,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Habit Name" },
+        { "type": "textarea", "id": "icon", "label": "SVG Path Data (d=...)" }
       ]
     },
     {
@@ -590,20 +508,16 @@
       ]
     },
     {
-      "type": "related_concern",
-      "name": "Related Concern",
-      "limit": 3,
+      "type": "why_choose_card",
+      "name": "Value Prop",
+      "limit": 6,
       "settings": [
-        { "type": "text", "id": "title", "label": "Title" },
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "url", "id": "link", "label": "Link" }
+        { "type": "text", "id": "title", "label": "Title" }
       ]
     }
   ],
   "presets": [
-    {
-      "name": "Concern Landing Page"
-    }
+    { "name": "Concern Landing Page V2" }
   ]
 }
 {% endschema %}

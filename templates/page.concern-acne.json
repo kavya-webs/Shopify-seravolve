@@ -3,175 +3,75 @@
     "main": {
       "type": "concern-page",
       "blocks": {
-        "understand_1": {
-          "type": "understanding_card",
-          "settings": {
-            "title": "Oil Build-up",
-            "text": "Excess oil can mix with dead skin cells and impurities throughout the day."
-          }
-        },
-        "understand_2": {
-          "type": "understanding_card",
-          "settings": {
-            "title": "Congested Skin",
-            "text": "When pores become congested, breakouts can become more noticeable."
-          }
-        },
-        "understand_3": {
-          "type": "understanding_card",
-          "settings": {
-            "title": "Weakened Skin Barrier",
-            "text": "Using harsh products too often can leave skin feeling stressed and uncomfortable."
-          }
-        },
-        "routine_1": {
-          "type": "routine_step_visual",
-          "settings": {
-            "title": "Clarifying Face Wash",
-            "subtitle": "Step 1"
-          }
-        },
-        "routine_2": {
-          "type": "routine_step_visual",
-          "settings": {
-            "title": "Radiance Toner",
-            "subtitle": "Step 2"
-          }
-        },
-        "routine_3": {
-          "type": "routine_step_visual",
-          "settings": {
-            "title": "Barrier Repair Moisturizer",
-            "subtitle": "Step 3"
-          }
-        },
-        "routine_4": {
-          "type": "routine_step_visual",
-          "settings": {
-            "title": "Ultra Light Sunscreen",
-            "subtitle": "Step 4"
-          }
-        },
-        "how_1": {
-          "type": "how_it_works",
-          "settings": {
-            "title": "Cleanse",
-            "text": "Start by washing away excess oil, sunscreen and daily impurities."
-          }
-        },
-        "how_2": {
-          "type": "how_it_works",
-          "settings": {
-            "title": "Prepare",
-            "text": "Hydrate and prepare your skin before the next steps."
-          }
-        },
-        "how_3": {
-          "type": "how_it_works",
-          "settings": {
-            "title": "Support",
-            "text": "Help maintain a healthy-looking skin barrier with lightweight hydration."
-          }
-        },
-        "how_4": {
-          "type": "how_it_works",
-          "settings": {
-            "title": "Protect",
-            "text": "Finish with broad-spectrum SPF 50 PA++++ protection every morning."
-          }
-        },
-        "am_1": { "type": "am_step", "settings": { "title": "Face Wash" } },
-        "am_2": { "type": "am_step", "settings": { "title": "Toner" } },
-        "am_3": { "type": "am_step", "settings": { "title": "Moisturizer" } },
-        "am_4": { "type": "am_step", "settings": { "title": "Sunscreen" } },
-        "pm_1": { "type": "pm_step", "settings": { "title": "Face Wash" } },
-        "pm_2": { "type": "pm_step", "settings": { "title": "Toner" } },
-        "pm_3": { "type": "pm_step", "settings": { "title": "Moisturizer" } },
-        "why_1": {
-          "type": "why_product",
-          "settings": {
-            "title": "Clarifying Face Wash",
-            "text": "Designed to gently cleanse away excess oil, dirt and daily impurities without using sulphates."
-          }
-        },
-        "why_2": {
-          "type": "why_product",
-          "settings": {
-            "title": "Radiance Toner",
-            "text": "Helps prepare your skin for the next steps while supporting a fresh, balanced-looking complexion."
-          }
-        },
-        "why_3": {
-          "type": "why_product",
-          "settings": {
-            "title": "Barrier Repair Moisturizer",
-            "text": "Lightweight daily hydration designed to support your skin barrier without feeling heavy."
-          }
-        },
-        "why_4": {
-          "type": "why_product",
-          "settings": {
-            "title": "Ultra Light Sunscreen",
-            "text": "Broad-spectrum SPF 50 PA++++ protection with a lightweight finish suitable for everyday wear."
-          }
-        },
-        "who_1": { "type": "who_checklist", "settings": { "text": "You experience frequent breakouts." } },
-        "who_2": { "type": "who_checklist", "settings": { "text": "Your skin feels oily or combination." } },
-        "who_3": { "type": "who_checklist", "settings": { "text": "You're tired of complicated skincare." } },
-        "who_4": { "type": "who_checklist", "settings": { "text": "You want a beginner-friendly routine." } },
-        "who_5": { "type": "who_checklist", "settings": { "text": "You prefer consistency over complicated ingredient routines." } },
-        "time_1": { "type": "timeline_step", "settings": { "time": "Week 1", "result": "Build the habit." } },
-        "time_2": { "type": "timeline_step", "settings": { "time": "Week 2-4", "result": "Skin may begin feeling cleaner and more balanced with consistent daily use.*" } },
-        "time_3": { "type": "timeline_step", "settings": { "time": "Long Term", "result": "Consistency helps support healthier-looking skin over time." } },
-        "faq_1": { "type": "faq_item", "settings": { "question": "Can I use this routine every day?", "answer": "<p>Yes, this routine is designed to be gentle enough for daily use, both morning and night.</p>" } },
-        "faq_2": { "type": "faq_item", "settings": { "question": "Can beginners use it?", "answer": "<p>Absolutely. We've removed the guesswork, making it the perfect starting point for anyone new to skincare.</p>" } },
-        "faq_3": { "type": "faq_item", "settings": { "question": "Will it work with oily skin?", "answer": "<p>Yes, these products are formulated to help manage excess oil without stripping your skin's natural moisture barrier.</p>" } },
-        "faq_4": { "type": "faq_item", "settings": { "question": "Can I add products later?", "answer": "<p>Yes! Once you build consistency with these core steps, you can introduce targeted serums or treatments.</p>" } },
-        "faq_5": { "type": "faq_item", "settings": { "question": "Can I buy products individually?", "answer": "<p>Yes, all items in this routine are available for individual purchase when you need a refill.</p>" } },
-        "faq_6": { "type": "faq_item", "settings": { "question": "Can teenagers use this routine?", "answer": "<p>Yes, the gentle nature of these formulations makes them suitable for teenage skin experiencing breakouts.</p>" } },
-        "faq_7": { "type": "faq_item", "settings": { "question": "How long does one routine last?", "answer": "<p>With standard daily use, this routine should last approximately 45-60 days.</p>" } },
-        "rel_1": { "type": "related_concern", "settings": { "title": "Barrier Recovery" } },
-        "rel_2": { "type": "related_concern", "settings": { "title": "Daily Glow" } },
-        "rel_3": { "type": "related_concern", "settings": { "title": "Smooth Skin" } },
-        "rel_4": { "type": "related_concern", "settings": { "title": "Daily UV Defense" } }
+        "und_1": { "type": "understand_card", "settings": { "title": "I've tried products that never worked together." } },
+        "und_2": { "type": "understand_card", "settings": { "title": "I don't know where to start." } },
+        "und_3": { "type": "understand_card", "settings": { "title": "My breakouts keep coming back." } },
+        "und_4": { "type": "understand_card", "settings": { "title": "I'm tired of guessing." } },
+        "why_1": { "type": "why_happens_card", "settings": { "title": "Oil & Congestion", "text": "Excess oil can mix with dead skin cells." } },
+        "why_2": { "type": "why_happens_card", "settings": { "title": "Blocked Pores", "text": "When pores become congested, breakouts become more noticeable." } },
+        "why_3": { "type": "why_happens_card", "settings": { "title": "Inflammation", "text": "Using harsh products too often leaves skin feeling stressed." } },
+        "am_1": { "type": "routine_am", "settings": { "text": "Face Wash" } },
+        "am_2": { "type": "routine_am", "settings": { "text": "Toner" } },
+        "am_3": { "type": "routine_am", "settings": { "text": "Sunscreen" } },
+        "pm_1": { "type": "routine_pm", "settings": { "text": "Face Wash" } },
+        "pm_2": { "type": "routine_pm", "settings": { "text": "Toner" } },
+        "step_1": { "type": "step_card", "settings": { "step_number": "STEP 1", "title": "Start with a clean foundation.", "product_name": "Clarifying Face Wash", "text": "Removes excess oil, impurities and prepares your skin for the rest of the routine." } },
+        "step_2": { "type": "step_card", "settings": { "step_number": "STEP 2", "title": "Support a balanced complexion.", "product_name": "Radiance Toner", "text": "Prepares skin for the next steps without stripping natural moisture." } },
+        "step_3": { "type": "step_card", "settings": { "step_number": "STEP 3", "title": "Protect your skin daily.", "product_name": "Ultra Light Sunscreen", "text": "Broad-spectrum SPF 50 PA++++ protection with a lightweight finish suitable for everyday wear." } },
+        "time_1": { "type": "timeline_step", "settings": { "time": "Week 1", "text": "Skin feels fresher and cleaner." } },
+        "time_2": { "type": "timeline_step", "settings": { "time": "Weeks 2-4", "text": "Routine begins supporting a calmer-looking complexion.*" } },
+        "time_3": { "type": "timeline_step", "settings": { "time": "Weeks 6-8", "text": "Consistency helps maintain healthier-looking skin.*" } },
+        "hab_1": { "type": "habit_card", "settings": { "text": "Avoid picking pimples.", "icon": "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" } },
+        "hab_2": { "type": "habit_card", "settings": { "text": "Clean pillowcases regularly.", "icon": "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" } },
+        "hab_3": { "type": "habit_card", "settings": { "text": "Remove sunscreen every evening.", "icon": "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" } },
+        "hab_4": { "type": "habit_card", "settings": { "text": "Wear SPF every morning.", "icon": "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" } },
+        "hab_5": { "type": "habit_card", "settings": { "text": "Stay consistent.", "icon": "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" } },
+        "faq_1": { "type": "faq_item", "settings": { "question": "Can beginners use this routine?", "answer": "<p>Yes, we've designed this exactly for beginners. No complicated layering required.</p>" } },
+        "faq_2": { "type": "faq_item", "settings": { "question": "Can oily skin use these products?", "answer": "<p>Absolutely. They are formulated to be lightweight and non-comedogenic.</p>" } },
+        "faq_3": { "type": "faq_item", "settings": { "question": "When should I expect visible changes?", "answer": "<p>While some feel fresher in week one, consistency over 6-8 weeks is key for visible calm.</p>" } },
+        "faq_4": { "type": "faq_item", "settings": { "question": "Should I use every step?", "answer": "<p>We highly recommend following the complete routine for the best supportive results.</p>" } },
+        "faq_5": { "type": "faq_item", "settings": { "question": "Can I combine this with other products?", "answer": "<p>We suggest using only this routine for the first month to let your skin adjust properly.</p>" } },
+        "choose_1": { "type": "why_choose_card", "settings": { "title": "Concern-first guidance" } },
+        "choose_2": { "type": "why_choose_card", "settings": { "title": "Thoughtfully formulated" } },
+        "choose_3": { "type": "why_choose_card", "settings": { "title": "Cruelty-Free" } },
+        "choose_4": { "type": "why_choose_card", "settings": { "title": "Made in India" } },
+        "choose_5": { "type": "why_choose_card", "settings": { "title": "Premium textures" } },
+        "choose_6": { "type": "why_choose_card", "settings": { "title": "Simple routines" } }
       },
       "block_order": [
-        "understand_1", "understand_2", "understand_3",
-        "routine_1", "routine_2", "routine_3", "routine_4",
-        "how_1", "how_2", "how_3", "how_4",
-        "am_1", "am_2", "am_3", "am_4",
-        "pm_1", "pm_2", "pm_3",
-        "why_1", "why_2", "why_3", "why_4",
-        "who_1", "who_2", "who_3", "who_4", "who_5",
+        "und_1", "und_2", "und_3", "und_4",
+        "why_1", "why_2", "why_3",
+        "am_1", "am_2", "am_3",
+        "pm_1", "pm_2",
+        "step_1", "step_2", "step_3",
         "time_1", "time_2", "time_3",
-        "faq_1", "faq_2", "faq_3", "faq_4", "faq_5", "faq_6", "faq_7",
-        "rel_1", "rel_2", "rel_3", "rel_4"
+        "hab_1", "hab_2", "hab_3", "hab_4", "hab_5",
+        "faq_1", "faq_2", "faq_3", "faq_4", "faq_5",
+        "choose_1", "choose_2", "choose_3", "choose_4", "choose_5", "choose_6"
       ],
       "settings": {
-        "hero_label": "ACNE & BREAKOUTS",
-        "hero_heading": "Stop guessing.\nStart following a routine.",
-        "hero_paragraph": "You don't need to learn every skincare ingredient to care for your skin.\n\nIf you're dealing with breakouts, the best place to start is a simple routine you can actually stick to.\n\nOur Clear Skin Routine combines four daily essentials designed to cleanse, support and protect acne-prone skin.",
-        "hero_button_1_text": "Start Clear Skin Routine",
-        "hero_button_2_text": "Build My Routine",
-        "understanding_heading": "Healthy skin starts with understanding the problem.",
-        "understanding_bottom_text": "Healthy skin isn't built by buying more products.\nIt's built by following the right routine consistently.",
-        "routine_name": "Clear Skin Routine",
-        "routine_description": "A complete daily skincare routine created for acne-prone skin.\nEach product has a role.\nTogether they create a routine that's simple enough to follow every day.",
-        "routine_price_custom": "₹1,799",
-        "routine_price_compare": "₹1,896",
-        "routine_shipping_text": "Free Shipping Included",
-        "morning_time": "About 3 minutes",
-        "night_time": "About 2 minutes",
-        "who_heading": "Is This Routine Right For You?",
-        "who_cta_text": "Yes, This Is My Routine",
-        "timeline_disclaimer": "*Results vary from person to person.",
-        "individuals_heading": "Start with one product. Upgrade whenever you're ready.",
-        "individuals_subheading": "Every product is available individually.\nBut routines are designed to make skincare simpler by giving each product a clear role.",
-        "related_heading": "Explore Other Concerns",
-        "final_heading": "Still not sure where to begin?",
-        "final_paragraph": "Answer four simple questions and we'll recommend the routine that's right for your skin.",
-        "final_btn_1_text": "Build My Routine",
-        "final_btn_2_text": "Browse All Routines"
+        "hero_label": "FOR ACNE-PRONE SKIN",
+        "hero_heading": "A simpler routine for calmer, healthier-looking skin.",
+        "hero_body": "Acne can make skincare feel overwhelming.\n\nYou don't need to understand every ingredient.\n\nJust start with a routine designed around your concern.",
+        "hero_btn_1": "Start My Acne Routine",
+        "hero_btn_2": "See How It Works",
+        "understand_heading": "Acne isn't just about your skin.\nIt's about confidence too.",
+        "why_bottom": "A consistent routine helps support skin that feels cleaner, calmer and healthier over time.",
+        "diff_other_1": "Research ingredients",
+        "diff_other_2": "Compare products",
+        "diff_other_3": "Watch videos",
+        "diff_other_4": "Hope it works",
+        "diff_us_1": "Choose your concern",
+        "diff_us_2": "Follow one routine",
+        "diff_us_3": "Stay consistent",
+        "diff_us_4": "Build confidence",
+        "routine_headline": "Designed around your concern.\nNot around ingredients.",
+        "routine_subheading": "Everything below has one purpose:\nsupporting acne-prone skin with a simple daily routine.",
+        "expect_disclaimer": "*Results vary. Consistency matters.",
+        "final_heading": "Healthy-looking skin starts with one simple decision.",
+        "final_body": "Stop researching products.\nStart following a routine built around your skin.",
+        "final_btn_1": "Start My Acne Routine",
+        "final_btn_2": "Shop Individual Products"
       }
     }
   },
