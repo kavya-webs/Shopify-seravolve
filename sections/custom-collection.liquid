@@ -53,10 +53,19 @@
       },
       
       get filteredProducts() {
-        return window.collectionProducts.filter(p => {
+        const filtered = window.collectionProducts.filter(p => {
           const matchesCategory = this.activeCategory === "All" || p.category === this.activeCategory;
           const matchesSearch = p.title.toLowerCase().includes(this.searchQuery.toLowerCase());
           return matchesCategory && matchesSearch;
+        });
+        
+        return filtered.sort((a, b) => {
+          const aIsRoutine = a.title.toLowerCase().includes('routine') || a.title.toLowerCase().includes('ritual');
+          const bIsRoutine = b.title.toLowerCase().includes('routine') || b.title.toLowerCase().includes('ritual');
+          
+          if (aIsRoutine && !bIsRoutine) return -1;
+          if (!aIsRoutine && bIsRoutine) return 1;
+          return 0;
         });
       }
     }));
