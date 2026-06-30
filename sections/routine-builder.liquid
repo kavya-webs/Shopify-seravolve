@@ -167,20 +167,51 @@
 
         let am = [];
         let pm = [];
+        
+        const isBeginner = this.answers.experience === "Beginner";
+        const isAdvanced = this.answers.experience === "Regular Routine";
+        const isDry = this.answers.skinType === "Dry";
+        const isOily = this.answers.skinType === "Oily";
+        const concern = this.answers.concern;
 
         // Build AM
         if (this.answers.usage !== "Night") {
-          if (cleanser && this.answers.skinType !== 'Dry') am.push(cleanser);
-          if (toner && ['Oily', 'Combination'].includes(this.answers.skinType)) am.push(toner);
-          if (treatment) am.push(treatment);
-          if (moisturizer && this.answers.skinType === 'Dry') am.push(moisturizer);
+          // Cleanser: Skip for Dry skin in the AM to protect the barrier
+          if (cleanser && !isDry) am.push(cleanser);
+          
+          // Toner: Skip for beginners unless it directly treats their main concern
+          const tonerMatchesConcern = toner && window.scoringConfig[toner.handle] && window.scoringConfig[toner.handle].tags.includes(concern);
+          if (toner && (!isBeginner || tonerMatchesConcern) && (isOily || this.answers.skinType === 'Combination' || isAdvanced || tonerMatchesConcern)) {
+            am.push(toner);
+          }
+          
+          // Treatment: Vitamin C is great for AM. For beginners, only include if it directly treats their concern.
+          const treatmentMatchesConcern = treatment && window.scoringConfig[treatment.handle] && window.scoringConfig[treatment.handle].tags.includes(concern);
+          if (treatment && (!isBeginner || treatmentMatchesConcern)) {
+            am.push(treatment);
+          }
+          
+          // Moisturizer: Dry/Normal skin needs it under SPF. Oily skin can often just use SPF in AM unless advanced.
+          if (moisturizer && (isDry || this.answers.skinType === 'Normal' || isAdvanced)) {
+            am.push(moisturizer);
+          }
+          
+          // SPF: Non-negotiable for AM
           if (spf) am.push(spf);
         }
 
         // Build PM
         if (this.answers.usage !== "Morning") {
+          // Cleanser: Essential for PM
           if (cleanser) pm.push(cleanser);
-          if (toner) pm.push(toner);
+          
+          // Toner: Same logic as AM
+          const tonerMatchesConcern = toner && window.scoringConfig[toner.handle] && window.scoringConfig[toner.handle].tags.includes(concern);
+          if (toner && (!isBeginner || tonerMatchesConcern) && !isDry) {
+            pm.push(toner);
+          }
+          
+          // Moisturizer: Essential for PM recovery
           if (moisturizer) pm.push(moisturizer);
         }
 
