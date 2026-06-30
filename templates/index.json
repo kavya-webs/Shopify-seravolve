@@ -25,6 +25,10 @@
         "to_color": "#ffffff"
       }
     },
+    "concern_selector": {
+      "type": "concern-selector",
+      "settings": {}
+    },
     "bestsellers": {
       "type": "bestsellers-v2",
       "settings": {}
@@ -75,6 +79,7 @@
     "div_1",
     "routine_cta",
     "div_2",
+    "concern_selector",
     "bestsellers",
     "testimonials",
     "div_3",
