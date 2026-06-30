@@ -90,6 +90,14 @@
        ========================================== -->
   <section class="py-24 lg:py-32 px-6 lg:px-20 bg-[#F6FBFD] rounded-[40px]">
     <div class="max-w-7xl mx-auto">
+      {% assign has_why_cards = false %}
+      {% for block in section.blocks %}
+        {% if block.type == 'why_happens_card' %}
+          {% assign has_why_cards = true %}
+        {% endif %}
+      {% endfor %}
+
+      {% if has_why_cards %}
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
         {% for block in section.blocks %}
           {% if block.type == 'why_happens_card' %}
@@ -107,6 +115,9 @@
           {% endif %}
         {% endfor %}
       </div>
+      {% else %}
+      <div class="h-8"></div>
+      {% endif %}
 
       <div class="max-w-3xl mx-auto text-center">
         <p class="font-serif text-3xl lg:text-4xl text-[#2F3948] leading-tight">
@@ -122,6 +133,9 @@
        ========================================== -->
   <section id="difference" class="py-24 lg:py-32 px-6 lg:px-20 bg-white">
     <div class="max-w-5xl mx-auto">
+      {% if section.settings.comp_headline != blank %}
+        <h2 class="font-serif text-4xl lg:text-5xl text-[#2F3948] text-center mb-16">{{ section.settings.comp_headline }}</h2>
+      {% endif %}
       <div class="bg-[#F6FBFD] rounded-[40px] p-10 lg:p-20 border border-[#2F3948]/5 shadow-sm">
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 relative">
@@ -257,7 +271,10 @@
             
             <!-- Content Right -->
             <div class="w-full md:w-1/2">
-              <h3 class="font-serif text-3xl text-[#2F3948] mb-8">{{ block.settings.title }}</h3>
+              <h3 class="font-serif text-3xl text-[#2F3948] mb-4">{{ block.settings.title }}</h3>
+              {% if block.settings.description != blank %}
+                <div class="text-lg text-[#5E6A78] mb-8 font-medium prose prose-p:mb-2 prose-ul:list-disc prose-ul:pl-5 prose-li:mb-1">{{ block.settings.description }}</div>
+              {% endif %}
               
               <div class="space-y-6 mb-10">
                 <div class="flex gap-4 items-start">
@@ -446,6 +463,7 @@
     { "type": "textarea", "id": "why_bottom", "label": "Bottom Copy", "default": "A consistent routine helps support skin that feels cleaner, calmer and healthier over time." },
     
     { "type": "header", "content": "Section 4: The Seravolve Difference" },
+    { "type": "text", "id": "comp_headline", "label": "Comparison Headline" },
     { "type": "text", "id": "diff_other_1", "label": "Other Skincare 1", "default": "Research ingredients" },
     { "type": "text", "id": "diff_other_2", "label": "Other Skincare 2", "default": "Compare products" },
     { "type": "text", "id": "diff_other_3", "label": "Other Skincare 3", "default": "Watch videos" },
@@ -509,6 +527,7 @@
         { "type": "product", "id": "product", "label": "Bundle Product" },
         { "type": "image_picker", "id": "image", "label": "Image (Optional override)" },
         { "type": "text", "id": "title", "label": "Headline", "default": "The Complete Routine" },
+        { "type": "richtext", "id": "description", "label": "Description" },
         { "type": "text", "id": "step_1_title", "label": "Step 1 Title", "default": "Cleanse" },
         { "type": "text", "id": "step_1_text", "label": "Step 1 Text" },
         { "type": "text", "id": "step_2_title", "label": "Step 2 Title", "default": "Moisturize" },
