@@ -33,9 +33,9 @@
         "faq_2": { "type": "faq_item", "settings": { "question": "How and when should I apply an acne routine?", "answer": "<p>Consistency is key. In the morning, cleanse your face and follow immediately with sunscreen to protect against environmental triggers. In the evening, cleanse again to remove daily buildup, then apply moisturiser to hydrate and repair your skin overnight.</p>" } },
         "faq_3": { "type": "faq_item", "settings": { "question": "How long does it take for an acne routine to work?", "answer": "<p>While surface oil reduction can be felt within the first week, clinical cellular turnover takes approximately 28 days. You should expect to see a visible reduction in congestion between weeks 4 and 6, with sustained clarity developing by week 8.</p>" } },
         "faq_4": { "type": "faq_item", "settings": { "question": "Do I need to buy individual ingredients or a complete routine?", "answer": "<p>You do not need to become a skincare chemist. Mixing individual active ingredients often leads to barrier damage and worsened breakouts. We engineered the Acne Control Routine as a complete, synchronized system so the formulation chemistry is already solved for you.</p>" } },
-        "why_1_1": { "type": "why_choose_card", "settings": { "title": "Dermatologist Tested" } },
-        "why_1_2": { "type": "why_choose_card", "settings": { "title": "Non-Comedogenic" } },
-        "why_1_3": { "type": "why_choose_card", "settings": { "title": "Fragrance Free" } }
+        "why_1_1": { "type": "why_choose_card", "settings": { "title": "Paraben Free" } },
+        "why_1_2": { "type": "why_choose_card", "settings": { "title": "Sulphate Free" } },
+        "why_1_3": { "type": "why_choose_card", "settings": { "title": "DEA Free" } }
       },
       "block_order": [
         "why_1", "why_2", "why_3",
