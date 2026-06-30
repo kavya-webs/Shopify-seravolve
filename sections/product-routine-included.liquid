@@ -2,7 +2,7 @@
   <div class="max-w-7xl mx-auto">
     <div class="mb-16 text-center lg:text-left">
       <p class="text-[9px] uppercase tracking-[0.5em] font-bold mb-4 text-brand-aqua">The Ecosystem</p>
-      <h2 class="font-serif text-3xl lg:text-5xl font-light text-brand-slate">Products Included</h2>
+      <h2 class="font-serif text-3xl lg:text-5xl font-light text-brand-slate">Included in Routine</h2>
     </div>
 
     {%- assign routine_products = product.metafields.custom.routine_products.value -%}
@@ -31,7 +31,7 @@
             <p class="text-sm text-brand-slate/60 font-light mb-6">{{ p.metafields.custom.why_we_made_this | default: p.description | strip_html | truncatewords: 10 }}</p>
             
             <div class="flex items-center justify-between mt-auto">
-              <span class="text-xs font-bold uppercase tracking-widest text-brand-aqua border-b border-brand-aqua/30 pb-1 group-hover:border-brand-aqua transition-colors">View Product</span>
+              <span class="text-xs font-bold uppercase tracking-widest text-brand-aqua border-b border-brand-aqua/30 pb-1 group-hover:border-brand-aqua transition-colors">View Routine</span>
               <span class="w-10 h-10 rounded-full bg-brand-aqua-mist/20 flex items-center justify-center text-brand-aqua group-hover:bg-brand-aqua group-hover:text-white transition-colors">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </span>

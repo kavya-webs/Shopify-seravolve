@@ -28,9 +28,17 @@
       {%- assign collection = collections['all'] -%}
     {%- endif -%}
     {%- assign product_limit = section.settings.products_to_show -%}
+    {%- assign routine_count = 0 -%}
     <div id="bestsellers-scroll-{{ section.id }}" class="flex gap-4 overflow-x-auto snap-x-mandatory scrollbar-hide pb-4 -mx-6 px-6 lg:mx-0 lg:px-0">
-      {%- for product in collection.products limit: product_limit -%}
-        <div class="snap-start shrink-0 w-[75vw] sm:w-[55vw] lg:w-[calc(33.33%-1rem)] group animate-fade-up" style="animation-delay: {{ forloop.index | times: 0.08 | at_most: 0.4 }}s;">
+      {%- for product in collection.products -%}
+        {%- unless product.title contains 'Routine' or product.title contains 'Ritual' -%}
+          {%- continue -%}
+        {%- endunless -%}
+        {%- assign routine_count = routine_count | plus: 1 -%}
+        {%- if routine_count > product_limit -%}
+          {%- break -%}
+        {%- endif -%}
+        <div class="snap-start shrink-0 w-[75vw] sm:w-[55vw] lg:w-[calc(33.33%-1rem)] group animate-fade-up" style="animation-delay: {{ routine_count | times: 0.08 | at_most: 0.4 }}s;">
           <a href="{{ product.url }}" class="flex flex-col">
             <!-- Image -->
             <div class="relative aspect-[3/4] rounded-3xl overflow-hidden mb-4">
@@ -88,8 +96,12 @@
 
     <!-- Dot indicators (mobile) -->
     <div id="bestsellers-dots-{{ section.id }}" class="flex lg:hidden items-center justify-center space-x-1.5 mt-6">
-      {%- for product in collection.products limit: product_limit -%}
-        <div class="carousel-dot transition-all duration-300 rounded-full {% if forloop.first %}w-5 h-1.5 bg-brand-aqua{% else %}w-1.5 h-1.5 bg-brand-marble/40{% endif %}" data-index="{{ forloop.index0 }}"></div>
+      {%- assign dot_count = 0 -%}
+      {%- for product in collection.products -%}
+        {%- unless product.title contains 'Routine' or product.title contains 'Ritual' -%}{%- continue -%}{%- endunless -%}
+        {%- assign dot_count = dot_count | plus: 1 -%}
+        {%- if dot_count > product_limit -%}{%- break -%}{%- endif -%}
+        <div class="carousel-dot transition-all duration-300 rounded-full {% if dot_count == 1 %}w-5 h-1.5 bg-brand-aqua{% else %}w-1.5 h-1.5 bg-brand-marble/40{% endif %}" data-index="{{ dot_count | minus: 1 }}"></div>
       {%- endfor -%}
     </div>
 
