@@ -19,7 +19,7 @@
     {% if section.settings.hero_image != blank %}
       {{ section.settings.hero_image | image_url: width: 2000 | image_tag: class: 'absolute inset-0 w-full h-full object-cover', loading: 'eager' }}
     {% else %}
-      <div class="absolute inset-0 w-full h-full bg-gray-200 flex items-center justify-center">Image</div>
+      <img src="{{ 'acne.webp' | asset_url }}" class="absolute inset-0 w-full h-full object-cover" loading="eager" alt="Acne hero">
     {% endif %}
     
     <!-- Gradient Overlay (Bottom only) -->
@@ -98,7 +98,7 @@
                 {% if block.settings.image != blank %}
                   {{ block.settings.image | image_url: width: 600 | image_tag: class: 'w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition-all duration-700', loading: 'lazy' }}
                 {% else %}
-                  <div class="w-full h-full bg-gray-100"></div>
+                  <img src="{{ 'pores.webp' | asset_url }}" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition-all duration-700" loading="lazy" alt="Acne concern">
                 {% endif %}
               </div>
               <h3 class="font-serif text-2xl text-[#2F3948] mb-3">{{ block.settings.title }}</h3>
@@ -239,9 +239,12 @@
       {% for block in section.blocks %}
         {% if block.type == 'step_card' %}
           <div class="bg-[#F6FBFD] rounded-[40px] p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 border border-[#2F3948]/5" {{ block.shopify_attributes }}>
+            {% assign product = block.settings.product %}
             <!-- Image Left -->
             <div class="w-full md:w-5/12 aspect-square rounded-[28px] overflow-hidden bg-white">
-              {% if block.settings.image != blank %}
+              {% if product != blank and product.featured_image != blank %}
+                {{ product.featured_image | image_url: width: 600 | image_tag: class: 'w-full h-full object-cover', loading: 'lazy' }}
+              {% elsif block.settings.image != blank %}
                 {{ block.settings.image | image_url: width: 600 | image_tag: class: 'w-full h-full object-cover', loading: 'lazy' }}
               {% else %}
                 <div class="w-full h-full bg-gray-100 flex items-center justify-center text-xs text-gray-400">Product Image</div>
@@ -255,8 +258,8 @@
               <p class="text-lg text-[#5E6A78] mb-8 font-medium">{{ block.settings.text }}</p>
               
               <div class="pt-8 border-t border-[#2F3948]/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <span class="font-bold text-[#2F3948]">{{ block.settings.product_name }}</span>
-                <a href="{{ block.settings.product_link | default: '#' }}" class="text-[10px] uppercase tracking-[0.2em] font-black text-[#5E6A78] hover:text-[#2F3948] transition-colors flex items-center">
+                <span class="font-bold text-[#2F3948]">{% if product != blank %}{{ product.title }}{% else %}{{ block.settings.product_name }}{% endif %}</span>
+                <a href="{% if product != blank %}{{ product.url }}{% else %}{{ block.settings.product_link | default: '#' }}{% endif %}" class="text-[10px] uppercase tracking-[0.2em] font-black text-[#5E6A78] hover:text-[#2F3948] transition-colors flex items-center">
                   View Product <svg class="w-3 h-3 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </a>
               </div>
@@ -374,6 +377,8 @@
   <section class="relative py-40 px-6 lg:px-20 bg-[#2F3948]">
     {% if section.settings.final_image != blank %}
       {{ section.settings.final_image | image_url: width: 2000 | image_tag: class: 'absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay grayscale', loading: 'lazy' }}
+    {% else %}
+      <img src="{{ 'heroimg.webp' | asset_url }}" class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay grayscale" loading="lazy" alt="Seravolve">
     {% endif %}
     
     <div class="relative z-10 max-w-3xl mx-auto text-center">
@@ -473,12 +478,13 @@
       "type": "step_card",
       "name": "Product Step",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Product Image" },
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "image_picker", "id": "image", "label": "Product Image (Optional override)" },
         { "type": "text", "id": "step_number", "label": "Step Identifier", "default": "STEP 1" },
         { "type": "text", "id": "title", "label": "Headline" },
         { "type": "textarea", "id": "text", "label": "Description" },
-        { "type": "text", "id": "product_name", "label": "Product Name" },
-        { "type": "url", "id": "product_link", "label": "Product Link" }
+        { "type": "text", "id": "product_name", "label": "Product Name Fallback" },
+        { "type": "url", "id": "product_link", "label": "Product Link Fallback" }
       ]
     },
     {
