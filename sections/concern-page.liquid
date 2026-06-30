@@ -43,10 +43,8 @@
   <section id="routine" class="relative bg-white border-t border-[#111]/5">
     <div class="flex flex-col lg:flex-row">
       
-      <!-- Sticky Left Side: Texture + Product -->
-      <div class="lg:w-1/2 lg:sticky lg:top-0 h-[60vh] lg:h-screen relative overflow-hidden bg-[#F2F7F9]">
-        <!-- Texture Background -->
-        <img src="{{ 'texture-gel-blue.png' | asset_url }}" class="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-multiply" loading="lazy">
+      <!-- Sticky Left Side: Product -->
+      <div class="lg:w-1/2 lg:sticky lg:top-0 h-[60vh] lg:h-screen relative overflow-hidden bg-[#F6FBFD]">
         
         <!-- Product Image Float -->
         <div class="absolute inset-0 flex items-center justify-center p-12">
@@ -74,11 +72,12 @@
                 {{ bundle_block.settings.description }}
               </div>
               
-              <form action="/cart/add" method="post" class="mt-12">
+              <form action="/cart/add" method="post" class="mt-12 sticky bottom-4 z-50 lg:relative lg:bottom-0">
                 <input type="hidden" name="id" value="{{ prod.variants.first.id }}">
-                <button type="submit" class="w-full py-5 bg-[#111] text-white rounded-full font-bold text-sm tracking-widest uppercase hover:bg-black hover:scale-[1.02] transition-all duration-300 flex justify-between items-center px-8 shadow-xl">
-                  <span>{{ section.settings.final_btn_1 }}</span>
-                  <span class="text-white/70">{{ prod.price | money }}</span>
+                <button type="submit" class="w-full py-5 bg-[#111] text-white rounded-full font-bold text-sm tracking-widest uppercase hover:bg-black hover:scale-[1.02] transition-all duration-300 flex justify-center gap-4 items-center px-8 shadow-2xl lg:shadow-xl">
+                  <span>BUY NOW</span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-white/40"></span>
+                  <span class="text-white">{{ prod.price | money }}</span>
                 </button>
               </form>
             </div>
