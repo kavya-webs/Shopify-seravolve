@@ -1,0 +1,74 @@
+{
+  "sections": {
+    "main": {
+      "type": "concern-page",
+      "blocks": {
+        "und_1": { "type": "understand_card", "settings": { "title": "Frequent breakouts" } },
+        "und_2": { "type": "understand_card", "settings": { "title": "Oily or combination skin" } },
+        "und_3": { "type": "understand_card", "settings": { "title": "Clogged pores" } },
+        "und_4": { "type": "understand_card", "settings": { "title": "Acne-prone skin" } },
+        "und_5": { "type": "understand_card", "settings": { "title": "Confusion about what products to use together" } },
+        "bundle": {
+          "type": "bundle_card",
+          "settings": {
+            "product": "acne-control-routine",
+            "title": "Acne Control Routine",
+            "description": "<p>A simple morning and night routine designed for acne-prone skin.</p><p><strong>Why this routine works for acne-prone skin</strong></p><ul><li>Helps keep skin clean and refreshed</li><li>Supports balanced hydration</li><li>Protects skin during the day</li><li>Removes the guesswork from building an acne routine</li></ul>",
+            "step_1_title": "Cleanse",
+            "step_1_text": "Face Wash",
+            "step_2_title": "Hydrate",
+            "step_2_text": "Moisturiser",
+            "step_3_title": "Protect",
+            "step_3_text": "Sunscreen"
+          }
+        },
+        "time_1": { "type": "timeline_step", "settings": { "time": "Week 1", "text": "Skin feels cleaner and fresher." } },
+        "time_2": { "type": "timeline_step", "settings": { "time": "Weeks 2-4", "text": "Routine begins supporting a calmer-looking complexion.*" } },
+        "time_3": { "type": "timeline_step", "settings": { "time": "Weeks 6-8", "text": "Consistent use continues supporting healthier-looking skin.*" } },
+        "hab_1": { "type": "habit_card", "settings": { "title": "Cleanse after sweating." } },
+        "hab_2": { "type": "habit_card", "settings": { "title": "Avoid picking at breakouts." } },
+        "hab_3": { "type": "habit_card", "settings": { "title": "Change pillowcases regularly." } },
+        "hab_4": { "type": "habit_card", "settings": { "title": "Wear sunscreen every morning." } },
+        "hab_5": { "type": "habit_card", "settings": { "title": "Stay consistent with your routine." } },
+        "faq_1": { "type": "faq_item", "settings": { "title": "What is included in the Acne Control Routine?", "text": "The routine includes a face wash, moisturiser, and sunscreen selected to create a simple daily acne routine." } },
+        "faq_2": { "type": "faq_item", "settings": { "title": "Is this suitable for beginners?", "text": "Yes. The routine is designed for people who want a straightforward acne routine without needing to understand complex skincare ingredients." } },
+        "faq_3": { "type": "faq_item", "settings": { "title": "Can oily skin use this routine?", "text": "Yes. The Acne Control Routine is designed with acne-prone and oily skin in mind." } },
+        "faq_4": { "type": "faq_item", "settings": { "title": "Do I need additional products?", "text": "No. This page should position the Acne Control Routine as the complete starting point for most people dealing with acne-prone skin." } }
+      },
+      "block_order": [
+        "und_1", "und_2", "und_3", "und_4", "und_5",
+        "bundle",
+        "time_1", "time_2", "time_3",
+        "hab_1", "hab_2", "hab_3", "hab_4", "hab_5",
+        "faq_1", "faq_2", "faq_3", "faq_4"
+      ],
+      "settings": {
+        "hero_headline": "FOR ACNE-PRONE SKIN",
+        "hero_title": "A simpler acne routine for clearer-looking skin.",
+        "hero_text": "Acne can make skincare feel confusing. You don't need to compare ingredients or build a routine from scratch. Seravolve's Acne Control Routine is designed to give acne-prone skin a simple daily routine that's easy to follow.",
+        "hero_btn": "Start My Acne Routine",
+        "hero_sub_btn": "See How It Works",
+        "talk_headline": "Designed for people who are dealing with:",
+        "talk_subheadline": "This is a complete acne routine designed to simplify your daily skincare decisions.",
+        "why_headline": "Understanding acne doesn't have to be complicated.",
+        "why_subheadline": "Acne often develops when excess oil, dead skin cells, and clogged pores create an environment where breakouts can appear. Many people try multiple products without a clear routine, which can make skincare feel overwhelming.",
+        "why_bottom": "That's why Seravolve focuses on one complete acne control routine instead of asking you to build a routine step by step.",
+        "comp_headline": "Most brands sell products. We recommend routines.",
+        "diff_other_1": "Choose a cleanser",
+        "diff_other_2": "Choose a moisturiser",
+        "diff_other_3": "Choose a sunscreen",
+        "diff_other_4": "Hope they work together",
+        "diff_us_1": "Choose your concern",
+        "diff_us_2": "Get one routine",
+        "diff_us_3": "Follow it daily",
+        "diff_us_4": "Stay consistent",
+        "timeline_headline": "What to expect from a consistent acne routine",
+        "habits_headline": "Simple habits that can support your acne routine",
+        "final_headline": "Stop building an acne routine product by product.",
+        "final_subheadline": "Start with a complete routine designed around your concern.",
+        "final_btn": "Start My Acne Routine",
+        "final_sub_btn": "Learn More"
+      }
+    }
+  }
+}
