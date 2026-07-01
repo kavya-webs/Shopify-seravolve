@@ -181,7 +181,8 @@
         "final_heading": "Stop mixing ingredients.\nStart a synchronized protocol.",
         "final_body": "A unified system engineered to restore clarity to acne-prone skin.",
         "final_btn_1": "Start The Protocol",
-        "final_btn_2": "Learn More"
+        "final_btn_2": "Learn More",
+        "hero_bg_asset": "texture-pores.png"
       }
     }
   },
