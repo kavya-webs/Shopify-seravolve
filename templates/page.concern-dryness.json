@@ -94,28 +94,28 @@
           "type": "faq_item",
           "settings": {
             "question": "How can I repair a damaged skin barrier causing severe dryness?",
-            "answer": "Barrier repair requires replenishing the skin's natural intercellular matrix. Our hydration protocol utilizes bio-identical ceramides and humectants to seal micro-cracks in the stratum corneum, instantly stopping transepidermal water loss."
+            "answer": "<p>Barrier repair requires replenishing the skin's natural intercellular matrix. Our hydration protocol utilizes bio-identical ceramides and humectants to seal micro-cracks in the stratum corneum, instantly stopping transepidermal water loss.</p>"
           }
         },
         "faq_2": {
           "type": "faq_item",
           "settings": {
             "question": "Why does my skin feel dry even after applying moisturizer?",
-            "answer": "If your skin feels dry post-moisturization, your routine lacks humectants or occlusives. True hydration requires drawing water into the cells and sealing it in to prevent evaporation. Our system provides both phases."
+            "answer": "<p>If your skin feels dry post-moisturization, your routine lacks humectants or occlusives. True hydration requires drawing water into the cells and sealing it in to prevent evaporation. Our system provides both phases.</p>"
           }
         },
         "faq_3": {
           "type": "faq_item",
           "settings": {
             "question": "What is the difference between dry and dehydrated skin?",
-            "answer": "Dry skin is a genetic skin type lacking oil (sebum), whereas dehydrated skin is a temporary condition lacking water. Our protocol is engineered with dual-action molecular weights to treat both lipid deficiency and water loss simultaneously."
+            "answer": "<p>Dry skin is a genetic skin type lacking oil (sebum), whereas dehydrated skin is a temporary condition lacking water. Our protocol is engineered with dual-action molecular weights to treat both lipid deficiency and water loss simultaneously.</p>"
           }
         },
         "faq_4": {
           "type": "faq_item",
           "settings": {
             "question": "Will a heavy hydration routine clog my pores or cause breakouts?",
-            "answer": "No. Our hydration protocol relies on non-comedogenic, biomimetic lipids that closely mimic your skin’s natural oils. This ensures deep, sustained moisture repair without suffocating the pore lining."
+            "answer": "<p>No. Our hydration protocol relies on non-comedogenic, biomimetic lipids that closely mimic your skin’s natural oils. This ensures deep, sustained moisture repair without suffocating the pore lining.</p>"
           }
         },
         "why_1_1": {

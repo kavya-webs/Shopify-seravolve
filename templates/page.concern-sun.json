@@ -94,28 +94,28 @@
           "type": "faq_item",
           "settings": {
             "question": "Does sunscreen prevent premature skin aging and wrinkles?",
-            "answer": "Yes. Over 80% of visible skin aging is caused by cumulative UV exposure (photoaging), which degrades collagen and elastin. Daily application of our broad-spectrum defense shield physically blocks these structural breakdown pathways."
+            "answer": "<p>Yes. Over 80% of visible skin aging is caused by cumulative UV exposure (photoaging), which degrades collagen and elastin. Daily application of our broad-spectrum defense shield physically blocks these structural breakdown pathways.</p>"
           }
         },
         "faq_2": {
           "type": "faq_item",
           "settings": {
             "question": "How often should I reapply sunscreen over makeup or during the day?",
-            "answer": "For optimal defense, clinical guidelines recommend reapplication every 2 hours of direct sun exposure. Our invisible UV shield is engineered to layer weightlessly over other skincare without pilling or leaving a white cast."
+            "answer": "<p>For optimal defense, clinical guidelines recommend reapplication every 2 hours of direct sun exposure. Our invisible UV shield is engineered to layer weightlessly over other skincare without pilling or leaving a white cast.</p>"
           }
         },
         "faq_3": {
           "type": "faq_item",
           "settings": {
             "question": "What is the difference between UVA and UVB rays?",
-            "answer": "UVB rays cause surface sunburns, while UVA rays penetrate deeper, causing cellular DNA damage and accelerating aging. Our advanced sun defense routine provides comprehensive broad-spectrum protection against both spectrums."
+            "answer": "<p>UVB rays cause surface sunburns, while UVA rays penetrate deeper, causing cellular DNA damage and accelerating aging. Our advanced sun defense routine provides comprehensive broad-spectrum protection against both spectrums.</p>"
           }
         },
         "faq_4": {
           "type": "faq_item",
           "settings": {
             "question": "Will daily sunscreen use clog my pores or cause acne?",
-            "answer": "Traditional sunscreens rely on heavy, pore-clogging filters. Our UV protocol utilizes a non-comedogenic, oil-free matrix designed specifically for daily wear, providing high-level protection without causing cellular congestion."
+            "answer": "<p>Traditional sunscreens rely on heavy, pore-clogging filters. Our UV protocol utilizes a non-comedogenic, oil-free matrix designed specifically for daily wear, providing high-level protection without causing cellular congestion.</p>"
           }
         },
         "why_1_1": {
