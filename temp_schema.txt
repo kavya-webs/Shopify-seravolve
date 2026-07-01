@@ -1,0 +1,145 @@
+{% schema %}
+{
+  "name": "Concern Landing Page V2",
+  "settings": [
+    { "type": "header", "content": "Hero Section" },
+    { "type": "image_picker", "id": "hero_image", "label": "Image" },
+    { "type": "text", "id": "hero_label", "label": "Label", "default": "FOR ACNE-PRONE SKIN" },
+    { "type": "textarea", "id": "hero_heading", "label": "Heading", "default": "A simpler routine for calmer, healthier-looking skin." },
+    { "type": "textarea", "id": "hero_body", "label": "Body Text" },
+    { "type": "text", "id": "hero_btn_1", "label": "Primary CTA", "default": "Start My Acne Routine" },
+    { "type": "text", "id": "hero_btn_2", "label": "Secondary CTA", "default": "See How It Works" },
+    
+    { "type": "header", "content": "Section 2: We Understand" },
+    { "type": "textarea", "id": "understand_heading", "label": "Heading", "default": "Acne isn't just about your skin.\nIt's about confidence too." },
+    
+    { "type": "header", "content": "Section 3: Why Acne Happens" },
+    { "type": "textarea", "id": "why_bottom", "label": "Bottom Copy", "default": "A consistent routine helps support skin that feels cleaner, calmer and healthier over time." },
+    
+    { "type": "header", "content": "Section 4: The Seravolve Difference" },
+    { "type": "text", "id": "comp_headline", "label": "Comparison Headline" },
+    { "type": "text", "id": "diff_other_1", "label": "Other Skincare 1", "default": "Research ingredients" },
+    { "type": "text", "id": "diff_other_2", "label": "Other Skincare 2", "default": "Compare products" },
+    { "type": "text", "id": "diff_other_3", "label": "Other Skincare 3", "default": "Watch videos" },
+    { "type": "text", "id": "diff_other_4", "label": "Other Skincare 4", "default": "Hope it works" },
+    { "type": "text", "id": "diff_us_1", "label": "Seravolve 1", "default": "Choose your concern" },
+    { "type": "text", "id": "diff_us_2", "label": "Seravolve 2", "default": "Follow one routine" },
+    { "type": "text", "id": "diff_us_3", "label": "Seravolve 3", "default": "Stay consistent" },
+    { "type": "text", "id": "diff_us_4", "label": "Seravolve 4", "default": "Build confidence" },
+    
+    { "type": "header", "content": "Section 5: Your Routine" },
+    { "type": "textarea", "id": "routine_headline", "label": "Headline", "default": "Designed around your concern.\nNot around ingredients." },
+    { "type": "textarea", "id": "routine_subheading", "label": "Subheading", "default": "Everything below has one purpose:\nsupporting acne-prone skin with a simple daily routine." },
+
+    { "type": "header", "content": "Section 7: What to Expect" },
+    { "type": "text", "id": "expect_disclaimer", "label": "Disclaimer", "default": "*Results vary. Consistency matters." },
+
+    { "type": "header", "content": "Final CTA" },
+    { "type": "image_picker", "id": "final_image", "label": "Background Image" },
+    { "type": "textarea", "id": "final_heading", "label": "Heading", "default": "Healthy-looking skin starts with one simple decision." },
+    { "type": "textarea", "id": "final_body", "label": "Body", "default": "Stop researching products.\nStart following a routine built around your skin." },
+    { "type": "text", "id": "final_btn_1", "label": "Primary CTA", "default": "Start My Acne Routine" },
+    { "type": "text", "id": "final_btn_2", "label": "Secondary CTA", "default": "Shop Individual Products" }
+  ],
+  "blocks": [
+    {
+      "type": "understand_card",
+      "name": "Quote Card",
+      "limit": 4,
+      "settings": [
+        { "type": "textarea", "id": "title", "label": "Quote" }
+      ]
+    },
+    {
+      "type": "why_happens_card",
+      "name": "Cause Card",
+      "limit": 3,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "text", "label": "Explanation" }
+      ]
+    },
+    {
+      "type": "routine_am",
+      "name": "Morning Step",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Step Name" }
+      ]
+    },
+    {
+      "type": "routine_pm",
+      "name": "Night Step",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Step Name" }
+      ]
+    },
+    {
+      "type": "bundle_card",
+      "name": "Bundle Routine Showcase",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Bundle Product" },
+        { "type": "image_picker", "id": "image", "label": "Image (Optional override)" },
+        { "type": "text", "id": "title", "label": "Headline", "default": "The Complete Routine" },
+        { "type": "richtext", "id": "description", "label": "Description" },
+        { "type": "text", "id": "step_1_title", "label": "Step 1 Title", "default": "Cleanse" },
+        { "type": "text", "id": "step_1_text", "label": "Step 1 Text" },
+        { "type": "text", "id": "step_2_title", "label": "Step 2 Title", "default": "Moisturize" },
+        { "type": "text", "id": "step_2_text", "label": "Step 2 Text" },
+        { "type": "text", "id": "step_3_title", "label": "Step 3 Title", "default": "Protect" },
+        { "type": "text", "id": "step_3_text", "label": "Step 3 Text" }
+      ]
+    },
+    {
+      "type": "step_card",
+      "name": "Product Step",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "image_picker", "id": "image", "label": "Product Image (Optional override)" },
+        { "type": "text", "id": "step_number", "label": "Step Identifier", "default": "STEP 1" },
+        { "type": "text", "id": "title", "label": "Headline" },
+        { "type": "textarea", "id": "text", "label": "Description" },
+        { "type": "text", "id": "product_name", "label": "Product Name Fallback" },
+        { "type": "url", "id": "product_link", "label": "Product Link Fallback" }
+      ]
+    },
+    {
+      "type": "timeline_step",
+      "name": "Expectation Timeline",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "time", "label": "Time (e.g., Week 1)" },
+        { "type": "text", "id": "text", "label": "Result" }
+      ]
+    },
+    {
+      "type": "habit_card",
+      "name": "Habit",
+      "limit": 5,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Habit Name" },
+        { "type": "textarea", "id": "icon", "label": "SVG Path Data (d=...)" }
+      ]
+    },
+    {
+      "type": "faq_item",
+      "name": "FAQ",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer" }
+      ]
+    },
+    {
+      "type": "why_choose_card",
+      "name": "Value Prop",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Concern Landing Page V2" }
+  ]
+}
+{% endschema %}

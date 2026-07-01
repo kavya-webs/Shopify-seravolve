@@ -1,0 +1,160 @@
+<div class="concern-page-wrapper font-sans antialiased text-[#111] bg-white">
+
+  <!-- ==========================================
+       SECTION 1: HERO (Cinematic & Edge-to-Edge)
+       ========================================== -->
+  <section class="relative w-full h-[85vh] md:h-screen flex flex-col items-center justify-center overflow-hidden bg-black text-white">
+    <!-- Background Texture -->
+    <img src="{{ 'texture-gel-blue.png' | asset_url }}" class="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-screen scale-105" loading="eager" alt="Gel Texture">
+    
+    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center mt-12">
+      <span class="text-xs uppercase tracking-[0.25em] font-bold text-white/70 mb-8">{{ section.settings.hero_label }}</span>
+      <h1 class="font-serif text-5xl md:text-7xl lg:text-[6rem] leading-[1.05] text-white mb-8 tracking-tight">{{ section.settings.hero_heading | newline_to_br }}</h1>
+      <p class="text-lg md:text-xl text-white/80 max-w-2xl font-light leading-relaxed mb-12">{{ section.settings.hero_body }}</p>
+      <a href="#routine" class="px-10 py-4 bg-white text-black rounded-full font-bold text-sm tracking-widest uppercase hover:scale-105 transition-transform duration-300">{{ section.settings.hero_btn_1 }}</a>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION 2: THE MECHANICS (Stark White Minimalism)
+       ========================================== -->
+  <section class="py-32 lg:py-48 px-6 lg:px-20 bg-white">
+    <div class="max-w-6xl mx-auto flex flex-col items-center text-center">
+      <h2 class="font-serif text-4xl md:text-6xl text-[#111] mb-24 max-w-3xl leading-tight">{{ section.settings.understand_heading | newline_to_br }}</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 w-full text-left">
+        {% for block in section.blocks %}
+          {% if block.type == 'why_happens_card' %}
+            <div class="flex flex-col border-t border-[#111]/10 pt-8">
+              <span class="text-[#111] font-bold text-2xl mb-4">{{ block.settings.title }}</span>
+              <p class="text-[#555] text-lg font-light leading-relaxed">{{ block.settings.text }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+      <p class="mt-32 text-xl font-medium text-[#111] tracking-wide">{{ section.settings.why_bottom }}</p>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION 3: THE PROTOCOL (Sticky Split-Screen)
+       ========================================== -->
+  <section id="routine" class="relative bg-white border-t border-[#111]/5">
+    <div class="flex flex-col lg:flex-row">
+      
+      <!-- Sticky Left Side: Texture + Product -->
+      <div class="lg:w-1/2 lg:sticky lg:top-0 h-[60vh] lg:h-screen relative overflow-hidden bg-[#F2F7F9]">
+        <!-- Texture Background -->
+        <img src="{{ 'texture-gel-blue.png' | asset_url }}" class="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-multiply" loading="lazy">
+        
+        <!-- Product Image Float -->
+        <div class="absolute inset-0 flex items-center justify-center p-12">
+          {% assign bundle_block = section.blocks | where: 'type', 'bundle_card' | first %}
+          {% assign prod = all_products[bundle_block.settings.product] %}
+          {% if prod != blank and prod.featured_image != blank %}
+            {{ prod.featured_image | image_url: width: 900 | image_tag: class: 'w-full max-w-md h-auto object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform duration-1000 ease-out', loading: 'lazy' }}
+          {% else %}
+            <img src="{{ 'heroimg.webp' | asset_url }}" class="w-full max-w-md h-auto object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform duration-1000 ease-out">
+          {% endif %}
+        </div>
+      </div>
+      
+      <!-- Scrolling Right Side: Info -->
+      <div class="lg:w-1/2 py-24 px-8 lg:px-24 lg:py-40 flex flex-col justify-center min-h-screen bg-white">
+        <div class="max-w-lg mx-auto w-full">
+          <h3 class="font-serif text-4xl md:text-6xl text-[#111] mb-8 leading-tight">{{ section.settings.routine_headline | newline_to_br }}</h3>
+          <p class="text-xl text-[#555] font-light mb-20 leading-relaxed">{{ section.settings.routine_subheading | newline_to_br }}</p>
+          
+          <div class="space-y-20">
+            <!-- Details -->
+            <div>
+              <h4 class="text-xs uppercase tracking-[0.25em] font-bold text-[#111] mb-8 border-b border-[#111]/10 pb-4">The System</h4>
+              <div class="text-[#333] text-lg font-light leading-relaxed space-y-6 [&>p]:mb-4 [&>ul]:list-disc [&>ul]:ml-5 [&>ul>li]:mb-3 [&>ul>li>strong]:font-bold [&>ul>li>strong]:text-[#111]">
+                {{ bundle_block.settings.description }}
+              </div>
+              
+              <form action="/cart/add" method="post" class="mt-12">
+                <input type="hidden" name="id" value="{{ prod.variants.first.id }}">
+                <button type="submit" class="w-full py-5 bg-[#111] text-white rounded-full font-bold text-sm tracking-widest uppercase hover:bg-black hover:scale-[1.02] transition-all duration-300 flex justify-between items-center px-8 shadow-xl">
+                  <span>{{ section.settings.final_btn_1 }}</span>
+                  <span class="text-white/70">{{ prod.price | money }}</span>
+                </button>
+              </form>
+            </div>
+            
+            <!-- Why It Works -->
+            <div>
+              <h4 class="text-xs uppercase tracking-[0.25em] font-bold text-[#111] mb-8 border-b border-[#111]/10 pb-4">Protocol Specifications</h4>
+              <ul class="space-y-6">
+                {% for block in section.blocks %}
+                  {% if block.type == 'why_choose_card' %}
+                    <li class="flex items-center gap-5 text-[#111] text-lg font-medium">
+                      <svg class="w-5 h-5 text-black shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                      {{ block.settings.title }}
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION 4: CLINICAL TIMELINE (High Contrast)
+       ========================================== -->
+  <section class="py-32 lg:py-48 px-6 lg:px-20 bg-[#111] text-white">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="font-serif text-4xl md:text-6xl mb-24 text-center">Clinical Timeline</h2>
+      
+      <div class="space-y-16 md:space-y-0 md:grid md:grid-cols-3 md:gap-16 relative">
+        {% for block in section.blocks %}
+          {% if block.type == 'timeline_step' %}
+            <div class="relative md:pt-10 md:border-t border-white/20">
+              <!-- Dot Indicator -->
+              <div class="hidden md:block absolute -top-[5px] left-0 w-2.5 h-2.5 bg-white rounded-full"></div>
+              
+              <span class="block text-xs uppercase tracking-[0.2em] font-bold text-white/50 mb-6">{{ block.settings.time }}</span>
+              <p class="text-xl md:text-2xl font-light leading-relaxed">{{ block.settings.text }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+      <p class="text-center text-xs text-white/30 mt-32 uppercase tracking-[0.2em] font-bold">{{ section.settings.expect_disclaimer }}</p>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION 5: FAQ (Minimal Accordion)
+       ========================================== -->
+  <section class="py-32 lg:py-40 px-6 bg-white">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-serif text-4xl md:text-5xl text-[#111] mb-20 text-center">Protocol FAQ</h2>
+      
+      <div class="border-t border-[#111]/10">
+        {% for block in section.blocks %}
+          {% if block.type == 'faq_item' %}
+            <details class="group border-b border-[#111]/10 [&::-webkit-details-marker]:hidden">
+              <summary class="flex justify-between items-center cursor-pointer py-8 list-none font-medium text-lg md:text-xl text-[#111] pr-4">
+                {{ block.settings.question }}
+                <span class="transition-transform duration-500 group-open:rotate-45 ml-4 shrink-0 text-[#111]/40">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"/></svg>
+                </span>
+              </summary>
+              <div class="pb-10 text-[#555] text-lg font-light leading-relaxed space-y-4 [&>p]:mb-4">
+                {{ block.settings.answer }}
+              </div>
+            </details>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+</div>
+
