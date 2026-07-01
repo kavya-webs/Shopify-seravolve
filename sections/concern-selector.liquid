@@ -16,11 +16,11 @@
   document.addEventListener('alpine:init', () => {
     Alpine.data('concernSelector', () => ({
       concerns: [
-        { id: "acne", title: "Acne & Breakouts", col: "col-span-1 md:col-span-2 row-span-2", img: "{{ 'acne.webp' | asset_url }}", url: "/pages/routine-builder" },
-        { id: "dryness", title: "Dryness & Dehydration", col: "col-span-1 md:col-span-1 row-span-1", img: "{{ 'dryness.webp' | asset_url }}", url: "/pages/routine-builder" },
-        { id: "pigment", title: "Dullness & Pigmentation", col: "col-span-1 md:col-span-1 row-span-1", img: "{{ 'dullness.webp' | asset_url }}", url: "/pages/routine-builder" },
-        { id: "sun", title: "UV & Sun Protection", col: "col-span-1 md:col-span-1 row-span-1", img: "{{ 'uvrays.webp' | asset_url }}", url: "/pages/routine-builder" },
-        { id: "pores", title: "Pores & Texture", col: "col-span-1 md:col-span-1 row-span-1", img: "{{ 'pores.webp' | asset_url }}", url: "/pages/routine-builder" }
+        { id: "acne", title: "Acne & Breakouts", col: "col-span-1 md:col-span-2 row-span-2", img: "{{ 'acne.webp' | asset_url }}", url: "/pages/concern-acne" },
+        { id: "dryness", title: "Dryness & Dehydration", col: "col-span-1 md:col-span-1 row-span-1", img: "{{ 'dryness.webp' | asset_url }}", url: "/pages/concern-dryness" },
+        { id: "pigment", title: "Dullness & Pigmentation", col: "col-span-1 md:col-span-1 row-span-1", img: "{{ 'dullness.webp' | asset_url }}", url: "/pages/concern-pigmentation" },
+        { id: "sun", title: "UV & Sun Protection", col: "col-span-1 md:col-span-1 row-span-1", img: "{{ 'uvrays.webp' | asset_url }}", url: "/pages/concern-sun" },
+        { id: "pores", title: "Pores & Texture", col: "col-span-1 md:col-span-1 row-span-1", img: "{{ 'pores.webp' | asset_url }}", url: "/pages/concern-pores" }
       ]
     }));
   });

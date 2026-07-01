@@ -1,0 +1,191 @@
+{
+  "sections": {
+    "main": {
+      "type": "concern-page",
+      "blocks": {
+        "why_1": {
+          "type": "why_happens_card",
+          "settings": {
+            "title": "Impaired Barrier",
+            "text": "Loss of natural ceramides allows essential moisture to escape."
+          }
+        },
+        "why_2": {
+          "type": "why_happens_card",
+          "settings": {
+            "title": "Environmental Stress",
+            "text": "Harsh climates and pollutants aggressively strip the skin of its natural oils."
+          }
+        },
+        "why_3": {
+          "type": "why_happens_card",
+          "settings": {
+            "title": "Transepidermal Water Loss",
+            "text": "Dehydration at a cellular level leads to visible flaking, tightness, and fine lines."
+          }
+        },
+        "bundle": {
+          "type": "bundle_card",
+          "settings": {
+            "product": "hydration-routine",
+            "image": "shopify://shop_images/acne-routine.webp",
+            "title": "Deep Hydration Routine",
+            "description": "<p>A unified system engineered to restore clarity to acne-prone skin.</p><p><strong>How and when to apply this routine:</strong></p><ul><li><strong>AM:</strong> Cleanse to remove overnight oil. Apply sunscreen to protect against UV inflammation.</li><li><strong>PM:</strong> Cleanse to remove daily buildup. Apply moisturiser to repair the skin barrier without clogging pores.</li></ul>",
+            "step_1_title": "Purify",
+            "step_1_text": "Deep Cleansing Face Wash",
+            "step_2_title": "Balance",
+            "step_2_text": "Oil-Free Hydrating Moisturizer",
+            "step_3_title": "Protect",
+            "step_3_text": "Invisible UV Shield"
+          }
+        },
+        "time_1": {
+          "type": "timeline_step",
+          "settings": {
+            "time": "Days 1-7",
+            "text": "Immediate relief from tightness. Surface hydration is restored."
+          }
+        },
+        "time_2": {
+          "type": "timeline_step",
+          "settings": {
+            "time": "Weeks 2-4",
+            "text": "Barrier fortification. Dry patches and flaking visibly reduce."
+          }
+        },
+        "time_3": {
+          "type": "timeline_step",
+          "settings": {
+            "time": "Weeks 6-8",
+            "text": "Sustained moisture retention. Skin feels plump and resilient."
+          }
+        },
+        "hab_1": {
+          "type": "habit_card",
+          "settings": {
+            "text": "Cleanse post-workout to prevent sweat buildup."
+          }
+        },
+        "hab_2": {
+          "type": "habit_card",
+          "settings": {
+            "text": "Avoid manual extraction (picking)."
+          }
+        },
+        "hab_3": {
+          "type": "habit_card",
+          "settings": {
+            "text": "Rotate pillowcases bi-weekly."
+          }
+        },
+        "hab_4": {
+          "type": "habit_card",
+          "settings": {
+            "text": "Apply SPF daily to prevent hyperpigmentation."
+          }
+        },
+        "hab_5": {
+          "type": "habit_card",
+          "settings": {
+            "text": "Maintain routine consistency."
+          }
+        },
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the best simple skincare routine for acne-prone skin?",
+            "answer": "<p>The most effective acne routine is one you can maintain consistently. Our Acne Control Routine provides the three non-negotiable steps: a clarifying cleanser to remove congestion, a non-comedogenic moisturiser to repair the barrier, and a daily sunscreen to prevent post-acne dark spots.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How and when should I apply an acne routine?",
+            "answer": "<p>Consistency is key. In the morning, cleanse your face and follow immediately with sunscreen to protect against environmental triggers. In the evening, cleanse again to remove daily buildup, then apply moisturiser to hydrate and repair your skin overnight.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does it take for an acne routine to work?",
+            "answer": "<p>While surface oil reduction can be felt within the first week, clinical cellular turnover takes approximately 28 days. You should expect to see a visible reduction in congestion between weeks 4 and 6, with sustained clarity developing by week 8.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do I need to buy individual ingredients or a complete routine?",
+            "answer": "<p>You do not need to become a skincare chemist. Mixing individual active ingredients often leads to barrier damage and worsened breakouts. We engineered the Acne Control Routine as a complete, synchronized system so the formulation chemistry is already solved for you.</p>"
+          }
+        },
+        "why_1_1": {
+          "type": "why_choose_card",
+          "settings": {
+            "title": "Paraben Free"
+          }
+        },
+        "why_1_2": {
+          "type": "why_choose_card",
+          "settings": {
+            "title": "Sulphate Free"
+          }
+        },
+        "why_1_3": {
+          "type": "why_choose_card",
+          "settings": {
+            "title": "DEA Free"
+          }
+        }
+      },
+      "block_order": [
+        "why_1",
+        "why_2",
+        "why_3",
+        "bundle",
+        "time_1",
+        "time_2",
+        "time_3",
+        "hab_1",
+        "hab_2",
+        "hab_3",
+        "hab_4",
+        "hab_5",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "why_1_1",
+        "why_1_2",
+        "why_1_3"
+      ],
+      "settings": {
+        "hero_label": "FOR DRY & DEHYDRATED SKIN",
+        "hero_heading": "Engineered for deep hydration.",
+        "hero_body": "You do not need a degree in skincare. You need a system that works. We eliminated the guesswork to deliver a synchronized routine designed specifically to restore moisture and repair the skin barrier.",
+        "hero_btn_1": "View The Protocol",
+        "hero_btn_2": "Discover the Science",
+        "understand_heading": "A unified system engineered to target the root causes of acne without compromising the skin barrier.",
+        "why_bottom": "The solution is a synchronized daily routine.",
+        "comp_headline": "Most brands sell products. We engineer solutions.",
+        "diff_other_1": "Research individual actives",
+        "diff_other_2": "Guess product compatibility",
+        "diff_other_3": "Risk barrier damage",
+        "diff_other_4": "Overcomplicate daily use",
+        "diff_us_1": "Identify your concern",
+        "diff_us_2": "Trust a synchronized system",
+        "diff_us_3": "Protect the skin barrier",
+        "diff_us_4": "Maintain simple consistency",
+        "routine_headline": "Designed around your concern.\nNot around ingredients.",
+        "routine_subheading": "Everything below has one purpose:\nsupporting acne-prone skin with a simple daily routine.",
+        "expect_disclaimer": "*Individual results may vary based on skin biology and adherence to the protocol.",
+        "final_heading": "Stop mixing ingredients.\nStart a synchronized protocol.",
+        "final_body": "A unified system engineered to restore clarity to acne-prone skin.",
+        "final_btn_1": "Start The Protocol",
+        "final_btn_2": "Learn More"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
