@@ -3,16 +3,34 @@
     "main": {
       "type": "concern-page",
       "blocks": {
-        "why_1": { "type": "why_happens_card", "settings": { "title": "Excess Oil Production", "text": "Sebum build-up creates an environment prone to blockages." } },
-        "why_2": { "type": "why_happens_card", "settings": { "title": "Cellular Congestion", "text": "Dead skin cells trap oil within the pore lining." } },
-        "why_3": { "type": "why_happens_card", "settings": { "title": "Bacterial Imbalance", "text": "Trapped debris leads to visible inflammation and breakouts." } },
+        "why_1": {
+          "type": "why_happens_card",
+          "settings": {
+            "title": "Excess Oil Production",
+            "text": "Sebum build-up creates an environment prone to blockages."
+          }
+        },
+        "why_2": {
+          "type": "why_happens_card",
+          "settings": {
+            "title": "Cellular Congestion",
+            "text": "Dead skin cells trap oil within the pore lining."
+          }
+        },
+        "why_3": {
+          "type": "why_happens_card",
+          "settings": {
+            "title": "Bacterial Imbalance",
+            "text": "Trapped debris leads to visible inflammation and breakouts."
+          }
+        },
         "bundle": {
           "type": "bundle_card",
           "settings": {
             "product": "acne-control-routine",
-            "image": "shopify:\/\/shop_images\/acne-routine.webp",
+            "image": "shopify://shop_images/acne-routine.webp",
             "title": "Acne Control Routine",
-            "description": "<p>A unified system engineered to restore clarity to acne-prone skin.<\/p><p><strong>How and when to apply this routine:<\/strong><\/p><ul><li><strong>AM:<\/strong> Cleanse to remove overnight oil. Apply sunscreen to protect against UV inflammation.<\/li><li><strong>PM:<\/strong> Cleanse to remove daily buildup. Apply moisturiser to repair the skin barrier without clogging pores.<\/li><\/ul>",
+            "description": "<p>A unified system engineered to restore clarity to acne-prone skin.</p><p><strong>How and when to apply this routine:</strong></p><ul><li><strong>AM:</strong> Cleanse to remove overnight oil. Apply sunscreen to protect against UV inflammation.</li><li><strong>PM:</strong> Cleanse to remove daily buildup. Apply moisturiser to repair the skin barrier without clogging pores.</li></ul>",
             "step_1_title": "Purify",
             "step_1_text": "Deep Cleansing Face Wash",
             "step_2_title": "Balance",
@@ -21,29 +39,124 @@
             "step_3_text": "Invisible UV Shield"
           }
         },
-        "time_1": { "type": "timeline_step", "settings": { "time": "Days 1-7", "text": "Baseline purification. Excess surface oil is reduced." } },
-        "time_2": { "type": "timeline_step", "settings": { "time": "Weeks 2-4", "text": "Sebum regulation. Pores appear less congested." } },
-        "time_3": { "type": "timeline_step", "settings": { "time": "Weeks 6-8", "text": "Sustained clarity. Skin barrier function is optimized." } },
-        "hab_1": { "type": "habit_card", "settings": { "text": "Cleanse post-workout to prevent sweat buildup." } },
-        "hab_2": { "type": "habit_card", "settings": { "text": "Avoid manual extraction (picking)." } },
-        "hab_3": { "type": "habit_card", "settings": { "text": "Rotate pillowcases bi-weekly." } },
-        "hab_4": { "type": "habit_card", "settings": { "text": "Apply SPF daily to prevent hyperpigmentation." } },
-        "hab_5": { "type": "habit_card", "settings": { "text": "Maintain routine consistency." } },
-        "faq_1": { "type": "faq_item", "settings": { "question": "What is the best simple skincare routine for acne-prone skin?", "answer": "<p>The most effective acne routine is one you can maintain consistently. Our Acne Control Routine provides the three non-negotiable steps: a clarifying cleanser to remove congestion, a non-comedogenic moisturiser to repair the barrier, and a daily sunscreen to prevent post-acne dark spots.</p>" } },
-        "faq_2": { "type": "faq_item", "settings": { "question": "How and when should I apply an acne routine?", "answer": "<p>Consistency is key. In the morning, cleanse your face and follow immediately with sunscreen to protect against environmental triggers. In the evening, cleanse again to remove daily buildup, then apply moisturiser to hydrate and repair your skin overnight.</p>" } },
-        "faq_3": { "type": "faq_item", "settings": { "question": "How long does it take for an acne routine to work?", "answer": "<p>While surface oil reduction can be felt within the first week, clinical cellular turnover takes approximately 28 days. You should expect to see a visible reduction in congestion between weeks 4 and 6, with sustained clarity developing by week 8.</p>" } },
-        "faq_4": { "type": "faq_item", "settings": { "question": "Do I need to buy individual ingredients or a complete routine?", "answer": "<p>You do not need to become a skincare chemist. Mixing individual active ingredients often leads to barrier damage and worsened breakouts. We engineered the Acne Control Routine as a complete, synchronized system so the formulation chemistry is already solved for you.</p>" } },
-        "why_1_1": { "type": "why_choose_card", "settings": { "title": "Paraben Free" } },
-        "why_1_2": { "type": "why_choose_card", "settings": { "title": "Sulphate Free" } },
-        "why_1_3": { "type": "why_choose_card", "settings": { "title": "DEA Free" } }
+        "time_1": {
+          "type": "timeline_step",
+          "settings": {
+            "time": "Days 1-7",
+            "text": "Baseline purification. Excess surface oil is reduced."
+          }
+        },
+        "time_2": {
+          "type": "timeline_step",
+          "settings": {
+            "time": "Weeks 2-4",
+            "text": "Sebum regulation. Pores appear less congested."
+          }
+        },
+        "time_3": {
+          "type": "timeline_step",
+          "settings": {
+            "time": "Weeks 6-8",
+            "text": "Sustained clarity. Skin barrier function is optimized."
+          }
+        },
+        "hab_1": {
+          "type": "habit_card",
+          "settings": {
+            "text": "Cleanse post-workout to prevent sweat buildup."
+          }
+        },
+        "hab_2": {
+          "type": "habit_card",
+          "settings": {
+            "text": "Avoid manual extraction (picking)."
+          }
+        },
+        "hab_3": {
+          "type": "habit_card",
+          "settings": {
+            "text": "Rotate pillowcases bi-weekly."
+          }
+        },
+        "hab_4": {
+          "type": "habit_card",
+          "settings": {
+            "text": "Apply SPF daily to prevent hyperpigmentation."
+          }
+        },
+        "hab_5": {
+          "type": "habit_card",
+          "settings": {
+            "text": "Maintain routine consistency."
+          }
+        },
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the most effective routine for cystic and hormonal acne?",
+            "answer": "The most effective routine targets excess sebum, bacteria, and inflammation simultaneously. Our protocol utilizes barrier-safe exfoliants and calming agents to reduce deep inflammation without causing surface dehydration."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Why do I keep breaking out even when using acne treatments?",
+            "answer": "Recurring breakouts are often caused by a compromised skin barrier. Harsh treatments strip the skin of natural lipids, causing an overproduction of oil to compensate. Our system is engineered to treat acne while actively restoring the lipid barrier."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does it take to see results for acne-prone skin?",
+            "answer": "Surface inflammation and redness visibly reduce within 48-72 hours. However, because the skin's cellular turnover cycle is approximately 28 days, significant clearance of deep congestion requires 4 to 6 weeks of consistent protocol adherence."
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I use this acne system with prescription retinoids?",
+            "answer": "Our formulas are non-comedogenic and free of harsh drying alcohols. While they pair well with clinical treatments, we recommend alternating active days or consulting your dermatologist to prevent over-exfoliation when combining with prescription retinoids."
+          }
+        },
+        "why_1_1": {
+          "type": "why_choose_card",
+          "settings": {
+            "title": "Paraben Free"
+          }
+        },
+        "why_1_2": {
+          "type": "why_choose_card",
+          "settings": {
+            "title": "Sulphate Free"
+          }
+        },
+        "why_1_3": {
+          "type": "why_choose_card",
+          "settings": {
+            "title": "DEA Free"
+          }
+        }
       },
       "block_order": [
-        "why_1", "why_2", "why_3",
+        "why_1",
+        "why_2",
+        "why_3",
         "bundle",
-        "time_1", "time_2", "time_3",
-        "hab_1", "hab_2", "hab_3", "hab_4", "hab_5",
-        "faq_1", "faq_2", "faq_3", "faq_4",
-        "why_1_1", "why_1_2", "why_1_3"
+        "time_1",
+        "time_2",
+        "time_3",
+        "hab_1",
+        "hab_2",
+        "hab_3",
+        "hab_4",
+        "hab_5",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "why_1_1",
+        "why_1_2",
+        "why_1_3"
       ],
       "settings": {
         "hero_label": "THE ACNE PROTOCOL",
@@ -72,5 +185,7 @@
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

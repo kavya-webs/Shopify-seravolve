@@ -93,29 +93,29 @@
         "faq_1": {
           "type": "faq_item",
           "settings": {
-            "question": "What is the best simple skincare routine for acne-prone skin?",
-            "answer": "<p>The most effective acne routine is one you can maintain consistently. Our Acne Control Routine provides the three non-negotiable steps: a clarifying cleanser to remove congestion, a non-comedogenic moisturiser to repair the barrier, and a daily sunscreen to prevent post-acne dark spots.</p>"
+            "question": "How can I repair a damaged skin barrier causing severe dryness?",
+            "answer": "Barrier repair requires replenishing the skin's natural intercellular matrix. Our hydration protocol utilizes bio-identical ceramides and humectants to seal micro-cracks in the stratum corneum, instantly stopping transepidermal water loss."
           }
         },
         "faq_2": {
           "type": "faq_item",
           "settings": {
-            "question": "How and when should I apply an acne routine?",
-            "answer": "<p>Consistency is key. In the morning, cleanse your face and follow immediately with sunscreen to protect against environmental triggers. In the evening, cleanse again to remove daily buildup, then apply moisturiser to hydrate and repair your skin overnight.</p>"
+            "question": "Why does my skin feel dry even after applying moisturizer?",
+            "answer": "If your skin feels dry post-moisturization, your routine lacks humectants or occlusives. True hydration requires drawing water into the cells and sealing it in to prevent evaporation. Our system provides both phases."
           }
         },
         "faq_3": {
           "type": "faq_item",
           "settings": {
-            "question": "How long does it take for an acne routine to work?",
-            "answer": "<p>While surface oil reduction can be felt within the first week, clinical cellular turnover takes approximately 28 days. You should expect to see a visible reduction in congestion between weeks 4 and 6, with sustained clarity developing by week 8.</p>"
+            "question": "What is the difference between dry and dehydrated skin?",
+            "answer": "Dry skin is a genetic skin type lacking oil (sebum), whereas dehydrated skin is a temporary condition lacking water. Our protocol is engineered with dual-action molecular weights to treat both lipid deficiency and water loss simultaneously."
           }
         },
         "faq_4": {
           "type": "faq_item",
           "settings": {
-            "question": "Do I need to buy individual ingredients or a complete routine?",
-            "answer": "<p>You do not need to become a skincare chemist. Mixing individual active ingredients often leads to barrier damage and worsened breakouts. We engineered the Acne Control Routine as a complete, synchronized system so the formulation chemistry is already solved for you.</p>"
+            "question": "Will a heavy hydration routine clog my pores or cause breakouts?",
+            "answer": "No. Our hydration protocol relies on non-comedogenic, biomimetic lipids that closely mimic your skin’s natural oils. This ensures deep, sustained moisture repair without suffocating the pore lining."
           }
         },
         "why_1_1": {

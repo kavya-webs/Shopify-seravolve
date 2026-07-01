@@ -93,29 +93,29 @@
         "faq_1": {
           "type": "faq_item",
           "settings": {
-            "question": "What is the best simple skincare routine for acne-prone skin?",
-            "answer": "<p>The most effective acne routine is one you can maintain consistently. Our Acne Control Routine provides the three non-negotiable steps: a clarifying cleanser to remove congestion, a non-comedogenic moisturiser to repair the barrier, and a daily sunscreen to prevent post-acne dark spots.</p>"
+            "question": "Is it possible to permanently shrink enlarged pores?",
+            "answer": "Pore size is genetically determined and cannot be permanently shrunk. However, you can significantly minimize their appearance by clearing the trapped sebum and dead skin cells that stretch the pore wall."
           }
         },
         "faq_2": {
           "type": "faq_item",
           "settings": {
-            "question": "How and when should I apply an acne routine?",
-            "answer": "<p>Consistency is key. In the morning, cleanse your face and follow immediately with sunscreen to protect against environmental triggers. In the evening, cleanse again to remove daily buildup, then apply moisturiser to hydrate and repair your skin overnight.</p>"
+            "question": "What is the most effective routine for textured skin and sebaceous filaments?",
+            "answer": "The most effective approach utilizes oil-soluble chemical exfoliants (like BHA) that penetrate inside the pore lining. Our protocol dissolves the hardened sebum that causes rough texture, restoring a smooth architectural surface."
           }
         },
         "faq_3": {
           "type": "faq_item",
           "settings": {
-            "question": "How long does it take for an acne routine to work?",
-            "answer": "<p>While surface oil reduction can be felt within the first week, clinical cellular turnover takes approximately 28 days. You should expect to see a visible reduction in congestion between weeks 4 and 6, with sustained clarity developing by week 8.</p>"
+            "question": "Why is my skin texture rough even though I exfoliate daily?",
+            "answer": "Over-exfoliation damages the moisture barrier, leading to microscopic flaking and inflammation that feels like rough texture. Our system balances rigorous pore purification with essential barrier repair to ensure a uniformly smooth canvas."
           }
         },
         "faq_4": {
           "type": "faq_item",
           "settings": {
-            "question": "Do I need to buy individual ingredients or a complete routine?",
-            "answer": "<p>You do not need to become a skincare chemist. Mixing individual active ingredients often leads to barrier damage and worsened breakouts. We engineered the Acne Control Routine as a complete, synchronized system so the formulation chemistry is already solved for you.</p>"
+            "question": "How do I reduce excess oil production without drying out my skin?",
+            "answer": "Stripping the skin of oil triggers a rebound effect, causing glands to produce even more sebum. Our routine utilizes intelligent hydrators and niacinamide to regulate sebum production at the source while maintaining optimal moisture levels."
           }
         },
         "why_1_1": {

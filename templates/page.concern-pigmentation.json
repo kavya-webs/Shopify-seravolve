@@ -93,29 +93,29 @@
         "faq_1": {
           "type": "faq_item",
           "settings": {
-            "question": "What is the best simple skincare routine for acne-prone skin?",
-            "answer": "<p>The most effective acne routine is one you can maintain consistently. Our Acne Control Routine provides the three non-negotiable steps: a clarifying cleanser to remove congestion, a non-comedogenic moisturiser to repair the barrier, and a daily sunscreen to prevent post-acne dark spots.</p>"
+            "question": "How do I get rid of post-acne dark spots (PIH) and sun damage?",
+            "answer": "Post-inflammatory hyperpigmentation (PIH) is treated by inhibiting melanin transfer and accelerating cellular turnover. Our protocol combines stabilized antioxidants with gentle exfoliants to fade existing spots and prevent new pigment formation."
           }
         },
         "faq_2": {
           "type": "faq_item",
           "settings": {
-            "question": "How and when should I apply an acne routine?",
-            "answer": "<p>Consistency is key. In the morning, cleanse your face and follow immediately with sunscreen to protect against environmental triggers. In the evening, cleanse again to remove daily buildup, then apply moisturiser to hydrate and repair your skin overnight.</p>"
+            "question": "Can I mix Vitamin C and Niacinamide in a brightening routine?",
+            "answer": "Yes. When formulated correctly at stable pH levels, Vitamin C and Niacinamide work synergistically. Our unified system removes the guesswork, layering these powerful antioxidants seamlessly to maximize luminous clarity without irritation."
           }
         },
         "faq_3": {
           "type": "faq_item",
           "settings": {
-            "question": "How long does it take for an acne routine to work?",
-            "answer": "<p>While surface oil reduction can be felt within the first week, clinical cellular turnover takes approximately 28 days. You should expect to see a visible reduction in congestion between weeks 4 and 6, with sustained clarity developing by week 8.</p>"
+            "question": "How long does it take for hyperpigmentation to fade?",
+            "answer": "Pigmentation resides in deeper epidermal layers. While surface brightness improves in 2 weeks, significantly fading stubborn dark spots requires 8 to 12 weeks of consistent cellular turnover and rigorous UV protection."
           }
         },
         "faq_4": {
           "type": "faq_item",
           "settings": {
-            "question": "Do I need to buy individual ingredients or a complete routine?",
-            "answer": "<p>You do not need to become a skincare chemist. Mixing individual active ingredients often leads to barrier damage and worsened breakouts. We engineered the Acne Control Routine as a complete, synchronized system so the formulation chemistry is already solved for you.</p>"
+            "question": "Why are my dark spots getting darker despite using brightening products?",
+            "answer": "Without strict daily sun protection, UV rays will continuously stimulate melanin production, counteracting any brightening treatments. Our protocol demands the integration of our UV Defense shield to halt further oxidative stress."
           }
         },
         "why_1_1": {

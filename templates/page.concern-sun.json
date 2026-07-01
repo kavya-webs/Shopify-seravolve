@@ -93,29 +93,29 @@
         "faq_1": {
           "type": "faq_item",
           "settings": {
-            "question": "What is the best simple skincare routine for acne-prone skin?",
-            "answer": "<p>The most effective acne routine is one you can maintain consistently. Our Acne Control Routine provides the three non-negotiable steps: a clarifying cleanser to remove congestion, a non-comedogenic moisturiser to repair the barrier, and a daily sunscreen to prevent post-acne dark spots.</p>"
+            "question": "Does sunscreen prevent premature skin aging and wrinkles?",
+            "answer": "Yes. Over 80% of visible skin aging is caused by cumulative UV exposure (photoaging), which degrades collagen and elastin. Daily application of our broad-spectrum defense shield physically blocks these structural breakdown pathways."
           }
         },
         "faq_2": {
           "type": "faq_item",
           "settings": {
-            "question": "How and when should I apply an acne routine?",
-            "answer": "<p>Consistency is key. In the morning, cleanse your face and follow immediately with sunscreen to protect against environmental triggers. In the evening, cleanse again to remove daily buildup, then apply moisturiser to hydrate and repair your skin overnight.</p>"
+            "question": "How often should I reapply sunscreen over makeup or during the day?",
+            "answer": "For optimal defense, clinical guidelines recommend reapplication every 2 hours of direct sun exposure. Our invisible UV shield is engineered to layer weightlessly over other skincare without pilling or leaving a white cast."
           }
         },
         "faq_3": {
           "type": "faq_item",
           "settings": {
-            "question": "How long does it take for an acne routine to work?",
-            "answer": "<p>While surface oil reduction can be felt within the first week, clinical cellular turnover takes approximately 28 days. You should expect to see a visible reduction in congestion between weeks 4 and 6, with sustained clarity developing by week 8.</p>"
+            "question": "What is the difference between UVA and UVB rays?",
+            "answer": "UVB rays cause surface sunburns, while UVA rays penetrate deeper, causing cellular DNA damage and accelerating aging. Our advanced sun defense routine provides comprehensive broad-spectrum protection against both spectrums."
           }
         },
         "faq_4": {
           "type": "faq_item",
           "settings": {
-            "question": "Do I need to buy individual ingredients or a complete routine?",
-            "answer": "<p>You do not need to become a skincare chemist. Mixing individual active ingredients often leads to barrier damage and worsened breakouts. We engineered the Acne Control Routine as a complete, synchronized system so the formulation chemistry is already solved for you.</p>"
+            "question": "Will daily sunscreen use clog my pores or cause acne?",
+            "answer": "Traditional sunscreens rely on heavy, pore-clogging filters. Our UV protocol utilizes a non-comedogenic, oil-free matrix designed specifically for daily wear, providing high-level protection without causing cellular congestion."
           }
         },
         "why_1_1": {
