@@ -5,7 +5,8 @@
        ========================================== -->
   <section class="relative w-full h-[85vh] md:h-screen flex flex-col items-center justify-center overflow-hidden bg-[#F6FBFD]">
     <!-- Background Texture -->
-    <img src="{{ 'texture-gel-blue.png' | asset_url }}" class="absolute inset-0 w-full h-full object-cover scale-105" loading="eager" alt="Gel Texture">
+    {% assign bg_asset = section.settings.hero_bg_asset | default: 'texture-gel-blue.png' %}
+    <img src="{{ bg_asset | asset_url }}" class="absolute inset-0 w-full h-full object-cover scale-105" loading="eager" alt="Background Texture">
     
     <div class="relative z-10 text-center px-8 py-16 md:px-16 md:py-20 max-w-4xl mx-auto flex flex-col items-center mt-12 bg-white/40 backdrop-blur-xl border border-white/50 shadow-2xl rounded-[40px]">
       <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-brand-aqua mb-6">{{ section.settings.hero_label }}</span>
@@ -187,6 +188,7 @@
   "name": "Concern Landing Page V2",
   "settings": [
     { "type": "header", "content": "Hero Section" },
+    { "type": "text", "id": "hero_bg_asset", "label": "Background Asset Filename (e.g. texture.png)" },
     { "type": "image_picker", "id": "hero_image", "label": "Image" },
     { "type": "text", "id": "hero_label", "label": "Label", "default": "FOR ACNE-PRONE SKIN" },
     { "type": "textarea", "id": "hero_heading", "label": "Heading", "default": "A simpler routine for calmer, healthier-looking skin." },
