@@ -83,7 +83,8 @@
               :src="concern.img"
               class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
               :alt="concern.title"
-              loading="lazy"
+              :loading="i < 2 ? 'eager' : 'lazy'"
+              :fetchpriority="i < 2 ? 'high' : 'auto'"
             />
             <div class="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-all duration-500"></div>
 

@@ -6,7 +6,7 @@
   <section class="relative w-full h-[85vh] md:h-screen flex flex-col items-center justify-center overflow-hidden bg-[#F6FBFD] px-4 md:px-0">
     <!-- Background Texture -->
     {% assign bg_asset = section.settings.hero_bg_asset | default: 'texture-gel-blue.png' %}
-    <img src="{{ bg_asset | asset_url }}" class="absolute inset-0 w-full h-full object-cover scale-105" loading="eager" alt="Background Texture">
+    <img src="{{ bg_asset | asset_url }}" class="absolute inset-0 w-full h-full object-cover scale-105" loading="eager" fetchpriority="high" alt="Background Texture">
     
     <div class="relative z-10 text-center mx-4 px-8 py-12 md:px-14 md:py-14 w-full max-w-[92%] md:w-auto md:max-w-3xl mx-auto flex flex-col items-center justify-center mt-8 md:mt-12 bg-white/40 backdrop-blur-xl border border-white/50 shadow-2xl rounded-[2rem]">
       <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-brand-aqua mb-4">{{ section.settings.hero_label }}</span>
@@ -77,7 +77,7 @@
           {% if prod != blank and prod.featured_image != blank %}
             {{ prod.featured_image | image_url: width: 900 | image_tag: class: 'w-full max-w-md h-auto object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform duration-1000 ease-out', loading: 'lazy' }}
           {% else %}
-            <img src="{{ 'heroimg.webp' | asset_url }}" class="w-full max-w-md h-auto object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform duration-1000 ease-out">
+            <img src="{{ 'heroimg.webp' | asset_url }}" class="w-full max-w-md h-auto object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform duration-1000 ease-out" loading="lazy">
           {% endif %}
         </div>
       </div>

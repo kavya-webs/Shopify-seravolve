@@ -27,6 +27,8 @@
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
+    <link rel="preload" as="font" href="{{ 'dm-sans-400.woff2' | asset_url }}" type="font/woff2" crossorigin>
+    <link rel="preload" as="font" href="{{ 'dm-sans-700.woff2' | asset_url }}" type="font/woff2" crossorigin>
 
     <title>
       {%- if request.page_type == 'index' -%}
@@ -91,7 +93,7 @@
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
-    {{ 'tailwind.css' | asset_url | stylesheet_tag }}
+    {{ 'tailwind.css' | asset_url | stylesheet_tag: preload: true }}
 
     {{ content_for_header }}
 

@@ -20,7 +20,7 @@
 
               <!-- Product Image -->
               <div class="w-1/2 md:w-full max-w-[180px] md:max-w-none mx-auto md:mx-0 aspect-[3/4] rounded-[32px] overflow-hidden bg-[#f8faf9] mb-8 relative border border-brand-charcoal/5">
-                <img src="{{ p.featured_image | image_url: width: 600 }}" alt="{{ p.title }}" class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-700">
+                <img src="{{ p.featured_image | image_url: width: 600 }}" alt="{{ p.title }}" class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-700" loading="lazy" width="{{ p.featured_image.width }}" height="{{ p.featured_image.height }}">
                 <div class="absolute inset-0 bg-brand-charcoal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
               </div>
 
